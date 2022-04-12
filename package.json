@@ -1,0 +1,59 @@
+{
+  "name": "slate-image-plugin-demo",
+  "version": "0.0.1",
+  "private": true,
+  "license": "Copyright MeZine Inc. 2022",
+  "engines": {
+    "node": "14.x",
+    "yarn": "1.22.x"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.23",
+    "@types/react": "17.x",
+    "@types/react-dom": "17.x",
+    "@typescript-eslint/eslint-plugin": "^5.15.0",
+    "@typescript-eslint/parser": "^5.15.0",
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-no-secrets": "^0.8.9",
+    "eslint-plugin-react": "^7.27.1",
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.4",
+    "ts-node": "^10.7.0",
+    "tsconfig-paths": "^3.14.1",
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "axios": "^0.26.1",
+    "dotenv": "16.x",
+    "nanoid": "^3.3.2",
+    "next": "10.x",
+    "react": "17.x",
+    "react-dom": "17.x",
+    "slate": "^0.76.1",
+    "slate-history": "^0.66.0",
+    "slate-react": "^0.76.1",
+    "zustand": "^3.7.2"
+  },
+  "scripts": {
+    "-- preset": "# Run preset from @thesunny/presets",
+    "preset": "ts-node --project node_modules/@thesunny/presets/tsconfig.ts-node.json node_modules/@thesunny/presets/bin/index.ts",
+    "--- test": "#",
+    "test:once": "jest --config=jest.config.js",
+    "test:watch": "jest --watch --config=jest.fast.config.js",
+    "test:watch:types": "jest --watch --config=jest.config.js",
+    "test:clearcache": "jest --clearCache",
+    "-- next": "# NextJs",
+    "start:dev": "DOTENV=.env/dev.env next dev -p 3050",
+    "-- fix": "# fix syntax",
+    "fix:prettier": "yarn lint:prettier --write",
+    "fix:eslint": "yarn lint:eslint --fix",
+    "-- lint": "# lint syntax",
+    "lint": "yarn lint:prettier && yarn lint:eslint && yarn lint:tsc",
+    "lint:prettier": "prettier --check \"**/*.{css,md,js,jsx,json,ts,tsx}\"",
+    "lint:eslint": "eslint .",
+    "lint:tsc": "tsc --build ./ --force",
+    "-- end": "# end"
+  }
+}

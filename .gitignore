@@ -1,0 +1,24 @@
+# Ignore dotenv environment variables
+.env/
+
+# Ignore build/dist directories
+.npm/
+.build
+.dist/
+
+# Ignore Next.js directory
+.next/
+
+# ignore vercel link directory
+.vercel/
+
+# standard ignorable files found when using Yarn
+node_modules/
+.DS_Store
+
+# logging we can ignore
+yarn-error.log
+eslint.log
+
+# ignore the increment typescript build info
+tsconfig.tsbuildinfo
