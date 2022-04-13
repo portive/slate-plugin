@@ -31,51 +31,61 @@ const initialValue: Descendant[] = [
   { type: "paragraph", children: [{ text: "Hello World" }] },
   {
     type: "hosted-image",
+    id: "RGVIrl9C5y2i5n95T7lAR",
+    size: [16, 16],
+    children: [{ text: "" }],
+  },
+  {
+    type: "hosted-image",
     id: "AtDtcNNMXEl3PNmkZbVmN",
+    size: [256, 171],
     children: [{ text: "" }],
   },
   {
     type: "hosted-image",
     id: "CUSLBfyRv4nxZTr9CmBBW",
+    size: [256, 171],
     children: [{ text: "" }],
   },
   {
     type: "hosted-image",
     id: "RwQIK7memACjhro80uwPN",
+    size: [256, 171],
     children: [{ text: "" }],
   },
   {
     type: "hosted-image",
     id: "KVFjpuYRvXDu0PuWIEsEP",
+    size: [256, 171],
     children: [{ text: "" }],
   },
   { type: "paragraph", children: [{ text: "End of World" }] },
 ]
 
 const initialEntities: Record<string, Entity> = {
+  RGVIrl9C5y2i5n95T7lAR: {
+    type: "uploaded",
+    url: "https://via.placeholder.com/16.png/06c/fff?text=+",
+  },
   AtDtcNNMXEl3PNmkZbVmN: {
     type: "loading",
     url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
-    viewSize: [256, 171],
     sentBytes: 50000,
     totalBytes: 100000,
   },
   CUSLBfyRv4nxZTr9CmBBW: {
     type: "loading",
     url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
-    viewSize: [256, 171],
     sentBytes: 100000,
     totalBytes: 100000,
   },
   RwQIK7memACjhro80uwPN: {
     type: "uploaded",
     url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
-    size: [256, 171],
   },
   KVFjpuYRvXDu0PuWIEsEP: {
     type: "error",
     url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
-    viewSize: [256, 171],
     message:
       "Error in API props validation: StructError: At path: file -- Expected the value to satisfy a union of `object | object`, but received: [object Object]",
   },

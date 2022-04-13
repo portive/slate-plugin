@@ -44,13 +44,13 @@ export async function uploadHostedImage(
   setImage(id, {
     type: "loading",
     url,
-    viewSize,
     sentBytes: 0,
     totalBytes: file.size,
   })
   Transforms.insertNodes(editor, {
     type: "hosted-image",
     id,
+    size: viewSize,
     children: [{ text: "" }],
   })
   try {
@@ -63,15 +63,12 @@ export async function uploadHostedImage(
       },
     })
   } catch (e) {
-    //       setUpload(file, {
-    //         status: "error",
-    //         message: `Could not access the upload API.
-    // The most likely cause is that the API URL ${JSON.stringify(
-    //           editor.uploadOptions.url
-    //         )} is configured incorrectly.
-    // The error is:
-    // ${e}`,
-    //       })
+    setImage(id, {
+      type: "error",
+      url,
+      message: `Could not access the upload API. The error is: ${e}`,
+    })
+    console.error(e)
     return
   }
   await uploadFile({
@@ -82,16 +79,25 @@ export async function uploadHostedImage(
       setImage(id, {
         type: "loading",
         url,
-        viewSize,
         sentBytes: e.loaded,
         totalBytes: e.total,
       })
     },
   })
+  /**
+   * Set image as uploaded but continue to use the local image URL
+   */
+  setImage(id, {
+    type: "uploaded",
+    url,
+  })
   await getImageSize(policyResponse.data.data.fileUrl)
+  /**
+   * After `getImageSize` executes, we know that the uploaded file is now in
+   * the cache so we can swap the local file for the remote file.
+   */
   setImage(id, {
     type: "uploaded",
     url: policyResponse.data.data.fileUrl,
-    size: viewSize,
   })
 }

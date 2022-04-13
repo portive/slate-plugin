@@ -1,4 +1,4 @@
-import { Discriminate, DiscriminatedRenderElementProps } from "../types"
+import { DiscriminatedRenderElementProps } from "../types"
 import { useSlateStatic, useSelected, useFocused } from "slate-react"
 import { Entity } from "../types"
 import { ImageControls } from "./image-controls"
@@ -11,15 +11,15 @@ export function RenderHostedImage(
   if (entity == null) {
     return <div {...props.attributes}>Entry not found{props.children}</div>
   }
-  switch (entity.type) {
-    case "loading":
-    case "error":
-      return RenderProgressImage({ ...props, entity })
-    case "uploaded":
-      return RenderFinishedImage({ ...props, entity })
-    // case "error":
-    //   return RenderErrorImage({ ...props, entity })
-  }
+  return RenderProgressImage({ ...props, entity })
+  // switch (entity.type) {
+  //   case "loading":
+  //   case "error":
+  //   case "uploaded":
+  //     return RenderFinishedImage({ ...props, entity })
+  //   // case "error":
+  //   //   return RenderErrorImage({ ...props, entity })
+  // }
 }
 
 function useHighlightedStyle() {
@@ -30,79 +30,31 @@ function useHighlightedStyle() {
   return { boxShadow }
 }
 
-function RenderErrorImage({
-  entity,
-  ...props
-}: DiscriminatedRenderElementProps<"hosted-image"> & {
-  entity: Discriminate<Entity, { type: "error" }>
-}) {
-  const highlightedStyle = useHighlightedStyle()
-  return (
-    <div {...props.attributes}>
-      <img
-        contentEditable={false}
-        src={entity.url}
-        width={entity.size[0]}
-        height={entity.size[1]}
-        style={{
-          borderRadius: 12,
-          ...highlightedStyle,
-        }}
-      />
-      {props.children}
-    </div>
-  )
-}
-
-function RenderFinishedImage({
-  entity,
-  ...props
-}: DiscriminatedRenderElementProps<"hosted-image"> & {
-  entity: Discriminate<Entity, { type: "uploaded" }>
-}) {
-  const highlightedStyle = useHighlightedStyle()
-  return (
-    <div {...props.attributes}>
-      <img
-        contentEditable={false}
-        src={entity.url}
-        width={entity.size[0]}
-        height={entity.size[1]}
-        style={{
-          borderRadius: 12,
-          ...highlightedStyle,
-        }}
-      />
-      {props.children}
-    </div>
-  )
-}
-
 function RenderProgressImage({
   entity,
   element,
   attributes,
   children,
 }: DiscriminatedRenderElementProps<"hosted-image"> & {
-  entity: Discriminate<Entity, { type: "loading" | "error" }>
+  entity: Entity //Discriminate<Entity, { type: "loading" | "error" }>
 }) {
   const highlightedStyle = useHighlightedStyle()
   return (
     <div
       {...attributes}
       style={{
-        width: entity.viewSize[0],
-        height: entity.viewSize[1],
-        position: "relative",
+        width: element.size[0],
+        height: element.size[1],
         margin: "8px 0",
       }}
     >
       <ImageControls element={element}>
         <img
           src={entity.url}
-          width={entity.viewSize[0]}
-          height={entity.viewSize[1]}
-          style={{ borderRadius: 8, ...highlightedStyle }}
+          width={element.size[0]}
+          height={element.size[1]}
+          // style={{ borderRadius: 8, ...highlightedStyle }}
+          style={{ ...highlightedStyle }}
         />
       </ImageControls>
       {children}

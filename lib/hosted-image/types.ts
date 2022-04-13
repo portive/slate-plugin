@@ -16,6 +16,7 @@ type VoidChildren = [{ text: "" }]
 export type HostedImageElement = {
   type: "hosted-image"
   id: string
+  size: [number, number]
   children: VoidChildren
 }
 
@@ -32,7 +33,6 @@ export type Resize = {
 export type FileLoadingEntity = {
   type: "loading"
   url: string
-  viewSize: [number, number]
   sentBytes: number
   totalBytes: number
 }
@@ -40,13 +40,11 @@ export type FileLoadingEntity = {
 export type FileUploadedEntity = {
   type: "uploaded"
   url: string
-  size: [number, number]
 }
 
 export type FileErrorEntity = {
   type: "error"
   url: string
-  viewSize: [number, number]
   message: string
 }
 
