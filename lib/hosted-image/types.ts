@@ -19,8 +19,14 @@ export type FullHostedEditor = BaseEditor &
 
 type VoidChildren = [{ text: "" }]
 
-export type HostedImageElement = {
-  type: "hosted-image"
+// export type HostedImageElement = {
+//   type: "hosted-image"
+//   id: string
+//   size: [number, number]
+//   children: VoidChildren
+// }
+
+export interface HostedImageInterface {
   id: string
   size: [number, number]
   children: VoidChildren
@@ -36,23 +42,25 @@ export type Resize = {
  * Entity
  */
 
+type FileSharedEntity = {
+  url: string
+  maxSize: [number, number]
+}
+
 export type FileLoadingEntity = {
   type: "loading"
-  url: string
   sentBytes: number
   totalBytes: number
-}
+} & FileSharedEntity
 
 export type FileUploadedEntity = {
   type: "uploaded"
-  url: string
-}
+} & FileSharedEntity
 
 export type FileErrorEntity = {
   type: "error"
-  url: string
   message: string
-}
+} & FileSharedEntity
 
 export type Entity = FileLoadingEntity | FileUploadedEntity | FileErrorEntity
 
@@ -78,6 +86,10 @@ export type DiscriminatedRenderElementProps<T extends Element["type"]> =
     // Add `element` back after having discriminated it
     element: Discriminate<Element, { type: T }>
   }
+
+export type RenderElementPropsFor<T> = Omit<RenderElementProps, "element"> & {
+  element: T
+}
 
 export type UploadPolicy = {
   status: "success"

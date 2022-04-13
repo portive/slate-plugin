@@ -1,5 +1,5 @@
 import { useFocused, useSelected } from "slate-react"
-import { HostedImageElement } from "../types"
+import { HostedImageInterface } from "../types"
 import { ProgressBar } from "./progress-bar"
 import { RemoveIcon } from "./remove-icon"
 import { ErrorMessage } from "./error-message"
@@ -10,7 +10,7 @@ export function ImageControls({
   element,
   children: image,
 }: {
-  element: HostedImageElement
+  element: HostedImageInterface
   children: React.ReactNode
 }) {
   const { entity } = useHostedImage()

@@ -1,15 +1,13 @@
 import React, { useCallback } from "react"
 import { ReactEditor, useSlateStatic } from "slate-react"
-import { HostedImageElement } from "../types"
-import { getSizeFromUrl } from "./utils"
-import { Transforms } from "slate"
+import { HostedImageInterface } from "../types"
+import { Element, Transforms } from "slate"
 import { useHostedImage } from "./context"
 
-export function ResizeControls({ element }: { element: HostedImageElement }) {
+export function ResizeControls({ element }: { element: HostedImageInterface }) {
   const { entity, size, setSize } = useHostedImage()
   const editor = useSlateStatic()
-  const sizeFromUrl = getSizeFromUrl(entity.url)
-  if (sizeFromUrl[0] < editor.minResizeWidth) return null
+  if (entity.maxSize[0] < editor.minResizeWidth) return null
 
   let currentSize = size
 
@@ -18,7 +16,7 @@ export function ResizeControls({ element }: { element: HostedImageElement }) {
       const startX = e.clientX
       const startWidth = size[0]
       const minWidth = editor.minResizeWidth
-      const maxWidth = Math.min(sizeFromUrl[0], editor.maxResizeWidth)
+      const maxWidth = Math.min(entity.maxSize[0], editor.maxResizeWidth)
       /**
        * Handle resize dragging through an event handler on mouseMove on the
        * document.
@@ -39,7 +37,7 @@ export function ResizeControls({ element }: { element: HostedImageElement }) {
         /**
          * Calculate the inverseAspect (used to calculate height)
          */
-        const inverseAspect = sizeFromUrl[1] / sizeFromUrl[0]
+        const inverseAspect = entity.maxSize[1] / entity.maxSize[0]
 
         /**
          * Calculate height
@@ -65,7 +63,7 @@ export function ResizeControls({ element }: { element: HostedImageElement }) {
         // setMode({ type: "ready" })
         document.body.style.cursor = originalCursor
 
-        const at = ReactEditor.findPath(editor, element)
+        const at = ReactEditor.findPath(editor, element as Element)
 
         Transforms.setNodes(editor, { size: currentSize }, { at })
 

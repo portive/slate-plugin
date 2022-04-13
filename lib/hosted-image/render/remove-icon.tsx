@@ -1,8 +1,8 @@
 import { useCallback } from "react"
 import { ReactEditor, useSlateStatic } from "slate-react"
-import { HostedImageElement } from "../types"
+import { HostedImageInterface } from "../types"
 import { SVGProps } from "react"
-import { Transforms } from "slate"
+import { Element, Transforms } from "slate"
 
 const CircleX = (props: SVGProps<SVGSVGElement>) => (
   <svg
@@ -21,10 +21,10 @@ const CircleX = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 )
 
-export function RemoveIcon({ element }: { element: HostedImageElement }) {
+export function RemoveIcon({ element }: { element: HostedImageInterface }) {
   const editor = useSlateStatic()
   const onMouseDown = useCallback(() => {
-    const at = ReactEditor.findPath(editor, element)
+    const at = ReactEditor.findPath(editor, element as Element)
     Transforms.removeNodes(editor, { at })
   }, [editor])
   return (

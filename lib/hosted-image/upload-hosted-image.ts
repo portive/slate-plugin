@@ -44,6 +44,7 @@ export async function uploadHostedImage(
   setImage(id, {
     type: "loading",
     url,
+    maxSize: [originalWidth, originalHeight],
     sentBytes: 0,
     totalBytes: file.size,
   })
@@ -66,6 +67,7 @@ export async function uploadHostedImage(
     setImage(id, {
       type: "error",
       url,
+      maxSize: [originalWidth, originalHeight],
       message: `Could not access the upload API. The error is: ${e}`,
     })
     console.error(e)
@@ -79,6 +81,7 @@ export async function uploadHostedImage(
       setImage(id, {
         type: "loading",
         url,
+        maxSize: [originalWidth, originalHeight],
         sentBytes: e.loaded,
         totalBytes: e.total,
       })
@@ -90,6 +93,7 @@ export async function uploadHostedImage(
   setImage(id, {
     type: "uploaded",
     url,
+    maxSize: [originalWidth, originalHeight],
   })
   await getImageSize(policyResponse.data.data.fileUrl)
   /**
@@ -99,5 +103,6 @@ export async function uploadHostedImage(
   setImage(id, {
     type: "uploaded",
     url: policyResponse.data.data.fileUrl,
+    maxSize: [originalWidth, originalHeight],
   })
 }
