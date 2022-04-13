@@ -1,10 +1,9 @@
-import { useCallback, useState } from "react"
-import { useFocused, useSelected, useSlateStatic } from "slate-react"
+import { useSlateStatic } from "slate-react"
 import { HostedImageElement } from "../types"
 import { ProgressBar } from "./progress-bar"
 import { RemoveIcon } from "./remove-icon"
 import { ErrorMessage } from "./error-message"
-import { ResizeHandle } from "./resize-handle"
+import { ResizeControls } from "./resize-controls"
 
 export function ImageControls({
   element,
@@ -47,7 +46,7 @@ export function ImageControls({
       <ErrorMessage entity={entity} />
       {entity.type === "error" ? <RemoveIcon element={element} /> : null}
       {/* Resize Handle */}
-      <ResizeHandle />
+      <ResizeControls element={element} />
     </span>
   )
 }

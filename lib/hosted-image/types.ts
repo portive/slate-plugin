@@ -7,6 +7,7 @@ export type HostedEditor = {
   useStore: UseStore
   hostedImageLookup: Record<string, string>
   uploadHostedImage: (file: File) => string
+  minResizeWidth: number
 }
 
 export type FullHostedEditor = BaseEditor & ReactEditor & HostedEditor

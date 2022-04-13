@@ -9,9 +9,16 @@ export * from "./render"
 
 export function withHostedImage<T extends FullHostedEditor>(
   {
+    // images can only be resized as low as this value.
+    // If the source image is less than this number, it cannot be resized
+    minResizeWidth = 100,
     defaultResize,
     initialEntities,
-  }: { defaultResize: Resize; initialEntities: Record<string, Entity> },
+  }: {
+    minResizeWidth?: number
+    defaultResize: Resize
+    initialEntities: Record<string, Entity>
+  },
   editor: T
 ): T {
   const isVoid = editor.isVoid
@@ -19,6 +26,7 @@ export function withHostedImage<T extends FullHostedEditor>(
     if (element.type === "hosted-image") return true
     return isVoid(element)
   }
+  editor.minResizeWidth = minResizeWidth
   editor.useStore = createStore({ entities: initialEntities })
   editor.defaultResize = defaultResize
   editor.uploadHostedImage = (file: File) => {

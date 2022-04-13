@@ -2,6 +2,7 @@ import { DiscriminatedRenderElementProps } from "../types"
 import { useSlateStatic, useSelected, useFocused } from "slate-react"
 import { Entity } from "../types"
 import { ImageControls } from "./image-controls"
+
 export function RenderHostedImage(
   props: DiscriminatedRenderElementProps<"hosted-image">
 ) {
@@ -12,14 +13,6 @@ export function RenderHostedImage(
     return <div {...props.attributes}>Entry not found{props.children}</div>
   }
   return RenderProgressImage({ ...props, entity })
-  // switch (entity.type) {
-  //   case "loading":
-  //   case "error":
-  //   case "uploaded":
-  //     return RenderFinishedImage({ ...props, entity })
-  //   // case "error":
-  //   //   return RenderErrorImage({ ...props, entity })
-  // }
 }
 
 function useHighlightedStyle() {

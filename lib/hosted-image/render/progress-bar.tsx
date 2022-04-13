@@ -1,4 +1,4 @@
-import { Entity, HostedImageElement } from "../types"
+import { Entity } from "../types"
 
 export function ProgressBar({ entity }: { entity: Entity }) {
   if (entity.type !== "loading") {
