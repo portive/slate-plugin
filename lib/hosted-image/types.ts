@@ -9,6 +9,7 @@ export type HostedEditor = {
   hostedImageLookup: Record<string, string>
   uploadHostedImage: (file: File) => string
   minResizeWidth: number
+  maxResizeWidth: number
 }
 
 export type FullHostedEditor = BaseEditor &

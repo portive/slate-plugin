@@ -8,16 +8,18 @@ import {
 } from "slate-react"
 import React, { useCallback, useState } from "react"
 import {
-  RenderHostedImage,
+  HostedImage,
   HostedImageElement,
   withHostedImage,
   HostedEditor,
   Entity,
 } from "~/lib/hosted-image"
 import { HistoryEditor, withHistory } from "slate-history"
+import { DiscriminatedRenderElementProps } from "~/lib/hosted-image"
 
 type CustomText = { text: string }
 type ParagraphElement = { type: "paragraph"; children: CustomText[] }
+// type BlockImageElement = HostedImageElement<{ type: "hosted-image" }>
 type CustomElement = ParagraphElement | HostedImageElement
 
 declare module "slate" {
@@ -106,24 +108,20 @@ const initialEntities: Record<string, Entity> = {
 
 const handlePaste = (editor: Editor, e: React.ClipboardEvent): boolean => {
   const files = e.clipboardData.files
-  if (files.length > 0) {
-    for (const file of files) {
-      editor.uploadHostedImage(file)
-    }
-    return true
+  if (files.length === 0) return false
+  for (const file of files) {
+    editor.uploadHostedImage(file)
   }
-  return false
+  return true
 }
 
 const handleDrop = (editor: Editor, e: React.DragEvent): boolean => {
   const files = e.dataTransfer.files
-  if (files.length > 0) {
-    for (const file of files) {
-      editor.uploadHostedImage(file)
-    }
-    return true
+  if (files.length === 0) return false
+  for (const file of files) {
+    editor.uploadHostedImage(file)
   }
-  return false
+  return true
 }
 
 export default function Index() {
@@ -131,6 +129,8 @@ export default function Index() {
     withHostedImage(
       {
         defaultResize: { type: "inside", width: 320, height: 320 },
+        minResizeWidth: 100,
+        maxResizeWidth: 640,
         initialEntities,
       },
       withReact(withHistory(createEditor()))
@@ -183,10 +183,34 @@ function renderElement(props: RenderElementProps) {
   const element = props.element
   switch (element.type) {
     case "hosted-image":
-      return <RenderHostedImage {...props} element={element} />
+      return <BlockImage {...props} element={element} />
     case "paragraph":
       return <p {...props.attributes}>{props.children}</p>
     default:
       throw new Error("Unexpected type")
   }
+}
+
+// export function InlineImage({
+//   attributes,
+//   element,
+//   children,
+// }: DiscriminatedRenderElementProps<"inline-image">) {
+//   return ()
+// }
+
+export function BlockImage({
+  attributes,
+  element,
+  children,
+}: DiscriminatedRenderElementProps<"hosted-image">) {
+  return (
+    <div {...attributes} style={{ margin: "8px 0" }}>
+      <HostedImage
+        element={element}
+        style={{ borderRadius: element.size[0] < 100 ? 0 : 4 }}
+      />
+      {children}
+    </div>
+  )
 }

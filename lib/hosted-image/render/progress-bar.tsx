@@ -1,18 +1,18 @@
-import { Entity } from "../types"
+import { useHostedImage } from "./context"
 
 const BAR_HEIGHT = 16
 const MARGIN = 16
 
-export function ProgressBar({
-  entity,
-  size,
-}: {
-  entity: Entity
-  size: [number, number]
-}) {
+export function ProgressBar() {
+  const { entity, size } = useHostedImage()
   if (entity.type !== "loading") {
     return null
   }
+  /**
+   * Length of the bar is the amount of pixels the bar can move which is the
+   * width of the image less the margins and also less the height because the
+   * starting point for the rounded
+   */
   const barLength = size[0] - MARGIN * 2 - BAR_HEIGHT
   const progressWidth =
     (entity.sentBytes / entity.totalBytes) * barLength + BAR_HEIGHT

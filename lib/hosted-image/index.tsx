@@ -12,10 +12,12 @@ export function withHostedImage<T extends FullHostedEditor>(
     // images can only be resized as low as this value.
     // If the source image is less than this number, it cannot be resized
     minResizeWidth = 100,
+    maxResizeWidth = 1280,
     defaultResize,
     initialEntities,
   }: {
     minResizeWidth?: number
+    maxResizeWidth?: number
     defaultResize: Resize
     initialEntities: Record<string, Entity>
   },
@@ -27,6 +29,7 @@ export function withHostedImage<T extends FullHostedEditor>(
     return isVoid(element)
   }
   editor.minResizeWidth = minResizeWidth
+  editor.maxResizeWidth = maxResizeWidth
   editor.useStore = createStore({ entities: initialEntities })
   editor.defaultResize = defaultResize
   editor.uploadHostedImage = (file: File) => {

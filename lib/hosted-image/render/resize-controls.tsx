@@ -1,20 +1,13 @@
-import React, { Dispatch, SetStateAction, useCallback } from "react"
+import React, { useCallback } from "react"
 import { ReactEditor, useSlateStatic } from "slate-react"
 import { HostedImageElement } from "../types"
 import { getSizeFromUrl } from "./utils"
 import { Transforms } from "slate"
+import { useHostedImage } from "./context"
 
-export function ResizeControls({
-  element,
-  size,
-  setSize,
-}: {
-  element: HostedImageElement
-  size: [number, number]
-  setSize: Dispatch<SetStateAction<[number, number]>>
-}) {
+export function ResizeControls({ element }: { element: HostedImageElement }) {
+  const { entity, size, setSize } = useHostedImage()
   const editor = useSlateStatic()
-  const entity = editor.useStore().getEntity(element.id)
   const sizeFromUrl = getSizeFromUrl(entity.url)
   if (sizeFromUrl[0] < editor.minResizeWidth) return null
 
@@ -25,7 +18,7 @@ export function ResizeControls({
       const startX = e.clientX
       const startWidth = size[0]
       const minWidth = editor.minResizeWidth
-      const maxWidth = sizeFromUrl[0]
+      const maxWidth = Math.min(sizeFromUrl[0], editor.maxResizeWidth)
       /**
        * Handle resize dragging through an event handler on mouseMove on the
        * document.

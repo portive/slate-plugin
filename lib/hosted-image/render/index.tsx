@@ -1,8 +1,8 @@
 import { DiscriminatedRenderElementProps, HostedImageElement } from "../types"
 import { useSlateStatic, useSelected, useFocused } from "slate-react"
-import { Entity } from "../types"
 import { ImageControls } from "./image-controls"
 import { CSSProperties, useEffect, useState } from "react"
+import { HostedImageContext } from "./context"
 
 export function RenderHostedImage({
   attributes,
@@ -11,7 +11,7 @@ export function RenderHostedImage({
 }: DiscriminatedRenderElementProps<"hosted-image">) {
   return (
     <div {...attributes} style={{ margin: "8px 0" }}>
-      <RenderImage
+      <HostedImage
         element={element}
         style={{ borderRadius: element.size[0] < 100 ? 0 : 4 }}
       />
@@ -28,7 +28,7 @@ function useHighlightedStyle() {
   return { boxShadow }
 }
 
-function RenderImage({
+export function HostedImage({
   element,
   className,
   style,
@@ -45,14 +45,16 @@ function RenderImage({
   }, [element.size[0], element.size[1]])
   const highlightedStyle = useHighlightedStyle()
   return (
-    <ImageControls element={element} size={size} setSize={setSize}>
-      <img
-        src={entity.url}
-        width={size[0]}
-        height={size[1]}
-        className={className}
-        style={{ ...highlightedStyle, ...style }}
-      />
-    </ImageControls>
+    <HostedImageContext.Provider value={{ editor, entity, size, setSize }}>
+      <ImageControls element={element}>
+        <img
+          src={entity.url}
+          width={size[0]}
+          height={size[1]}
+          className={className}
+          style={{ ...highlightedStyle, ...style }}
+        />
+      </ImageControls>
+    </HostedImageContext.Provider>
   )
 }
