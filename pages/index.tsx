@@ -6,7 +6,7 @@ import {
   withReact,
   RenderElementProps,
 } from "slate-react"
-import React, { ClipboardEventHandler, useCallback, useState } from "react"
+import React, { useCallback, useState } from "react"
 import {
   RenderHostedImage,
   HostedImageElement,
@@ -14,6 +14,7 @@ import {
   HostedEditor,
   Entity,
 } from "~/lib/hosted-image"
+import { HistoryEditor, withHistory } from "slate-history"
 
 type CustomText = { text: string }
 type ParagraphElement = { type: "paragraph"; children: CustomText[] }
@@ -21,7 +22,7 @@ type CustomElement = ParagraphElement | HostedImageElement
 
 declare module "slate" {
   interface CustomTypes {
-    Editor: BaseEditor & ReactEditor & HostedEditor
+    Editor: BaseEditor & ReactEditor & HistoryEditor & HostedEditor
     Element: CustomElement
     Text: CustomText
   }
@@ -120,7 +121,7 @@ export default function Index() {
         defaultResize: { type: "inside", width: 320, height: 320 },
         initialEntities,
       },
-      withReact(createEditor())
+      withReact(withHistory(createEditor()))
     )
   )
 

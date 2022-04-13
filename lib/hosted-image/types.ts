@@ -1,5 +1,6 @@
 import { BaseEditor, Element } from "slate"
 import { ReactEditor, RenderElementProps } from "slate-react"
+import { HistoryEditor } from "slate-history"
 import { UseStore } from "./use-store"
 
 export type HostedEditor = {
@@ -10,7 +11,10 @@ export type HostedEditor = {
   minResizeWidth: number
 }
 
-export type FullHostedEditor = BaseEditor & ReactEditor & HostedEditor
+export type FullHostedEditor = BaseEditor &
+  ReactEditor &
+  HistoryEditor &
+  HostedEditor
 
 type VoidChildren = [{ text: "" }]
 

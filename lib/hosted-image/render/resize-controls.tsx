@@ -1,14 +1,21 @@
+import React, { useCallback } from "react"
 import { HostedImageElement } from "../types"
 
 export function ResizeControls({ element }: { element: HostedImageElement }) {
-  return <ResizeHandles />
+  const onMouseDown = useCallback(() => {}, [])
+  return <ResizeHandles onMouseDown={onMouseDown} />
 }
 
-function ResizeHandles() {
+function ResizeHandles({
+  onMouseDown,
+}: {
+  onMouseDown: React.MouseEventHandler
+}) {
   return (
     <>
       {/* Invisible Handle */}
       <div
+        onMouseDown={onMouseDown}
         style={{
           position: "absolute",
           cursor: "ew-resize",
