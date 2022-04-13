@@ -97,7 +97,7 @@ export function HostedImage({
           width={size[0]}
           height={size[1]}
           className={className}
-          style={{ ...highlightedStyle, ...style }}
+          style={{ ...highlightedStyle, ...style, display: "block" }}
         />
       </ImageControls>
     </HostedImageContext.Provider>

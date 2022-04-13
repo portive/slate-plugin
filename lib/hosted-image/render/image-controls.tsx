@@ -36,6 +36,8 @@ export function ImageControls({
          * This is usually an issue with 'img' but also affects this scenario.
          *
          * https://stackoverflow.com/questions/5804256/image-inside-div-has-extra-space-below-the-image
+         *
+         * Also, make sure that <img> on the inside is display: 'block'.
          */
         verticalAlign: "top",
         /**

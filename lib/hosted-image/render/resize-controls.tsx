@@ -1,4 +1,4 @@
-import React, { useCallback } from "react"
+import React, { useCallback, useState } from "react"
 import { ReactEditor, useSlateStatic } from "slate-react"
 import { HostedImageInterface } from "../types"
 import { Element, Transforms } from "slate"
@@ -7,12 +7,15 @@ import { useHostedImage } from "./context"
 export function ResizeControls({ element }: { element: HostedImageInterface }) {
   const { entity, size, setSize } = useHostedImage()
   const editor = useSlateStatic()
+  const [isResizing, setIsResizing] = useState(false)
+
   if (entity.maxSize[0] < editor.minResizeWidth) return null
 
   let currentSize = size
 
   const onMouseDown = useCallback(
     (e: React.MouseEvent) => {
+      setIsResizing(true)
       const startX = e.clientX
       const startWidth = size[0]
       const minWidth = editor.minResizeWidth
@@ -58,6 +61,7 @@ export function ResizeControls({ element }: { element: HostedImageInterface }) {
        * When the user releases the mouse, remove all the event handlers
        */
       function onDocumentMouseUp() {
+        setIsResizing(false)
         document.removeEventListener("mousemove", onDocumentMouseMove)
         document.removeEventListener("mouseup", onDocumentMouseUp)
         // setMode({ type: "ready" })
@@ -93,7 +97,38 @@ export function ResizeControls({ element }: { element: HostedImageInterface }) {
     },
     [editor, size[0], size[1]]
   )
-  return <ResizeHandles onMouseDown={onMouseDown} />
+  return (
+    <>
+      {isResizing ? <SizeLabel size={size} /> : null}
+      <ResizeHandles onMouseDown={onMouseDown} />
+    </>
+  )
+}
+
+function SizeLabel({ size }: { size: [number, number] }) {
+  const isBelow = size[0] < 100 || size[1] < 100
+  const bottom = isBelow ? -24 : 4
+  return (
+    <div
+      style={{
+        position: "absolute",
+        bottom,
+        left: 4,
+        font: "10px/20px sans-serif",
+        color: "white",
+        background: "#404040",
+        minWidth: 50,
+        padding: "0 7px",
+        borderRadius: 3,
+        textAlign: "center",
+        boxShadow: "0px 0px 2px 1px rgba(255, 255, 255, 0.5)",
+        zIndex: 100,
+        transition: "bottom 250ms",
+      }}
+    >
+      {size[0]} &times; {size[1]}
+    </div>
+  )
 }
 
 function ResizeHandles({
