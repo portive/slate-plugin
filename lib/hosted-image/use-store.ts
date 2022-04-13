@@ -10,7 +10,7 @@ export const createStore = (
 ) => {
   return create<EntityState>((set, get) => ({
     entities,
-    setImage(id: string, entity: Entity): void {
+    setEntity(id: string, entity: Entity): void {
       set((state: EntityState) => ({
         entities: {
           ...state.entities,

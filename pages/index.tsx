@@ -1,4 +1,4 @@
-import { createEditor, BaseEditor, Descendant, Editor, Transforms } from "slate"
+import { createEditor, BaseEditor, Descendant, Editor } from "slate"
 import {
   Slate,
   Editable,
@@ -18,9 +18,13 @@ import { HistoryEditor, withHistory } from "slate-history"
 import { DiscriminatedRenderElementProps } from "~/lib/hosted-image"
 
 type CustomText = { text: string }
-type ParagraphElement = { type: "paragraph"; children: CustomText[] }
+type ParagraphElement = {
+  type: "paragraph"
+  children: (CustomText | InlineImageElement)[]
+}
 type BlockImageElement = { type: "block-image" } & HostedImageInterface
-type CustomElement = ParagraphElement | BlockImageElement
+type InlineImageElement = { type: "inline-image" } & HostedImageInterface
+type CustomElement = ParagraphElement | BlockImageElement | InlineImageElement
 
 declare module "slate" {
   interface CustomTypes {
@@ -32,6 +36,19 @@ declare module "slate" {
 
 const initialValue: Descendant[] = [
   { type: "paragraph", children: [{ text: "Small image can't be resized" }] },
+  {
+    type: "paragraph",
+    children: [
+      { text: "Image is inline " },
+      {
+        type: "inline-image",
+        id: "RGVIrl9C5y2i5n95T7lAR",
+        size: [16, 16],
+        children: [{ text: "" }],
+      },
+      { text: " in the middle of text" },
+    ],
+  },
   {
     type: "block-image",
     id: "RGVIrl9C5y2i5n95T7lAR",
@@ -125,7 +142,7 @@ const initialEntities: Record<string, Entity> = {
   },
 }
 
-const handlePaste = (editor: Editor, e: React.ClipboardEvent): boolean => {
+const handlePasteImage = (editor: Editor, e: React.ClipboardEvent): boolean => {
   const files = e.clipboardData.files
   if (files.length === 0) return false
   for (const file of files) {
@@ -134,7 +151,7 @@ const handlePaste = (editor: Editor, e: React.ClipboardEvent): boolean => {
   return true
 }
 
-const handleDrop = (editor: Editor, e: React.DragEvent): boolean => {
+const handleDropImage = (editor: Editor, e: React.DragEvent): boolean => {
   const files = e.dataTransfer.files
   if (files.length === 0) return false
   for (const file of files) {
@@ -144,8 +161,8 @@ const handleDrop = (editor: Editor, e: React.DragEvent): boolean => {
 }
 
 export default function Index() {
-  const [editor] = useState<Editor>(() =>
-    withHostedImage(
+  const [editor] = useState<Editor>(() => {
+    const editor = withHostedImage(
       {
         defaultResize: { type: "inside", width: 320, height: 320 },
         minResizeWidth: 100,
@@ -154,7 +171,14 @@ export default function Index() {
       },
       withReact(withHistory(createEditor()))
     )
-  )
+    editor.isVoid = (element) => {
+      return element.type === "block-image" || element.type === "inline-image"
+    }
+    editor.isInline = (element) => {
+      return element.type === "inline-image"
+    }
+    return editor
+  })
 
   const onChangeFile = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
     (e) => {
@@ -169,14 +193,14 @@ export default function Index() {
 
   const onPaste = useCallback(
     (e: React.ClipboardEvent) => {
-      handlePaste(editor, e)
+      handlePasteImage(editor, e)
     },
     [editor]
   )
 
   const onDrop = useCallback(
     (e: React.DragEvent) => {
-      handleDrop(editor, e)
+      handleDropImage(editor, e)
     },
     [editor]
   )
@@ -203,6 +227,8 @@ function renderElement(props: RenderElementProps) {
   switch (element.type) {
     case "block-image":
       return <BlockImage {...props} element={element} />
+    case "inline-image":
+      return <InlineImage {...props} element={element} />
     case "paragraph":
       return <p {...props.attributes}>{props.children}</p>
     default:
@@ -223,5 +249,21 @@ export function BlockImage({
       />
       {children}
     </div>
+  )
+}
+
+export function InlineImage({
+  attributes,
+  element,
+  children,
+}: DiscriminatedRenderElementProps<"inline-image">) {
+  return (
+    <span {...attributes} style={{ margin: "8px 0" }}>
+      <HostedImage
+        element={element}
+        style={{ borderRadius: element.size[0] < 100 ? 0 : 4 }}
+      />
+      {children}
+    </span>
   )
 }

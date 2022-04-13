@@ -1,5 +1,4 @@
 import { nanoid } from "nanoid"
-import { Element } from "slate"
 import { createStore } from "./use-store"
 import { Entity, FullHostedEditor, Resize } from "./types"
 import { uploadHostedImage } from "./upload-hosted-image"
@@ -23,11 +22,6 @@ export function withHostedImage<T extends FullHostedEditor>(
   },
   editor: T
 ): T {
-  const isVoid = editor.isVoid
-  editor.isVoid = (element: Element): boolean => {
-    if (element.type === "block-image") return true
-    return isVoid(element)
-  }
   editor.minResizeWidth = minResizeWidth
   editor.maxResizeWidth = maxResizeWidth
   editor.useStore = createStore({ entities: initialEntities })

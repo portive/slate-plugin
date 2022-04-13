@@ -23,7 +23,7 @@ export async function uploadHostedImage(
   file: File
 ) {
   let policyResponse: AxiosResponse<UploadPolicy>
-  const { setImage } = editor.useStore.getState()
+  const { setEntity } = editor.useStore.getState()
 
   /**
    * Create temporary Image URL
@@ -41,7 +41,7 @@ export async function uploadHostedImage(
     editor.defaultResize.height
   )
 
-  setImage(id, {
+  setEntity(id, {
     type: "loading",
     url,
     maxSize: [originalWidth, originalHeight],
@@ -64,7 +64,7 @@ export async function uploadHostedImage(
       },
     })
   } catch (e) {
-    setImage(id, {
+    setEntity(id, {
       type: "error",
       url,
       maxSize: [originalWidth, originalHeight],
@@ -78,7 +78,7 @@ export async function uploadHostedImage(
     uploadUrl: policyResponse.data.data.apiUrl,
     formFields: policyResponse.data.data.formFields,
     onProgress(e) {
-      setImage(id, {
+      setEntity(id, {
         type: "loading",
         url,
         maxSize: [originalWidth, originalHeight],
@@ -90,7 +90,7 @@ export async function uploadHostedImage(
   /**
    * Set image as uploaded but continue to use the local image URL
    */
-  setImage(id, {
+  setEntity(id, {
     type: "uploaded",
     url,
     maxSize: [originalWidth, originalHeight],
@@ -100,7 +100,7 @@ export async function uploadHostedImage(
    * After `getImageSize` executes, we know that the uploaded file is now in
    * the cache so we can swap the local file for the remote file.
    */
-  setImage(id, {
+  setEntity(id, {
     type: "uploaded",
     url: policyResponse.data.data.fileUrl,
     maxSize: [originalWidth, originalHeight],
