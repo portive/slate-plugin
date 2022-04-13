@@ -5,6 +5,7 @@ import { uploadHostedImage } from "./upload-hosted-image"
 export * from "./types"
 export * from "./use-store"
 export * from "./render"
+export * from "./handlers"
 
 export function withHostedImage<T extends FullHostedEditor>(
   {

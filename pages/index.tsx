@@ -10,6 +10,8 @@ import React, { useCallback, useState } from "react"
 import {
   HostedImage,
   HostedImageInterface,
+  handlePasteImage,
+  handleDropImage,
   withHostedImage,
   HostedEditor,
   Entity,
@@ -142,24 +144,6 @@ const initialEntities: Record<string, Entity> = {
   },
 }
 
-const handlePasteImage = (editor: Editor, e: React.ClipboardEvent): boolean => {
-  const files = e.clipboardData.files
-  if (files.length === 0) return false
-  for (const file of files) {
-    editor.uploadHostedImage(file)
-  }
-  return true
-}
-
-const handleDropImage = (editor: Editor, e: React.DragEvent): boolean => {
-  const files = e.dataTransfer.files
-  if (files.length === 0) return false
-  for (const file of files) {
-    editor.uploadHostedImage(file)
-  }
-  return true
-}
-
 export default function Index() {
   const [editor] = useState<Editor>(() => {
     const editor = withHostedImage(
@@ -258,7 +242,7 @@ export function InlineImage({
   children,
 }: DiscriminatedRenderElementProps<"inline-image">) {
   return (
-    <span {...attributes} style={{ margin: "8px 0" }}>
+    <span {...attributes}>
       <HostedImage
         element={element}
         style={{ borderRadius: element.size[0] < 100 ? 0 : 4 }}
