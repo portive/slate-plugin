@@ -25,7 +25,7 @@ export function withHostedImage<T extends FullHostedEditor>(
 ): T {
   const isVoid = editor.isVoid
   editor.isVoid = (element: Element): boolean => {
-    if (element.type === "hosted-image") return true
+    if (element.type === "block-image") return true
     return isVoid(element)
   }
   editor.minResizeWidth = minResizeWidth

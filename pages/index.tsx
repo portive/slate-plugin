@@ -19,7 +19,7 @@ import { DiscriminatedRenderElementProps } from "~/lib/hosted-image"
 
 type CustomText = { text: string }
 type ParagraphElement = { type: "paragraph"; children: CustomText[] }
-type BlockImageElement = { type: "hosted-image" } & HostedImageInterface
+type BlockImageElement = { type: "block-image" } & HostedImageInterface
 type CustomElement = ParagraphElement | BlockImageElement
 
 declare module "slate" {
@@ -33,26 +33,26 @@ declare module "slate" {
 const initialValue: Descendant[] = [
   { type: "paragraph", children: [{ text: "Small image can't be resized" }] },
   {
-    type: "hosted-image",
+    type: "block-image",
     id: "RGVIrl9C5y2i5n95T7lAR",
     size: [16, 16],
     children: [{ text: "" }],
   },
   { type: "paragraph", children: [{ text: "In progress uploads" }] },
   {
-    type: "hosted-image",
+    type: "block-image",
     id: "fviZDsq2zVZ3PIe3vgVU9",
     size: [256, 171],
     children: [{ text: "" }],
   },
   {
-    type: "hosted-image",
+    type: "block-image",
     id: "AtDtcNNMXEl3PNmkZbVmN",
     size: [256, 171],
     children: [{ text: "" }],
   },
   {
-    type: "hosted-image",
+    type: "block-image",
     id: "CUSLBfyRv4nxZTr9CmBBW",
     size: [256, 171],
     children: [{ text: "" }],
@@ -62,21 +62,21 @@ const initialValue: Descendant[] = [
     children: [{ text: "Completed upload in document value" }],
   },
   {
-    type: "hosted-image",
+    type: "block-image",
     id: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
     size: [256, 171],
     children: [{ text: "" }],
   },
   { type: "paragraph", children: [{ text: "Completed upload in Store" }] },
   {
-    type: "hosted-image",
+    type: "block-image",
     id: "RwQIK7memACjhro80uwPN",
     size: [256, 171],
     children: [{ text: "" }],
   },
   { type: "paragraph", children: [{ text: "Failed upload" }] },
   {
-    type: "hosted-image",
+    type: "block-image",
     id: "KVFjpuYRvXDu0PuWIEsEP",
     size: [256, 171],
     children: [{ text: "" }],
@@ -201,7 +201,7 @@ export default function Index() {
 function renderElement(props: RenderElementProps) {
   const element = props.element
   switch (element.type) {
-    case "hosted-image":
+    case "block-image":
       return <BlockImage {...props} element={element} />
     case "paragraph":
       return <p {...props.attributes}>{props.children}</p>
@@ -214,7 +214,7 @@ export function BlockImage({
   attributes,
   element,
   children,
-}: DiscriminatedRenderElementProps<"hosted-image">) {
+}: DiscriminatedRenderElementProps<"block-image">) {
   return (
     <div {...attributes} style={{ margin: "8px 0" }}>
       <HostedImage

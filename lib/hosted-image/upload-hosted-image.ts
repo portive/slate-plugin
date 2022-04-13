@@ -49,7 +49,7 @@ export async function uploadHostedImage(
     totalBytes: file.size,
   })
   Transforms.insertNodes(editor, {
-    type: "hosted-image",
+    type: "block-image",
     id,
     size: viewSize,
     children: [{ text: "" }],
