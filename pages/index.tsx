@@ -44,6 +44,11 @@ const initialValue: Descendant[] = [
     id: "RwQIK7memACjhro80uwPN",
     children: [{ text: "" }],
   },
+  {
+    type: "hosted-image",
+    id: "KVFjpuYRvXDu0PuWIEsEP",
+    children: [{ text: "" }],
+  },
   { type: "paragraph", children: [{ text: "End of World" }] },
 ]
 
@@ -66,6 +71,13 @@ const initialEntities: Record<string, Entity> = {
     type: "uploaded",
     url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
     size: [256, 171],
+  },
+  KVFjpuYRvXDu0PuWIEsEP: {
+    type: "error",
+    url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
+    viewSize: [256, 171],
+    message:
+      "Error in API props validation: StructError: At path: file -- Expected the value to satisfy a union of `object | object`, but received: [object Object]",
   },
 }
 

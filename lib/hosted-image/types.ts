@@ -26,6 +26,38 @@ export type Resize = {
 }
 
 /**
+ * Entity
+ */
+
+export type FileLoadingEntity = {
+  type: "loading"
+  url: string
+  viewSize: [number, number]
+  sentBytes: number
+  totalBytes: number
+}
+
+export type FileUploadedEntity = {
+  type: "uploaded"
+  url: string
+  size: [number, number]
+}
+
+export type FileErrorEntity = {
+  type: "error"
+  url: string
+  viewSize: [number, number]
+  message: string
+}
+
+export type Entity = FileLoadingEntity | FileUploadedEntity | FileErrorEntity
+
+export type EntityState = {
+  entities: Record<string, Entity>
+  setImage: (id: string, entity: Entity) => void
+}
+
+/**
  * Take one type and narrows it using a second type, usually on a type field
  * like:
  *

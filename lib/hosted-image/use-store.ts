@@ -1,25 +1,5 @@
 import create from "zustand"
-
-type FileLoadingEntity = {
-  type: "loading"
-  url: string
-  viewSize: [number, number]
-  sentBytes: number
-  totalBytes: number
-}
-
-type FileUploadedEntity = {
-  type: "uploaded"
-  url: string
-  size: [number, number]
-}
-
-export type Entity = FileLoadingEntity | FileUploadedEntity
-
-type EntityState = {
-  entities: Record<string, Entity>
-  setImage: (id: string, entity: Entity) => void
-}
+import { Entity, EntityState } from "./types"
 
 export const createStore = (
   {
