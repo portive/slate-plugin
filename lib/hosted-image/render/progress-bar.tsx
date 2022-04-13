@@ -1,19 +1,30 @@
 import { Entity } from "../types"
 
-export function ProgressBar({ entity }: { entity: Entity }) {
+const BAR_HEIGHT = 16
+const MARGIN = 16
+
+export function ProgressBar({
+  entity,
+  size,
+}: {
+  entity: Entity
+  size: [number, number]
+}) {
   if (entity.type !== "loading") {
     return null
   }
-  const percent = (entity.sentBytes * 100) / entity.totalBytes
-  console.log({ percent })
+  const barLength = size[0] - MARGIN * 2 - BAR_HEIGHT
+  const progressWidth =
+    (entity.sentBytes / entity.totalBytes) * barLength + BAR_HEIGHT
+
   return (
     <div
       style={{
         position: "absolute",
         top: "50%",
         marginTop: -6,
-        left: 16,
-        right: 16,
+        left: MARGIN,
+        right: MARGIN,
         background: "white",
         borderRadius: 12,
         boxShadow: "0 0 3px 0px rgba(0,0,0,1)",
@@ -22,9 +33,9 @@ export function ProgressBar({ entity }: { entity: Entity }) {
       <div
         style={{
           background: "DodgerBlue",
-          width: `${percent}%`,
+          width: progressWidth,
           transition: "width 0.1s",
-          height: 16,
+          height: BAR_HEIGHT,
           borderRadius: 12,
         }}
       ></div>

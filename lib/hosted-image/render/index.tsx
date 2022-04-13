@@ -1,18 +1,23 @@
-import { DiscriminatedRenderElementProps } from "../types"
+import { DiscriminatedRenderElementProps, HostedImageElement } from "../types"
 import { useSlateStatic, useSelected, useFocused } from "slate-react"
 import { Entity } from "../types"
 import { ImageControls } from "./image-controls"
+import { CSSProperties, useEffect, useState } from "react"
 
-export function RenderHostedImage(
-  props: DiscriminatedRenderElementProps<"hosted-image">
-) {
-  const editor = useSlateStatic()
-  const { element } = props
-  const entity = editor.useStore((state) => state.entities[element.id])
-  if (entity == null) {
-    return <div {...props.attributes}>Entry not found{props.children}</div>
-  }
-  return RenderProgressImage({ ...props, entity })
+export function RenderHostedImage({
+  attributes,
+  element,
+  children,
+}: DiscriminatedRenderElementProps<"hosted-image">) {
+  return (
+    <div {...attributes} style={{ margin: "8px 0" }}>
+      <RenderImage
+        element={element}
+        style={{ borderRadius: element.size[0] < 100 ? 0 : 4 }}
+      />
+      {children}
+    </div>
+  )
 }
 
 function useHighlightedStyle() {
@@ -23,34 +28,31 @@ function useHighlightedStyle() {
   return { boxShadow }
 }
 
-function RenderProgressImage({
-  entity,
+function RenderImage({
   element,
-  attributes,
-  children,
-}: DiscriminatedRenderElementProps<"hosted-image"> & {
-  entity: Entity //Discriminate<Entity, { type: "loading" | "error" }>
+  className,
+  style,
+}: {
+  element: HostedImageElement
+  className?: string
+  style?: CSSProperties
 }) {
+  const editor = useSlateStatic()
+  const entity = editor.useStore((state) => state.entities[element.id])
+  const [size, setSize] = useState(element.size)
+  useEffect(() => {
+    setSize(element.size)
+  }, [element.size[0], element.size[1]])
   const highlightedStyle = useHighlightedStyle()
   return (
-    <div
-      {...attributes}
-      style={{
-        width: element.size[0],
-        height: element.size[1],
-        margin: "8px 0",
-      }}
-    >
-      <ImageControls element={element}>
-        <img
-          src={entity.url}
-          width={element.size[0]}
-          height={element.size[1]}
-          // style={{ borderRadius: 8, ...highlightedStyle }}
-          style={{ ...highlightedStyle }}
-        />
-      </ImageControls>
-      {children}
-    </div>
+    <ImageControls element={element} size={size} setSize={setSize}>
+      <img
+        src={entity.url}
+        width={size[0]}
+        height={size[1]}
+        className={className}
+        style={{ ...highlightedStyle, ...style }}
+      />
+    </ImageControls>
   )
 }

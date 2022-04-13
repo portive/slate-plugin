@@ -58,6 +58,7 @@ export type Entity = FileLoadingEntity | FileUploadedEntity | FileErrorEntity
 export type EntityState = {
   entities: Record<string, Entity>
   setImage: (id: string, entity: Entity) => void
+  getEntity: (id: string) => Entity
 }
 
 /**

@@ -38,6 +38,12 @@ const initialValue: Descendant[] = [
   },
   {
     type: "hosted-image",
+    id: "fviZDsq2zVZ3PIe3vgVU9",
+    size: [256, 171],
+    children: [{ text: "" }],
+  },
+  {
+    type: "hosted-image",
     id: "AtDtcNNMXEl3PNmkZbVmN",
     size: [256, 171],
     children: [{ text: "" }],
@@ -66,7 +72,13 @@ const initialValue: Descendant[] = [
 const initialEntities: Record<string, Entity> = {
   RGVIrl9C5y2i5n95T7lAR: {
     type: "uploaded",
-    url: "https://via.placeholder.com/16.png/06c/fff?text=+",
+    url: "https://files.wysimark.com/f/demo/2022/4/13/bu371qgo8qvrxrsknqfv9--44x44.png",
+  },
+  fviZDsq2zVZ3PIe3vgVU9: {
+    type: "loading",
+    url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
+    sentBytes: 1000,
+    totalBytes: 100000,
   },
   AtDtcNNMXEl3PNmkZbVmN: {
     type: "loading",

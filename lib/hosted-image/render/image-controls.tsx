@@ -1,19 +1,28 @@
-import { useSlateStatic } from "slate-react"
+import { useFocused, useSelected, useSlateStatic } from "slate-react"
 import { HostedImageElement } from "../types"
 import { ProgressBar } from "./progress-bar"
 import { RemoveIcon } from "./remove-icon"
 import { ErrorMessage } from "./error-message"
 import { ResizeControls } from "./resize-controls"
+import { Dispatch, SetStateAction, useCallback, useState } from "react"
 
 export function ImageControls({
   element,
   children: image,
+  size,
+  setSize,
 }: {
   element: HostedImageElement
   children: React.ReactNode
+  size: [number, number]
+  setSize: Dispatch<SetStateAction<[number, number]>>
 }) {
   const editor = useSlateStatic()
   const entity = editor.useStore((state) => state.entities[element.id])
+
+  const focused = useFocused()
+  const selected = useSelected()
+  const showResizeControls = focused && selected
 
   return (
     <span
@@ -42,11 +51,12 @@ export function ImageControls({
       }}
     >
       {image}
-      <ProgressBar entity={entity} />
+      <ProgressBar entity={entity} size={size} />
       <ErrorMessage entity={entity} />
       {entity.type === "error" ? <RemoveIcon element={element} /> : null}
-      {/* Resize Handle */}
-      <ResizeControls element={element} />
+      {showResizeControls ? (
+        <ResizeControls element={element} size={size} setSize={setSize} />
+      ) : null}
     </span>
   )
 }

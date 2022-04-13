@@ -8,15 +8,22 @@ export const createStore = (
     entities: Record<string, Entity>
   } = { entities: {} }
 ) => {
-  return create<EntityState>((set) => ({
+  return create<EntityState>((set, get) => ({
     entities,
-    setImage(id: string, entity: Entity) {
+    setImage(id: string, entity: Entity): void {
       set((state: EntityState) => ({
         entities: {
           ...state.entities,
           [id]: entity,
         },
       }))
+    },
+    getEntity(id: string): Entity {
+      const entity = get().entities[id]
+      if (entity === undefined) {
+        throw new Error(`Expected entity with id "${id}" but could not find it`)
+      }
+      return entity
     },
   }))
 }
