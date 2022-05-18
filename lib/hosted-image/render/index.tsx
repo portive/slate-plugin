@@ -68,7 +68,9 @@ export function HostedImage({
   style?: CSSProperties
 }) {
   const editor = useSlateStatic()
-  const entityFromStore = editor.useStore((state) => state.entities[element.id])
+  const entityFromStore = editor.hostedUpload.useStore(
+    (state) => state.entities[element.id]
+  )
   const [size, setSize] = useState(element.size)
 
   useEffect(() => {

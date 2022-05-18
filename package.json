@@ -22,9 +22,11 @@
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
     "tsconfig-paths": "^3.14.1",
+    "type-fest": "^2.12.2",
     "typescript": "^4.6.3"
   },
   "dependencies": {
+    "@portive/api-types": "^3.0.2",
     "axios": "^0.26.1",
     "dotenv": "16.x",
     "nanoid": "^3.3.2",

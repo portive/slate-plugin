@@ -9,7 +9,7 @@ export function ResizeControls({ element }: { element: HostedImageInterface }) {
   const editor = useSlateStatic()
   const [isResizing, setIsResizing] = useState(false)
 
-  if (entity.maxSize[0] < editor.minResizeWidth) return null
+  if (entity.maxSize[0] < editor.hostedUpload.minResizeWidth) return null
 
   let currentSize = size
 
@@ -18,8 +18,11 @@ export function ResizeControls({ element }: { element: HostedImageInterface }) {
       setIsResizing(true)
       const startX = e.clientX
       const startWidth = size[0]
-      const minWidth = editor.minResizeWidth
-      const maxWidth = Math.min(entity.maxSize[0], editor.maxResizeWidth)
+      const minWidth = editor.hostedUpload.minResizeWidth
+      const maxWidth = Math.min(
+        entity.maxSize[0],
+        editor.hostedUpload.maxResizeWidth
+      )
       /**
        * Handle resize dragging through an event handler on mouseMove on the
        * document.
@@ -99,13 +102,13 @@ export function ResizeControls({ element }: { element: HostedImageInterface }) {
   )
   return (
     <>
-      {isResizing ? <SizeLabel size={size} /> : null}
+      {isResizing ? <ResizeLabel size={size} /> : null}
       <ResizeHandles onMouseDown={onMouseDown} />
     </>
   )
 }
 
-function SizeLabel({ size }: { size: [number, number] }) {
+function ResizeLabel({ size }: { size: [number, number] }) {
   const isBelow = size[0] < 100 || size[1] < 100
   const bottom = isBelow ? -24 : 4
   return (

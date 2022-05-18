@@ -2,10 +2,10 @@ import { Transforms } from "slate"
 import axios, { AxiosResponse } from "axios"
 import { uploadFile } from "./upload-file"
 import { FullHostedEditor } from "./types"
-import { UploadPolicy } from "./types"
 import { resizeInside } from "./resize-inside"
+import { UploadFileResponse, UploadProps } from "@portive/api-types"
 
-const POLICY_URL = "http://localhost:3001/api/v1/upload/demo"
+const POLICY_URL = "http://localhost:3001/api/v1/upload"
 
 async function getImageSize(url: string): Promise<[number, number]> {
   return new Promise((resolve) => {
@@ -22,8 +22,9 @@ export async function uploadHostedImage(
   id: string,
   file: File
 ) {
-  let policyResponse: AxiosResponse<UploadPolicy>
-  const { setEntity } = editor.useStore.getState()
+  const upload = editor.hostedUpload
+  let axiosResponse: AxiosResponse<UploadFileResponse>
+  const { setEntity } = upload.useStore.getState()
 
   /**
    * Create temporary Image URL
@@ -37,8 +38,8 @@ export async function uploadHostedImage(
   const viewSize = resizeInside(
     originalWidth,
     originalHeight,
-    editor.defaultResize.width,
-    editor.defaultResize.height
+    upload.defaultResize.width,
+    upload.defaultResize.height
   )
 
   setEntity(id, {
@@ -55,14 +56,22 @@ export async function uploadHostedImage(
     children: [{ text: "" }],
   })
   try {
-    policyResponse = await axios.post(POLICY_URL, {
-      type: "demo",
+    const authTokenAsString =
+      typeof upload.authToken === "function"
+        ? await upload.authToken()
+        : upload.authToken
+    const uploadProps: UploadProps & { authToken: string } = {
+      authToken: authTokenAsString,
+      recordKey: "demo",
       file: {
-        type: "generic",
+        type: "image",
         filename: file.name,
+        contentType: file.type,
         bytes: file.size,
+        size: [originalWidth, originalHeight],
       },
-    })
+    }
+    axiosResponse = await axios.post(POLICY_URL, uploadProps)
   } catch (e) {
     setEntity(id, {
       type: "error",
@@ -73,10 +82,39 @@ export async function uploadHostedImage(
     console.error(e)
     return
   }
+
+  const policyResponse = axiosResponse.data
+
+  if (policyResponse.status === "error") {
+    const message = `Error getting upload Policy. The error is: ${policyResponse.message}`
+    setEntity(id, {
+      type: "error",
+      url,
+      maxSize: [originalWidth, originalHeight],
+      message,
+    })
+    console.error(message)
+    return
+  }
+
+  if (policyResponse.status === "fail") {
+    const message = `Failed getting upload Policy. The error is: ${policyResponse.data.faults.join(
+      ". "
+    )}`
+    setEntity(id, {
+      type: "error",
+      url,
+      maxSize: [originalWidth, originalHeight],
+      message,
+    })
+    console.error(message)
+    return
+  }
+
   await uploadFile({
     file,
-    uploadUrl: policyResponse.data.data.apiUrl,
-    formFields: policyResponse.data.data.formFields,
+    uploadUrl: policyResponse.data.apiUrl,
+    formFields: policyResponse.data.formFields,
     onProgress(e) {
       setEntity(id, {
         type: "loading",
@@ -95,14 +133,14 @@ export async function uploadHostedImage(
     url,
     maxSize: [originalWidth, originalHeight],
   })
-  await getImageSize(policyResponse.data.data.fileUrl)
+  await getImageSize(policyResponse.data.fileUrl)
   /**
    * After `getImageSize` executes, we know that the uploaded file is now in
    * the cache so we can swap the local file for the remote file.
    */
   setEntity(id, {
     type: "uploaded",
-    url: policyResponse.data.data.fileUrl,
+    url: policyResponse.data.fileUrl,
     maxSize: [originalWidth, originalHeight],
   })
 }

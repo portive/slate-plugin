@@ -637,6 +637,14 @@
   resolved "https://registry.yarnpkg.com/@opentelemetry/context-base/-/context-base-0.14.0.tgz#c67fc20a4d891447ca1a855d7d70fa79a3533001"
   integrity sha512-sDOAZcYwynHFTbLo6n8kIbLiVF3a3BLkrmehJUyEbT9F+Smbi47kLGS2gG2g0fjBLR/Lr1InPD7kXL7FaTqEkw==
 
+"@portive/api-types@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@portive/api-types/-/api-types-3.0.2.tgz#fd2d26e4bff435481493a75f6dbad3030f98b424"
+  integrity sha512-x0K4ZF5FYXNOBFeqbDV/tT4zdiwN5ZndyWNHPa5QeyAn1n3M3/UKyhAyg2sDkJC0XSb29g71XLE7eR6We/A4KQ==
+  dependencies:
+    "@thesunny/assert-type" "^0.1.7"
+    superstruct "^0.15.4"
+
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.3.tgz#3802ddd21a50a949b6721ddd72da36e67e7f1b2d"
@@ -650,6 +658,13 @@
   integrity sha512-OAPJUAtgeINhh/TAlUID4QTs53Njm7xzddaVlEs/SXwgtiD1tW22zAB/W1wdqfrpmikgaWQ9Fw6Ws+hsiRm5Vg==
   dependencies:
     "@sinonjs/commons" "^1.7.0"
+
+"@thesunny/assert-type@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@thesunny/assert-type/-/assert-type-0.1.7.tgz#c68cb8432da8baa81c9f5e0acbdfceebb8add5de"
+  integrity sha512-QmE7FgpAPD/vhRDRPlS8bmyOV+7mwQgJn6D+4p2qVn3mXzo0yHohiAjDBNCH/fDhR8aqxtBBVdEp+tJfd/4i3A==
+  dependencies:
+    ts-node "^10.4.0"
 
 "@tootallnate/once@1":
   version "1.1.2"
@@ -4496,6 +4511,11 @@ stylis@3.5.4:
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.5.4.tgz#f665f25f5e299cf3d64654ab949a57c768b73fbe"
   integrity sha512-8/3pSmthWM7lsPBKv7NXkzn2Uc9W7NotcwGNpJaa3k7WMM1XDCA4MgT5k/8BIexd5ydZdboXtU90XH9Ec4Bv/Q==
 
+superstruct@^0.15.4:
+  version "0.15.4"
+  resolved "https://registry.yarnpkg.com/superstruct/-/superstruct-0.15.4.tgz#e3381dd84ca07e704e19f69eda74eee1a5efb1f9"
+  integrity sha512-eOoMeSbP9ZJChNOm/9RYjE+F36rYR966AAqeG3xhQB02j2sfAUXDp4EQ/7bAOqnlJnuFDB8yvOu50SocvKpUEw==
+
 supports-color@^5.3.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.5.0.tgz#e2e69a44ac8772f78a1ec0b35b689df6530efc8f"
@@ -4643,7 +4663,7 @@ ts-jest@^27.1.4:
     semver "7.x"
     yargs-parser "20.x"
 
-ts-node@^10.7.0:
+ts-node@^10.4.0, ts-node@^10.7.0:
   version "10.7.0"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.7.0.tgz#35d503d0fab3e2baa672a0e94f4b40653c2463f5"
   integrity sha512-TbIGS4xgJoX2i3do417KSaep1uRAW/Lu+WAL2doDHC0D6ummjirVOXU5/7aiZotbQ5p1Zp9tP7U6cYhA0O7M8A==
@@ -4732,6 +4752,11 @@ type-fest@^0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.7.1.tgz#8dda65feaf03ed78f0a3f9678f1869147f7c5c48"
   integrity sha512-Ne2YiiGN8bmrmJJEuTWTLJR32nh/JdL1+PSicowtNb0WFpn59GK8/lfD61bVtzguz7b3PBt74nxpv/Pw5po5Rg==
+
+type-fest@^2.12.2:
+  version "2.12.2"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-2.12.2.tgz#80a53614e6b9b475eb9077472fb7498dc7aa51d0"
+  integrity sha512-qt6ylCGpLjZ7AaODxbpyBZSs9fCI9SkL3Z9q2oxMBQhs/uyY+VD8jHA8ULCGmWQJlBgqvO3EJeAngOHD8zQCrQ==
 
 typedarray-to-buffer@^3.1.5:
   version "3.1.5"

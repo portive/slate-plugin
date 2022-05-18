@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid"
 import { createStore } from "./use-store"
-import { Entity, FullHostedEditor, Resize } from "./types"
+import { FullHostedEditor, UploadOptions } from "./types"
 import { uploadHostedImage } from "./upload-hosted-image"
 export * from "./types"
 export * from "./use-store"
@@ -9,29 +9,30 @@ export * from "./handlers"
 
 export function withHostedImage<T extends FullHostedEditor>(
   {
+    authToken,
     // images can only be resized as low as this value.
     // If the source image is less than this number, it cannot be resized
     minResizeWidth = 100,
     maxResizeWidth = 1280,
     defaultResize,
     initialEntities,
-  }: {
-    minResizeWidth?: number
-    maxResizeWidth?: number
-    defaultResize: Resize
-    initialEntities: Record<string, Entity>
-  },
+  }: UploadOptions,
   editor: T
 ): T {
-  editor.minResizeWidth = minResizeWidth
-  editor.maxResizeWidth = maxResizeWidth
-  editor.useStore = createStore({ entities: initialEntities })
-  editor.defaultResize = defaultResize
-  editor.uploadHostedImage = (file: File) => {
-    const id = nanoid()
-    // NOTE: Executed without `await` on purpose
-    uploadHostedImage(editor, id, file)
-    return id
+  editor.hostedUpload = {
+    authToken,
+    minResizeWidth,
+    maxResizeWidth,
+    defaultResize,
+    useStore: createStore({ entities: initialEntities }),
+    uploadHostedImage(file: File) {
+      const id = nanoid()
+      // NOTE: Executed without `await` on purpose because this method
+      // starts the `uploadHostedImage` but doesn't wait for it to finish
+      // before returning
+      uploadHostedImage(editor, id, file)
+      return id
+    },
   }
   return editor
 }

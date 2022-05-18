@@ -2,14 +2,27 @@ import { BaseEditor, Element } from "slate"
 import { ReactEditor, RenderElementProps } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { UseStore } from "./use-store"
+import { Promisable } from "type-fest"
 
-export type HostedEditor = {
+export type UploadOptions = {
+  authToken: string | (() => Promisable<string>)
   defaultResize: Resize
-  useStore: UseStore
-  hostedImageLookup: Record<string, string>
-  uploadHostedImage: (file: File) => string
+  minResizeWidth?: number
+  maxResizeWidth?: number
+  initialEntities: Record<string, Entity>
+}
+
+export type HostedUploadProperties = {
+  authToken: string | (() => Promisable<string>)
+  defaultResize: Resize
   minResizeWidth: number
   maxResizeWidth: number
+  useStore: UseStore // store of entities. `initialEntities` is put into here initially.
+  uploadHostedImage: (file: File) => string
+}
+
+export type HostedEditor = {
+  hostedUpload: HostedUploadProperties
 }
 
 export type FullHostedEditor = BaseEditor &
@@ -18,13 +31,6 @@ export type FullHostedEditor = BaseEditor &
   HostedEditor
 
 type VoidChildren = [{ text: "" }]
-
-// export type HostedImageElement = {
-//   type: "hosted-image"
-//   id: string
-//   size: [number, number]
-//   children: VoidChildren
-// }
 
 export interface HostedImageInterface {
   id: string
@@ -66,7 +72,7 @@ export type Entity = FileLoadingEntity | FileUploadedEntity | FileErrorEntity
 
 export type EntityState = {
   entities: Record<string, Entity>
-  setImage: (id: string, entity: Entity) => void
+  setEntity: (id: string, entity: Entity) => void
   getEntity: (id: string) => Entity
 }
 

@@ -146,14 +146,18 @@ const initialEntities: Record<string, Entity> = {
 
 export default function Index() {
   const [editor] = useState<Editor>(() => {
+    const reactEditor = withReact(withHistory(createEditor()))
     const editor = withHostedImage(
       {
+        authToken:
+          // eslint-disable-next-line no-secrets/no-secrets
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik9vajhhY1Y5b0doV0xmczcifQ.eyJyZWNvcmRLZXkiOiIqKi8qIiwiaWF0IjoxNjUyODQwMzk0LCJleHAiOjQ4MDg2MDAzOTR9.jP1W-iHP3mfRNChJfMDXMDgNHatXpaf8iryhcapxGjo",
         defaultResize: { type: "inside", width: 320, height: 320 },
         minResizeWidth: 100,
         maxResizeWidth: 640,
         initialEntities,
       },
-      withReact(withHistory(createEditor()))
+      reactEditor
     )
     editor.isVoid = (element) => {
       return element.type === "block-image" || element.type === "inline-image"
@@ -169,7 +173,7 @@ export default function Index() {
       const files = e.target.files
       if (files === null) return
       for (const file of files) {
-        editor.uploadHostedImage(file)
+        editor.hostedUpload.uploadHostedImage(file)
       }
     },
     [editor]
@@ -190,8 +194,10 @@ export default function Index() {
   )
 
   return (
-    <div>
-      <h1>Editor</h1>
+    <div style={{ marginLeft: 240 }}>
+      <h1 style={{ font: "bold 36px sans-serif" }}>
+        Slate Hosted Upload Plugin Demo
+      </h1>
       <p>
         <input type="file" onChange={onChangeFile} multiple />
       </p>
@@ -200,6 +206,13 @@ export default function Index() {
           renderElement={renderElement}
           onPaste={onPaste}
           onDrop={onDrop}
+          style={{
+            font: "16px sans-serif",
+            border: "1px solid #c0c0c0",
+            borderRadius: 8,
+            padding: "0 16px",
+            width: 800,
+          }}
         />
       </Slate>
     </div>
