@@ -62,7 +62,7 @@ export async function uploadHostedImage(
         : upload.authToken
     const uploadProps: UploadProps & { authToken: string } = {
       authToken: authTokenAsString,
-      recordKey: "demo",
+      path: "demo",
       file: {
         type: "image",
         filename: file.name,

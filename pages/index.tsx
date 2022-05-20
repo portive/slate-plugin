@@ -147,11 +147,12 @@ const initialEntities: Record<string, Entity> = {
 export default function Index() {
   const [editor] = useState<Editor>(() => {
     const reactEditor = withReact(withHistory(createEditor()))
+    const authToken =
+      // eslint-disable-next-line no-secrets/no-secrets
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImQyNmxiZXlNRDdtWlBVZHYifQ.eyJwYXRoIjoiKiovKiIsImlhdCI6MTY1MzA2ODkwOSwiZXhwIjo0ODA4ODI4OTA5fQ.wBK-pdpXjGuEH8RMHW9o1yHWuOF2DJ8ohX-kaC5VfUk"
     const editor = withHostedImage(
       {
-        authToken:
-          // eslint-disable-next-line no-secrets/no-secrets
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik9vajhhY1Y5b0doV0xmczcifQ.eyJyZWNvcmRLZXkiOiIqKi8qIiwiaWF0IjoxNjUyODQwMzk0LCJleHAiOjQ4MDg2MDAzOTR9.jP1W-iHP3mfRNChJfMDXMDgNHatXpaf8iryhcapxGjo",
+        authToken,
         defaultResize: { type: "inside", width: 320, height: 320 },
         minResizeWidth: 100,
         maxResizeWidth: 640,

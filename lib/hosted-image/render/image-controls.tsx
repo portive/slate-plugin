@@ -6,6 +6,19 @@ import { ErrorMessage } from "./error-message"
 import { ResizeControls } from "./resize-controls"
 import { useHostedImage } from "./context"
 
+/**
+ * Display image controls that appear over the image.
+ *
+ * It works by displaying the actual image inside the image controls which is
+ * rendered in its children.
+ *
+ * A `<span>` is placed surrounding the image such that it is flushed tight to
+ * the image and has `position: relative;`.
+ *
+ * Now that we have a tight container, we can relatively position things like
+ * the <ProgressBar /> and the <ErrorMessage /> as well as the <RemoveIcon />
+ * and the <ResizeControls />.
+ */
 export function ImageControls({
   element,
   children: image,
