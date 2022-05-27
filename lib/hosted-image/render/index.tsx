@@ -1,10 +1,11 @@
-import { RenderElementPropsFor, HostedImageInterface, Entity } from "../types"
+import { HostedImageInterface, Entity } from "../types"
 import { useSlateStatic, useSelected, useFocused } from "slate-react"
 import { ImageControls } from "./image-controls"
 import { CSSProperties, useEffect, useState } from "react"
 import { HostedImageContext } from "./context"
 import { useMemo } from "react"
 import { getSizeFromUrl } from "./utils"
+import { RenderElementPropsFor } from "../../shared/types"
 
 export function RenderHostedImage({
   attributes,

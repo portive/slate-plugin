@@ -1,5 +1,5 @@
-import { BaseEditor, Element } from "slate"
-import { ReactEditor, RenderElementProps } from "slate-react"
+import { BaseEditor } from "slate"
+import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { UseStore } from "./use-store"
 import { Promisable } from "type-fest"
@@ -76,26 +76,26 @@ export type EntityState = {
   getEntity: (id: string) => Entity
 }
 
-/**
- * Take one type and narrows it using a second type, usually on a type field
- * like:
- *
- * { type: "cat", ... } or { type: "dog", ... }
- *
- * This is typically referred to as a Discriminated Union in TypeScript.
- */
-export type Discriminate<T, N> = T extends N ? T : never
+// /**
+//  * Take one type and narrows it using a second type, usually on a type field
+//  * like:
+//  *
+//  * { type: "cat", ... } or { type: "dog", ... }
+//  *
+//  * This is typically referred to as a Discriminated Union in TypeScript.
+//  */
+// export type Discriminate<T, N> = T extends N ? T : never
 
-export type DiscriminatedRenderElementProps<T extends Element["type"]> =
-  // Remote `element`
-  Omit<RenderElementProps, "element"> & {
-    // Add `element` back after having discriminated it
-    element: Discriminate<Element, { type: T }>
-  }
+// export type DiscriminatedRenderElementProps<T extends Element["type"]> =
+//   // Remote `element`
+//   Omit<RenderElementProps, "element"> & {
+//     // Add `element` back after having discriminated it
+//     element: Discriminate<Element, { type: T }>
+//   }
 
-export type RenderElementPropsFor<T> = Omit<RenderElementProps, "element"> & {
-  element: T
-}
+// export type RenderElementPropsFor<T> = Omit<RenderElementProps, "element"> & {
+//   element: T
+// }
 
 export type UploadPolicy = {
   status: "success"

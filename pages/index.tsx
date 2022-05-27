@@ -17,7 +17,7 @@ import {
   Entity,
 } from "~/lib/hosted-image"
 import { HistoryEditor, withHistory } from "slate-history"
-import { DiscriminatedRenderElementProps } from "~/lib/hosted-image"
+import { DiscriminatedRenderElementProps } from "~/lib/shared/types"
 import { env } from "~/lib/server-env"
 import { InferGetServerSidePropsType } from "next"
 
