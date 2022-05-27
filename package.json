@@ -19,6 +19,7 @@
     "eslint-plugin-no-secrets": "^0.8.9",
     "eslint-plugin-react": "^7.27.1",
     "jest": "^27.5.1",
+    "prettier": "^2",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
     "tsconfig-paths": "^3.14.1",
