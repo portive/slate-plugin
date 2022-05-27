@@ -24,9 +24,6 @@ export async function uploadFile({
   for (const [key, value] of Object.entries(formFields)) {
     form.append(key, value)
   }
-  // Object.entries(formFields).forEach(([key, value]: [string, any]) => {
-  //   form.append(key, value)
-  // })
   form.append("content-type", file.type)
   form.append("file", file)
 

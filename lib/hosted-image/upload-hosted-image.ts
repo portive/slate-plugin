@@ -1,6 +1,6 @@
 import { Transforms } from "slate"
 import axios, { AxiosResponse } from "axios"
-import { uploadFile } from "./upload-file"
+import { uploadFile } from "../shared/upload-file"
 import { FullHostedEditor } from "./types"
 import { resizeInside } from "./resize-inside"
 import { UploadFileResponse, UploadProps } from "@portive/api-types"
