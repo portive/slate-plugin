@@ -19,7 +19,7 @@ export function withHostedImage<T extends FullHostedEditor>(
   }: UploadOptions,
   editor: T
 ): T {
-  editor.hostedUpload = {
+  editor.portiveHostedImageOptions = {
     authToken,
     minResizeWidth,
     maxResizeWidth,

@@ -22,7 +22,7 @@ export async function uploadHostedImage(
   id: string,
   file: File
 ) {
-  const upload = editor.hostedUpload
+  const upload = editor.portiveHostedImageOptions
   let axiosResponse: AxiosResponse<UploadFileResponse>
   const { setEntity } = upload.useStore.getState()
 

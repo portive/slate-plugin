@@ -13,7 +13,7 @@ import {
   handlePasteImage,
   handleDropImage,
   withHostedImage,
-  HostedEditor,
+  PortiveHostedImageEditor,
   Entity,
 } from "~/lib/hosted-image"
 import { HistoryEditor, withHistory } from "slate-history"
@@ -36,7 +36,7 @@ type CustomElement = ParagraphElement | BlockImageElement | InlineImageElement
 
 declare module "slate" {
   interface CustomTypes {
-    Editor: BaseEditor & ReactEditor & HistoryEditor & HostedEditor
+    Editor: BaseEditor & ReactEditor & HistoryEditor & PortiveHostedImageEditor
     Element: CustomElement
     Text: CustomText
   }
@@ -179,7 +179,7 @@ export default function Index({
       const files = e.target.files
       if (files === null) return
       for (const file of files) {
-        editor.hostedUpload.uploadHostedImage(file)
+        editor.portiveHostedImageOptions.uploadHostedImage(file)
       }
     },
     [editor]

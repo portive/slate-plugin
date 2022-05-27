@@ -7,7 +7,7 @@ export const handlePasteImage = (
   const files = e.clipboardData.files
   if (files.length === 0) return false
   for (const file of files) {
-    editor.hostedUpload.uploadHostedImage(file)
+    editor.portiveHostedImageOptions.uploadHostedImage(file)
   }
   return true
 }
@@ -19,7 +19,7 @@ export const handleDropImage = (
   const files = e.dataTransfer.files
   if (files.length === 0) return false
   for (const file of files) {
-    editor.hostedUpload.uploadHostedImage(file)
+    editor.portiveHostedImageOptions.uploadHostedImage(file)
   }
   return true
 }

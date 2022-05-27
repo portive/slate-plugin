@@ -12,7 +12,7 @@ export type UploadOptions = {
   initialEntities: Record<string, Entity>
 }
 
-export type HostedUploadProperties = {
+export type PortiveHostedImageOptions = {
   authToken: string | (() => Promisable<string>)
   defaultResize: Resize
   minResizeWidth: number
@@ -21,14 +21,14 @@ export type HostedUploadProperties = {
   uploadHostedImage: (file: File) => string
 }
 
-export type HostedEditor = {
-  hostedUpload: HostedUploadProperties
+export type PortiveHostedImageEditor = {
+  portiveHostedImageOptions: PortiveHostedImageOptions
 }
 
 export type FullHostedEditor = BaseEditor &
   ReactEditor &
   HistoryEditor &
-  HostedEditor
+  PortiveHostedImageEditor
 
 type VoidChildren = [{ text: "" }]
 
