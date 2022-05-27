@@ -25,9 +25,6 @@ export function withHostedImage<T extends FullHostedEditor>(
     defaultResize,
     useStore: createStore({ entities: initialEntities }),
     uploadHostedImage(file: File): string {
-      // NOTE: Executed without `await` on purpose because this method
-      // starts the `uploadHostedImage` but doesn't wait for it to finish.
-      // The method retunds a string `id` for the upload process.
       return uploadHostedImage(editor, file)
     },
   }

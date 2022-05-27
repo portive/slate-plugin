@@ -18,6 +18,10 @@ async function getImageSize(url: string): Promise<[number, number]> {
   })
 }
 
+/**
+ * This is the asynchronous part of `uploadHostedImage` that contains most of
+ * the meat of the function including uploading and setting the entity.
+ */
 async function _uploadHostedImage(
   editor: FullHostedEditor,
   id: string,
@@ -146,7 +150,17 @@ async function _uploadHostedImage(
   })
 }
 
-export function uploadHostedImage(editor: FullHostedEditor, file: File) {
+/**
+ * This method starts the upload process. It creates a unique `id` which is
+ * returned from the function. As the upload is progressing through its
+ * upload stages, it is updating an `Entity` that is used to display the stage
+ * of the upload in the editor. For example, how much upload progress there is
+ * and when it's complete, sets the URL of the upload.
+ */
+export function uploadHostedImage(
+  editor: FullHostedEditor,
+  file: File
+): string {
   const id = nanoid()
   _uploadHostedImage(editor, id, file)
   return id
