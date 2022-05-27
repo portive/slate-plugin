@@ -18,6 +18,12 @@ import {
 } from "~/lib/hosted-image"
 import { HistoryEditor, withHistory } from "slate-history"
 import { DiscriminatedRenderElementProps } from "~/lib/hosted-image"
+import { env } from "~/lib/server-env"
+import { InferGetServerSidePropsType } from "next"
+
+export async function getServerSideProps() {
+  return { props: { authToken: env.PORTIVE_AUTH_TOKEN } }
+}
 
 type CustomText = { text: string }
 type ParagraphElement = {
@@ -144,12 +150,11 @@ const initialEntities: Record<string, Entity> = {
   },
 }
 
-export default function Index() {
+export default function Index({
+  authToken,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [editor] = useState<Editor>(() => {
     const reactEditor = withReact(withHistory(createEditor()))
-    const authToken =
-      // eslint-disable-next-line no-secrets/no-secrets
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImQyNmxiZXlNRDdtWlBVZHYifQ.eyJwYXRoIjoiKiovKiIsImlhdCI6MTY1MzA2ODkwOSwiZXhwIjo0ODA4ODI4OTA5fQ.wBK-pdpXjGuEH8RMHW9o1yHWuOF2DJ8ohX-kaC5VfUk"
     const editor = withHostedImage(
       {
         authToken,
