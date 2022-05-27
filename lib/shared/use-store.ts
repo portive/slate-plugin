@@ -1,5 +1,5 @@
 import create from "zustand"
-import { Entity, EntityState } from "./types"
+import { Entity, EntityState } from "../hosted-image/types"
 
 export const createStore = (
   {

@@ -1,8 +1,8 @@
-import { createStore } from "./use-store"
+import { createStore } from "../shared/use-store"
 import { FullHostedEditor, UploadOptions } from "./types"
 import { uploadHostedImage } from "./upload-hosted-image"
 export * from "./types"
-export * from "./use-store"
+export * from "../shared/use-store"
 export * from "./render"
 export * from "./handlers"
 

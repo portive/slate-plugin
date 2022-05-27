@@ -1,7 +1,7 @@
 import { BaseEditor } from "slate"
 import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
-import { UseStore } from "./use-store"
+import { UseStore } from "../shared/use-store"
 import { Promisable } from "type-fest"
 
 export type UploadOptions = {
