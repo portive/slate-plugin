@@ -50,7 +50,7 @@ export type Resize = {
 
 type FileSharedEntity = {
   url: string
-  maxSize: [number, number]
+  maxSize: [number, number] // necessary for when the image is still a BLOB
 }
 
 export type FileLoadingEntity = {
