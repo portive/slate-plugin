@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid"
 import { createStore } from "./use-store"
 import { FullHostedEditor, UploadOptions } from "./types"
 import { uploadHostedImage } from "./upload-hosted-image"
@@ -25,13 +24,11 @@ export function withHostedImage<T extends FullHostedEditor>(
     maxResizeWidth,
     defaultResize,
     useStore: createStore({ entities: initialEntities }),
-    uploadHostedImage(file: File) {
-      const id = nanoid()
+    uploadHostedImage(file: File): string {
       // NOTE: Executed without `await` on purpose because this method
-      // starts the `uploadHostedImage` but doesn't wait for it to finish
-      // before returning
-      uploadHostedImage(editor, id, file)
-      return id
+      // starts the `uploadHostedImage` but doesn't wait for it to finish.
+      // The method retunds a string `id` for the upload process.
+      return uploadHostedImage(editor, file)
     },
   }
   return editor

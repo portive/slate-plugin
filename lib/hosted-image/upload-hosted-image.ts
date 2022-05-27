@@ -4,6 +4,7 @@ import { uploadFile } from "./upload-file"
 import { FullHostedEditor } from "./types"
 import { resizeInside } from "./resize-inside"
 import { UploadFileResponse, UploadProps } from "@portive/api-types"
+import { nanoid } from "nanoid"
 
 const POLICY_URL = "http://localhost:3001/api/v1/upload"
 
@@ -17,7 +18,7 @@ async function getImageSize(url: string): Promise<[number, number]> {
   })
 }
 
-export async function uploadHostedImage(
+async function _uploadHostedImage(
   editor: FullHostedEditor,
   id: string,
   file: File
@@ -143,4 +144,10 @@ export async function uploadHostedImage(
     url: policyResponse.data.fileUrl,
     maxSize: [originalWidth, originalHeight],
   })
+}
+
+export function uploadHostedImage(editor: FullHostedEditor, file: File) {
+  const id = nanoid()
+  _uploadHostedImage(editor, id, file)
+  return id
 }
