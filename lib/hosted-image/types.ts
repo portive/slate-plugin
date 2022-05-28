@@ -1,15 +1,15 @@
 import { BaseEditor } from "slate"
 import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
-import { UseStore } from "../shared/use-store"
 import { Promisable } from "type-fest"
+import { UseImageStore } from "../shared/use-store"
 
 export type UploadOptions = {
   authToken: string | (() => Promisable<string>)
   defaultResize: Resize
   minResizeWidth?: number
   maxResizeWidth?: number
-  initialEntities: Record<string, Entity>
+  initialEntities: Record<string, Entity<ImageFileEntityProps>>
 }
 
 export type PortiveHostedImageOptions = {
@@ -17,7 +17,8 @@ export type PortiveHostedImageOptions = {
   defaultResize: Resize
   minResizeWidth: number
   maxResizeWidth: number
-  useStore: UseStore // store of entities. `initialEntities` is put into here initially.
+  // useStore: UseStore // store of entities. `initialEntities` is put into here initially.
+  useStore: UseImageStore
   uploadHostedImage: (file: File) => string
 }
 
@@ -48,32 +49,35 @@ export type Resize = {
  * Entity
  */
 
-type FileSharedEntity = {
+export type ImageFileEntityProps = {
   url: string
   maxSize: [number, number] // necessary for when the image is still a BLOB
 }
 
-export type FileLoadingEntity = {
+export type FileLoadingEntity<T> = {
   type: "loading"
   sentBytes: number
   totalBytes: number
-} & FileSharedEntity
+} & T
 
-export type FileUploadedEntity = {
+export type FileUploadedEntity<T> = {
   type: "uploaded"
-} & FileSharedEntity
+} & T
 
-export type FileErrorEntity = {
+export type FileErrorEntity<T> = {
   type: "error"
   message: string
-} & FileSharedEntity
+} & T
 
-export type Entity = FileLoadingEntity | FileUploadedEntity | FileErrorEntity
+export type Entity<T> =
+  | FileLoadingEntity<T>
+  | FileUploadedEntity<T>
+  | FileErrorEntity<T>
 
-export type EntityState = {
-  entities: Record<string, Entity>
-  setEntity: (id: string, entity: Entity) => void
-  getEntity: (id: string) => Entity
+export type EntityState<T> = {
+  entities: Record<string, Entity<T>>
+  setEntity: (id: string, entity: Entity<T>) => void
+  getEntity: (id: string) => Entity<T>
 }
 
 export type UploadPolicy = {
