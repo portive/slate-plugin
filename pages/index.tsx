@@ -158,6 +158,7 @@ export default function Index({
     const editor = withHostedImage(
       {
         authToken,
+        path: "demo",
         defaultResize: { type: "inside", width: 320, height: 320 },
         minResizeWidth: 100,
         maxResizeWidth: 640,
@@ -179,7 +180,7 @@ export default function Index({
       const files = e.target.files
       if (files === null) return
       for (const file of files) {
-        editor.portiveHostedImageOptions.uploadHostedImage(file)
+        editor.hostedImage.uploadHostedImage(file)
       }
     },
     [editor]

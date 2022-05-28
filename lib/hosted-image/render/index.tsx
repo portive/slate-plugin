@@ -69,7 +69,7 @@ export function HostedImage({
   style?: CSSProperties
 }) {
   const editor = useSlateStatic()
-  const entityFromStore = editor.portiveHostedImageOptions.useStore(
+  const entityFromStore = editor.hostedImage.useStore(
     (state) => state.entities[element.id]
   )
   const [size, setSize] = useState(element.size)

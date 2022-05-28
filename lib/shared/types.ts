@@ -66,3 +66,12 @@ export type EntityState<T> = {
   setEntity: (id: string, entity: Entity<T>) => void
   getEntity: (id: string) => Entity<T>
 }
+
+export type UploadPolicy = {
+  status: "success"
+  data: {
+    apiUrl: string
+    fileUrl: string
+    formFields: Record<string, string>
+  }
+}

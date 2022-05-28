@@ -9,8 +9,7 @@ export function ResizeControls({ element }: { element: HostedImageInterface }) {
   const editor = useSlateStatic()
   const [isResizing, setIsResizing] = useState(false)
 
-  if (entity.maxSize[0] < editor.portiveHostedImageOptions.minResizeWidth)
-    return null
+  if (entity.maxSize[0] < editor.hostedImage.minResizeWidth) return null
 
   let currentSize = size
 
@@ -19,10 +18,10 @@ export function ResizeControls({ element }: { element: HostedImageInterface }) {
       setIsResizing(true)
       const startX = e.clientX
       const startWidth = size[0]
-      const minWidth = editor.portiveHostedImageOptions.minResizeWidth
+      const minWidth = editor.hostedImage.minResizeWidth
       const maxWidth = Math.min(
         entity.maxSize[0],
-        editor.portiveHostedImageOptions.maxResizeWidth
+        editor.hostedImage.maxResizeWidth
       )
       /**
        * Handle resize dragging through an event handler on mouseMove on the

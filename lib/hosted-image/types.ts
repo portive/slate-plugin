@@ -16,16 +16,18 @@ export type ImageFileEntityProps = {
 
 export type ImageEntity = Entity<ImageFileEntityProps>
 
-export type UploadOptions = {
+export type HostedImageOptions = {
   authToken: string | (() => Promisable<string>)
+  path: string
   defaultResize: Resize
   minResizeWidth?: number
   maxResizeWidth?: number
   initialEntities: Record<string, ImageEntity>
 }
 
-export type PortiveHostedImageOptions = {
+export type HostedImageEditorProp = {
   authToken: string | (() => Promisable<string>)
+  path: string
   defaultResize: Resize
   minResizeWidth: number
   maxResizeWidth: number
@@ -35,10 +37,10 @@ export type PortiveHostedImageOptions = {
 }
 
 export type PortiveHostedImageEditor = {
-  portiveHostedImageOptions: PortiveHostedImageOptions
+  hostedImage: HostedImageEditorProp
 }
 
-export type FullHostedEditor = BaseEditor &
+export type FullPortivedHostedImageEditor = BaseEditor &
   ReactEditor &
   HistoryEditor &
   PortiveHostedImageEditor
@@ -55,13 +57,4 @@ export type Resize = {
   type: "inside"
   width: number
   height: number
-}
-
-export type UploadPolicy = {
-  status: "success"
-  data: {
-    apiUrl: string
-    fileUrl: string
-    formFields: Record<string, string>
-  }
 }

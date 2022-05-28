@@ -1,7 +1,7 @@
 import { Transforms } from "slate"
 import axios, { AxiosResponse } from "axios"
 import { uploadFile } from "../shared/upload-file"
-import { FullHostedEditor } from "./types"
+import { FullPortivedHostedImageEditor } from "./types"
 import { resizeInside } from "./resize-inside"
 import { UploadFileResponse, UploadProps } from "@portive/api-types"
 import { nanoid } from "nanoid"
@@ -23,11 +23,11 @@ async function getImageSize(url: string): Promise<[number, number]> {
  * the meat of the function including uploading and setting the entity.
  */
 async function _uploadHostedImage(
-  editor: FullHostedEditor,
+  editor: FullPortivedHostedImageEditor,
   id: string,
   file: File
 ) {
-  const upload = editor.portiveHostedImageOptions
+  const upload = editor.hostedImage
   let axiosResponse: AxiosResponse<UploadFileResponse>
   const { setEntity } = upload.useStore.getState()
 
@@ -67,7 +67,7 @@ async function _uploadHostedImage(
         : upload.authToken
     const uploadProps: UploadProps & { authToken: string } = {
       authToken: authTokenAsString,
-      path: "demo",
+      path: upload.path,
       file: {
         type: "image",
         filename: file.name,
@@ -158,7 +158,7 @@ async function _uploadHostedImage(
  * and when it's complete, sets the URL of the upload.
  */
 export function uploadHostedImage(
-  editor: FullHostedEditor,
+  editor: FullPortivedHostedImageEditor,
   file: File
 ): string {
   const id = nanoid()
