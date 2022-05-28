@@ -1,5 +1,5 @@
 import { createStore } from "../shared/use-store"
-import { FullHostedEditor, UploadOptions } from "./types"
+import { FullHostedEditor, ImageFileEntityProps, UploadOptions } from "./types"
 import { uploadHostedImage } from "./upload-hosted-image"
 export * from "./types"
 export * from "../shared/use-store"
@@ -23,7 +23,7 @@ export function withHostedImage<T extends FullHostedEditor>(
     minResizeWidth,
     maxResizeWidth,
     defaultResize,
-    useStore: createStore({ entities: initialEntities }),
+    useStore: createStore<ImageFileEntityProps>({ entities: initialEntities }),
     uploadHostedImage(file: File): string {
       return uploadHostedImage(editor, file)
     },

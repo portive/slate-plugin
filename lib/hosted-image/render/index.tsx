@@ -1,4 +1,4 @@
-import { HostedImageInterface, Entity } from "../types"
+import { HostedImageInterface, ImageEntity } from "../types"
 import { useSlateStatic, useSelected, useFocused } from "slate-react"
 import { ImageControls } from "./image-controls"
 import { CSSProperties, useEffect, useState } from "react"
@@ -78,7 +78,7 @@ export function HostedImage({
     setSize(element.size)
   }, [element.size[0], element.size[1]])
 
-  const entity = useMemo<Entity>(() => {
+  const entity = useMemo<ImageEntity>(() => {
     if (element.id.includes("/")) {
       const maxSize = getSizeFromUrl(element.id)
       return {

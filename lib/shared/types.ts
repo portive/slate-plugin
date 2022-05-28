@@ -40,3 +40,29 @@ export type DiscriminatedRenderElementProps<T extends Element["type"]> =
 export type RenderElementPropsFor<T> = Omit<RenderElementProps, "element"> & {
   element: T
 }
+
+export type FileLoadingEntity<T> = {
+  type: "loading"
+  sentBytes: number
+  totalBytes: number
+} & T
+
+export type FileUploadedEntity<T> = {
+  type: "uploaded"
+} & T
+
+export type FileErrorEntity<T> = {
+  type: "error"
+  message: string
+} & T
+
+export type Entity<T> =
+  | FileLoadingEntity<T>
+  | FileUploadedEntity<T>
+  | FileErrorEntity<T>
+
+export type EntityState<T> = {
+  entities: Record<string, Entity<T>>
+  setEntity: (id: string, entity: Entity<T>) => void
+  getEntity: (id: string) => Entity<T>
+}

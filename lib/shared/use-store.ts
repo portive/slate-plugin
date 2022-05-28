@@ -1,9 +1,6 @@
 import create from "zustand"
-import {
-  ImageFileEntityProps,
-  Entity,
-  EntityState,
-} from "../hosted-image/types"
+import { ImageFileEntityProps } from "../hosted-image/types"
+import { Entity, EntityState } from "./types"
 
 export const createStore = <T>(
   {

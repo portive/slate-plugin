@@ -1,11 +1,11 @@
 import React from "react"
-import { Entity } from "../types"
+import { ImageEntity } from "../types"
 import { useContext, Dispatch, SetStateAction } from "react"
 import { Editor } from "slate"
 
 export const HostedImageContext = React.createContext<{
   editor: Editor
-  entity: Entity
+  entity: ImageEntity
   size: [number, number]
   setSize: Dispatch<SetStateAction<[number, number]>>
 } | null>(null)

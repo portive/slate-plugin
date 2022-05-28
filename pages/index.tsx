@@ -14,7 +14,7 @@ import {
   handleDropImage,
   withHostedImage,
   PortiveHostedImageEditor,
-  Entity,
+  ImageEntity,
 } from "~/lib/hosted-image"
 import { HistoryEditor, withHistory } from "slate-history"
 import { DiscriminatedRenderElementProps } from "~/lib/shared/types"
@@ -109,7 +109,7 @@ const initialValue: Descendant[] = [
   { type: "paragraph", children: [{ text: "End of World" }] },
 ]
 
-const initialEntities: Record<string, Entity> = {
+const initialEntities: Record<string, ImageEntity> = {
   RGVIrl9C5y2i5n95T7lAR: {
     type: "uploaded",
     url: "https://files.wysimark.com/f/demo/2022/4/13/bu371qgo8qvrxrsknqfv9--44x44.png",

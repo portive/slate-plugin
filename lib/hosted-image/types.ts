@@ -3,13 +3,25 @@ import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { Promisable } from "type-fest"
 import { UseImageStore } from "../shared/use-store"
+import { Entity } from "../shared/types"
+
+/**
+ * Entity
+ */
+
+export type ImageFileEntityProps = {
+  url: string
+  maxSize: [number, number] // necessary for when the image is still a BLOB
+}
+
+export type ImageEntity = Entity<ImageFileEntityProps>
 
 export type UploadOptions = {
   authToken: string | (() => Promisable<string>)
   defaultResize: Resize
   minResizeWidth?: number
   maxResizeWidth?: number
-  initialEntities: Record<string, Entity<ImageFileEntityProps>>
+  initialEntities: Record<string, ImageEntity>
 }
 
 export type PortiveHostedImageOptions = {
@@ -43,41 +55,6 @@ export type Resize = {
   type: "inside"
   width: number
   height: number
-}
-
-/**
- * Entity
- */
-
-export type ImageFileEntityProps = {
-  url: string
-  maxSize: [number, number] // necessary for when the image is still a BLOB
-}
-
-export type FileLoadingEntity<T> = {
-  type: "loading"
-  sentBytes: number
-  totalBytes: number
-} & T
-
-export type FileUploadedEntity<T> = {
-  type: "uploaded"
-} & T
-
-export type FileErrorEntity<T> = {
-  type: "error"
-  message: string
-} & T
-
-export type Entity<T> =
-  | FileLoadingEntity<T>
-  | FileUploadedEntity<T>
-  | FileErrorEntity<T>
-
-export type EntityState<T> = {
-  entities: Record<string, Entity<T>>
-  setEntity: (id: string, entity: Entity<T>) => void
-  getEntity: (id: string) => Entity<T>
 }
 
 export type UploadPolicy = {
