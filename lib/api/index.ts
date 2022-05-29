@@ -40,7 +40,7 @@ const SUPPORTED_IMAGE_TYPES = [
 
 const CLIENT_FILE_MAP = new WeakMap<File, ClientFile>()
 
-async function createClientFile(file: File): Promise<ClientFile> {
+export async function createClientFile(file: File): Promise<ClientFile> {
   const cachedClientFile = CLIENT_FILE_MAP.get(file)
   if (cachedClientFile !== undefined) {
     return cachedClientFile

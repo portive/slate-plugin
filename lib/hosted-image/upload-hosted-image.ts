@@ -5,6 +5,7 @@ import { FullPortivedHostedImageEditor } from "./types"
 import { resizeInside } from "./resize-inside"
 import { UploadFileResponse, UploadProps } from "@portive/api-types"
 import { nanoid } from "nanoid"
+import { createClientFile } from "~/lib/api"
 
 const POLICY_URL = "http://localhost:3001/api/v1/upload"
 
@@ -31,26 +32,33 @@ async function _uploadHostedImage(
   let axiosResponse: AxiosResponse<UploadFileResponse>
   const { setEntity } = upload.useStore.getState()
 
+  const clientFile = await createClientFile(file)
+  if (clientFile.type !== "image") {
+    throw new Error(
+      `Need to fix this later so clientFile image never gets to this part of the code`
+    )
+  }
+
   /**
    * Create temporary Image URL
    */
-  const url = URL.createObjectURL(file)
+  // const url = URL.createObjectURL(file)
 
   /**
    * Get Image size
    */
-  const [originalWidth, originalHeight] = await getImageSize(url)
+  // const [originalWidth, originalHeight] = await getImageSize(url)
   const viewSize = resizeInside(
-    originalWidth,
-    originalHeight,
+    clientFile.size[0],
+    clientFile.size[1],
     upload.defaultResize.width,
     upload.defaultResize.height
   )
 
   setEntity(id, {
     type: "loading",
-    url,
-    maxSize: [originalWidth, originalHeight],
+    url: clientFile.objectUrl,
+    maxSize: clientFile.size,
     sentBytes: 0,
     totalBytes: file.size,
   })
@@ -60,6 +68,7 @@ async function _uploadHostedImage(
     size: viewSize,
     children: [{ text: "" }],
   })
+
   try {
     const authTokenAsString =
       typeof upload.authToken === "function"
@@ -70,18 +79,18 @@ async function _uploadHostedImage(
       path: upload.path,
       clientFileInfo: {
         type: "image",
-        filename: file.name,
-        contentType: file.type,
-        bytes: file.size,
-        size: [originalWidth, originalHeight],
+        filename: clientFile.filename,
+        contentType: clientFile.contentType,
+        bytes: clientFile.bytes,
+        size: clientFile.size,
       },
     }
     axiosResponse = await axios.post(POLICY_URL, uploadProps)
   } catch (e) {
     setEntity(id, {
       type: "error",
-      url,
-      maxSize: [originalWidth, originalHeight],
+      url: clientFile.objectUrl,
+      maxSize: clientFile.size,
       message: `Could not access the upload API. The error is: ${e}`,
     })
     console.error(e)
@@ -94,8 +103,8 @@ async function _uploadHostedImage(
     const message = `Error getting upload Policy. The error is: ${policyResponse.message}`
     setEntity(id, {
       type: "error",
-      url,
-      maxSize: [originalWidth, originalHeight],
+      url: clientFile.objectUrl,
+      maxSize: clientFile.size,
       message,
     })
     console.error(message)
@@ -109,8 +118,8 @@ async function _uploadHostedImage(
     onProgress(e) {
       setEntity(id, {
         type: "loading",
-        url,
-        maxSize: [originalWidth, originalHeight],
+        url: clientFile.objectUrl,
+        maxSize: clientFile.size,
         sentBytes: e.loaded,
         totalBytes: e.total,
       })
@@ -121,8 +130,8 @@ async function _uploadHostedImage(
    */
   setEntity(id, {
     type: "uploaded",
-    url,
-    maxSize: [originalWidth, originalHeight],
+    url: policyResponse.data.fileUrl,
+    maxSize: clientFile.size,
   })
   await getImageSize(policyResponse.data.fileUrl)
   /**
@@ -132,7 +141,7 @@ async function _uploadHostedImage(
   setEntity(id, {
     type: "uploaded",
     url: policyResponse.data.fileUrl,
-    maxSize: [originalWidth, originalHeight],
+    maxSize: clientFile.size,
   })
 }
 
