@@ -68,7 +68,7 @@ async function _uploadHostedImage(
     const uploadProps: UploadProps & { authToken: string } = {
       authToken: authTokenAsString,
       path: upload.path,
-      file: {
+      clientFileInfo: {
         type: "image",
         filename: file.name,
         contentType: file.type,
@@ -92,20 +92,6 @@ async function _uploadHostedImage(
 
   if (policyResponse.status === "error") {
     const message = `Error getting upload Policy. The error is: ${policyResponse.message}`
-    setEntity(id, {
-      type: "error",
-      url,
-      maxSize: [originalWidth, originalHeight],
-      message,
-    })
-    console.error(message)
-    return
-  }
-
-  if (policyResponse.status === "fail") {
-    const message = `Failed getting upload Policy. The error is: ${policyResponse.data.faults.join(
-      ". "
-    )}`
     setEntity(id, {
       type: "error",
       url,

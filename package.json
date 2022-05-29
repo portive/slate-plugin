@@ -27,7 +27,7 @@
     "typescript": "^4.6.3"
   },
   "dependencies": {
-    "@portive/api-types": "^4.0.0",
+    "@portive/api-types": "^5.0.2",
     "axios": "^0.26.1",
     "dotenv": "16.x",
     "nanoid": "^3.3.2",
