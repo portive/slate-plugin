@@ -1,13 +1,9 @@
 import { Transforms } from "slate"
-import axios, { AxiosResponse } from "axios"
 import { uploadFile } from "../shared/upload-file"
 import { FullPortivedHostedImageEditor } from "./types"
 import { resizeInside } from "./resize-inside"
-import { UploadFileResponse, UploadProps } from "@portive/api-types"
 import { nanoid } from "nanoid"
 import { createClientFile, getUploadPolicy } from "~/lib/api"
-
-const POLICY_URL = "http://localhost:3001/api/v1/upload"
 
 async function getImageSize(url: string): Promise<[number, number]> {
   return new Promise((resolve) => {
@@ -29,7 +25,6 @@ async function _uploadHostedImage(
   file: File
 ) {
   const upload = editor.hostedImage
-  let axiosResponse: AxiosResponse<UploadFileResponse>
   const { setEntity } = upload.useStore.getState()
 
   const clientFile = await createClientFile(file)
@@ -40,15 +35,9 @@ async function _uploadHostedImage(
   }
 
   /**
-   * Create temporary Image URL
-   */
-  // const url = URL.createObjectURL(file)
-
-  /**
    * Get Image size
    */
-  // const [originalWidth, originalHeight] = await getImageSize(url)
-  const viewSize = resizeInside(
+  const initialPreviewSize = resizeInside(
     clientFile.size[0],
     clientFile.size[1],
     upload.defaultResize.width,
@@ -65,7 +54,7 @@ async function _uploadHostedImage(
   Transforms.insertNodes(editor, {
     type: "block-image",
     id,
-    size: viewSize,
+    size: initialPreviewSize,
     children: [{ text: "" }],
   })
 
