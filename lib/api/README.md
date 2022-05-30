@@ -5,7 +5,7 @@ There are two steps to upload a file from the browser to an API endpoint. The fi
 ## Step 1: Generate a `ClientFile` object
 
 ```
-const clientFile = await getClientFile(file)
+const clientFile = await createClientFile(file)
 ```
 
 There are many properties in the `clientFile` that are useful to you before you upload the file to Portive. For example `clientFile.type` will tell you if it is an `image` or a `generic` file.
@@ -14,11 +14,20 @@ A `type="image"` can be displayed in an `<img>` tag. You can set the `src` of th
 
 ## Step 2: Upload the `ClientFile`
 
+The next step is to take the `ClientFile` object and upload it. Once it has been uploaded,
+
 ```ts
-const hostedFile = await upload({
-  authToken: YOUR_AUTH_TOKEN,
+type UploadProps = {
+  authToken: string | () => Promise<string> | () => string,
+  path: string,
+  file: File | ClientFile,
+  apiUrl?: string
+}
+
+const hostedFile = await uploadFile({
+  authToken: YOUR_AUTH_TOKEN_OR_FUNCTION_RETURNING_AUTH_TOKEN,
   path: "articles/12345",
-  clientFile,
+  file,
 })
 /**
  * returns {

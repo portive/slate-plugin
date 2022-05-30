@@ -1,91 +1,32 @@
 import axios, { AxiosResponse } from "axios"
 import {
   ClientFile,
-  ClientGenericFile,
-  ClientImageFile,
   HostedFileInfo,
   JSendError,
   JSendSuccess,
   UploadFileResponse,
   UploadProps,
 } from "@portive/api-types"
+import { Promisable } from "type-fest"
+import { createClientFile } from "./create-client-file"
+export * from "./create-client-file"
 
-const POLICY_URL = "http://localhost:3001/api/v1/upload"
+const DEFAULT_UPLOAD_POLICY_URL = "http://localhost:3001/api/v1/upload"
 
 async function normalizeAuthToken(
-  authToken: string | (() => Promise<string>)
+  authToken: string | (() => Promisable<string>)
 ): Promise<string> {
   if (typeof authToken === "string") return authToken
   return await authToken()
-}
-
-export function isHostedImage(file: File): boolean {
-  return SUPPORTED_IMAGE_TYPES.includes(file.type)
-}
-
-async function getImageSize(url: string): Promise<[number, number]> {
-  return new Promise((resolve) => {
-    const image = new Image()
-    image.addEventListener("load", function () {
-      resolve([this.naturalWidth, this.naturalHeight])
-    })
-    image.src = url
-  })
-}
-
-const SUPPORTED_IMAGE_TYPES = [
-  "image/jpg",
-  "image/jpeg",
-  "image/png",
-  "image/gif",
-  "image/webp",
-]
-
-const CLIENT_FILE_MAP = new WeakMap<File, ClientFile>()
-
-export async function createClientFile(
-  file: File | ClientFile
-): Promise<ClientFile> {
-  if (!(file instanceof File)) return file
-  const cachedClientFile = CLIENT_FILE_MAP.get(file)
-  if (cachedClientFile !== undefined) {
-    return cachedClientFile
-  }
-  const objectUrl = URL.createObjectURL(file)
-  if (isHostedImage(file)) {
-    const size = await getImageSize(objectUrl)
-    const clientImageFile: ClientImageFile = {
-      type: "image",
-      filename: file.name,
-      contentType: file.type,
-      bytes: file.size,
-      size,
-      file,
-      objectUrl,
-    }
-    CLIENT_FILE_MAP.set(file, clientImageFile)
-    return clientImageFile
-  } else {
-    const clientGenericFile: ClientGenericFile = {
-      type: "generic",
-      filename: file.name,
-      contentType: file.type,
-      bytes: file.size,
-      file,
-      objectUrl,
-    }
-    CLIENT_FILE_MAP.set(file, clientGenericFile)
-    return clientGenericFile
-  }
 }
 
 export async function getUploadPolicy({
   authToken,
   path,
   file,
-  apiUrl = POLICY_URL,
+  apiUrl = DEFAULT_UPLOAD_POLICY_URL,
 }: {
-  authToken: string | (() => Promise<string>)
+  authToken: string | (() => Promisable<string>)
   path: string
   file: File | ClientFile
   apiUrl?: string
@@ -109,7 +50,7 @@ export async function getUploadPolicy({
       clientFileInfo,
     }
     const axiosResponse: AxiosResponse<UploadFileResponse> = await axios.post(
-      POLICY_URL,
+      apiUrl,
       uploadProps
     )
     return axiosResponse.data
@@ -133,14 +74,14 @@ export async function uploadFile({
   path,
   file,
   onProgress,
-  apiUrl = POLICY_URL,
+  apiUrl = DEFAULT_UPLOAD_POLICY_URL,
 }: {
-  authToken: string | (() => Promise<string>)
+  authToken: string | (() => Promisable<string>)
   path: string
   file: File | ClientFile
   onProgress?: (e: ProgressEvent) => void
   apiUrl?: string
-}): Promise<JSendError | JSendSuccess<{ hostedFileInfo: HostedFileInfo }>> {
+}): Promise<JSendError | JSendSuccess<HostedFileInfo>> {
   const clientFile = await createClientFile(file)
 
   const uploadPolicyResponse = await getUploadPolicy({
@@ -201,8 +142,6 @@ export async function uploadFile({
         }
   return {
     status: "success",
-    data: {
-      hostedFileInfo,
-    },
+    data: hostedFileInfo,
   }
 }

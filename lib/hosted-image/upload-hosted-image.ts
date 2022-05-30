@@ -1,9 +1,10 @@
 import { Transforms } from "slate"
-import { uploadFile } from "../shared/upload-file"
+// import { uploadFile } from "../shared/upload-file"
 import { FullPortivedHostedImageEditor } from "./types"
 import { resizeInside } from "./resize-inside"
 import { nanoid } from "nanoid"
 import { createClientFile, getUploadPolicy } from "~/lib/api"
+import { uploadFile } from "~/lib/api"
 
 async function getImageSize(url: string): Promise<[number, number]> {
   return new Promise((resolve) => {
@@ -58,33 +59,10 @@ async function _uploadHostedImage(
     children: [{ text: "" }],
   })
 
-  const authTokenAsString =
-    typeof upload.authToken === "function"
-      ? await upload.authToken()
-      : upload.authToken
-
-  const policyResponse = await getUploadPolicy({
-    authToken: authTokenAsString,
+  const uploadResult = await uploadFile({
+    authToken: upload.authToken,
     path: upload.path,
-    file: clientFile,
-  })
-
-  if (policyResponse.status === "error") {
-    const message = `Error getting upload Policy. The error is: ${policyResponse.message}`
-    setEntity(id, {
-      type: "error",
-      url: clientFile.objectUrl,
-      maxSize: clientFile.size,
-      message,
-    })
-    console.error(message)
-    return
-  }
-
-  await uploadFile({
     file,
-    uploadUrl: policyResponse.data.apiUrl,
-    formFields: policyResponse.data.formFields,
     onProgress(e) {
       setEntity(id, {
         type: "loading",
@@ -95,22 +73,34 @@ async function _uploadHostedImage(
       })
     },
   })
+
+  if (uploadResult.status === "error") {
+    setEntity(id, {
+      type: "error",
+      url: clientFile.objectUrl,
+      maxSize: clientFile.size,
+      message: uploadResult.message,
+    })
+    console.error(uploadResult.message)
+    return
+  }
+
   /**
    * Set image as uploaded but continue to use the local image URL
    */
   setEntity(id, {
     type: "uploaded",
-    url: policyResponse.data.fileUrl,
+    url: uploadResult.data.url,
     maxSize: clientFile.size,
   })
-  await getImageSize(policyResponse.data.fileUrl)
+  await getImageSize(uploadResult.data.url)
   /**
    * After `getImageSize` executes, we know that the uploaded file is now in
    * the cache so we can swap the local file for the remote file.
    */
   setEntity(id, {
     type: "uploaded",
-    url: policyResponse.data.fileUrl,
+    url: uploadResult.data.url,
     maxSize: clientFile.size,
   })
 }
