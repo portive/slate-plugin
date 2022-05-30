@@ -3,6 +3,9 @@ import {
   ClientFile,
   ClientGenericFile,
   ClientImageFile,
+  HostedFileInfo,
+  JSendError,
+  JSendSuccess,
   UploadFileResponse,
   UploadProps,
 } from "@portive/api-types"
@@ -40,7 +43,10 @@ const SUPPORTED_IMAGE_TYPES = [
 
 const CLIENT_FILE_MAP = new WeakMap<File, ClientFile>()
 
-export async function createClientFile(file: File): Promise<ClientFile> {
+export async function createClientFile(
+  file: File | ClientFile
+): Promise<ClientFile> {
+  if (!(file instanceof File)) return file
   const cachedClientFile = CLIENT_FILE_MAP.get(file)
   if (cachedClientFile !== undefined) {
     return cachedClientFile
@@ -73,18 +79,19 @@ export async function createClientFile(file: File): Promise<ClientFile> {
   }
 }
 
-export async function uploadFile({
+export async function getUploadPolicy({
   authToken,
   path,
   file,
+  apiUrl = POLICY_URL,
 }: {
   authToken: string | (() => Promise<string>)
   path: string
   file: File | ClientFile
+  apiUrl?: string
 }): Promise<UploadFileResponse> {
   try {
-    const clientFile =
-      file instanceof File ? await createClientFile(file) : file
+    const clientFile = await createClientFile(file)
 
     const {
       // disable to allow eating a property
@@ -111,5 +118,91 @@ export async function uploadFile({
       status: "error",
       message: `Error during uploadImage. The error is: ${e}`,
     }
+  }
+}
+
+type ProgressEvent = {
+  loaded: number
+  total: number
+  file: File
+  clientFile: ClientFile
+}
+
+export async function uploadFile({
+  authToken,
+  path,
+  file,
+  onProgress,
+  apiUrl = POLICY_URL,
+}: {
+  authToken: string | (() => Promise<string>)
+  path: string
+  file: File | ClientFile
+  onProgress?: (e: ProgressEvent) => void
+  apiUrl?: string
+}): Promise<JSendError | JSendSuccess<{ hostedFileInfo: HostedFileInfo }>> {
+  const clientFile = await createClientFile(file)
+
+  const uploadPolicyResponse = await getUploadPolicy({
+    authToken,
+    path,
+    file,
+    apiUrl,
+  })
+
+  if (uploadPolicyResponse.status === "error") {
+    return uploadPolicyResponse
+  }
+
+  const { formFields, apiUrl: uploadUrl, fileUrl } = uploadPolicyResponse.data
+
+  // upload file to Amazon
+  const form = new FormData()
+  for (const [key, value] of Object.entries(formFields)) {
+    form.append(key, value)
+  }
+  form.append("content-type", file.type)
+  form.append("file", clientFile.file)
+
+  /**
+   * Post to S3 with a callback for returning progress
+   */
+  const uploadResponse = await axios.post(uploadUrl, form, {
+    onUploadProgress(e) {
+      if (onProgress == null) return
+      onProgress({
+        clientFile,
+        file: clientFile.file,
+        loaded: e.loaded,
+        total: e.total,
+      })
+    },
+  })
+  if (uploadResponse.status !== 204) {
+    return {
+      status: "error",
+      message: `Error during upload ${JSON.stringify(
+        uploadResponse.data,
+        null,
+        2
+      )}`,
+    }
+  }
+  const hostedFileInfo: HostedFileInfo =
+    clientFile.type === "image"
+      ? {
+          type: "image",
+          size: clientFile.size,
+          url: fileUrl,
+        }
+      : {
+          type: "generic",
+          url: fileUrl,
+        }
+  return {
+    status: "success",
+    data: {
+      hostedFileInfo,
+    },
   }
 }

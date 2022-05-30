@@ -5,7 +5,7 @@ import { FullPortivedHostedImageEditor } from "./types"
 import { resizeInside } from "./resize-inside"
 import { UploadFileResponse, UploadProps } from "@portive/api-types"
 import { nanoid } from "nanoid"
-import { createClientFile } from "~/lib/api"
+import { createClientFile, getUploadPolicy } from "~/lib/api"
 
 const POLICY_URL = "http://localhost:3001/api/v1/upload"
 
@@ -69,35 +69,16 @@ async function _uploadHostedImage(
     children: [{ text: "" }],
   })
 
-  try {
-    const authTokenAsString =
-      typeof upload.authToken === "function"
-        ? await upload.authToken()
-        : upload.authToken
-    const uploadProps: UploadProps & { authToken: string } = {
-      authToken: authTokenAsString,
-      path: upload.path,
-      clientFileInfo: {
-        type: "image",
-        filename: clientFile.filename,
-        contentType: clientFile.contentType,
-        bytes: clientFile.bytes,
-        size: clientFile.size,
-      },
-    }
-    axiosResponse = await axios.post(POLICY_URL, uploadProps)
-  } catch (e) {
-    setEntity(id, {
-      type: "error",
-      url: clientFile.objectUrl,
-      maxSize: clientFile.size,
-      message: `Could not access the upload API. The error is: ${e}`,
-    })
-    console.error(e)
-    return
-  }
+  const authTokenAsString =
+    typeof upload.authToken === "function"
+      ? await upload.authToken()
+      : upload.authToken
 
-  const policyResponse = axiosResponse.data
+  const policyResponse = await getUploadPolicy({
+    authToken: authTokenAsString,
+    path: upload.path,
+    file: clientFile,
+  })
 
   if (policyResponse.status === "error") {
     const message = `Error getting upload Policy. The error is: ${policyResponse.message}`
