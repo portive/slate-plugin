@@ -1,10 +1,9 @@
 import { Transforms } from "slate"
 // import { uploadFile } from "../shared/upload-file"
-import { FullPortivedHostedImageEditor } from "./types"
+import { FullPortiveEditor } from "./types"
 import { resizeInside } from "./resize-inside"
 import { nanoid } from "nanoid"
-import { createClientFile } from "~/lib/api"
-import { uploadFile } from "~/lib/api"
+import { createClientFile, isHostedImage, uploadFile } from "~/lib/api"
 
 async function getImageSize(url: string): Promise<[number, number]> {
   return new Promise((resolve, reject) => {
@@ -23,13 +22,13 @@ async function getImageSize(url: string): Promise<[number, number]> {
  * This is the asynchronous part of `uploadHostedImage` that contains most of
  * the meat of the function including uploading and setting the entity.
  */
-async function _uploadHostedImage(
-  editor: FullPortivedHostedImageEditor,
+async function uploadHostedImage(
+  editor: FullPortiveEditor,
   id: string,
   file: File
 ) {
-  const upload = editor.hostedImage
-  const { setEntity } = upload.useStore.getState()
+  const portive = editor.portive
+  const { setEntity } = portive.useStore.getState()
 
   const clientFile = await createClientFile(file)
   if (clientFile.type !== "image") {
@@ -44,12 +43,13 @@ async function _uploadHostedImage(
   const initialPreviewSize = resizeInside(
     clientFile.size[0],
     clientFile.size[1],
-    upload.defaultResize.width,
-    upload.defaultResize.height
+    portive.defaultResize.width,
+    portive.defaultResize.height
   )
 
   setEntity(id, {
-    type: "loading",
+    status: "loading",
+    type: "image",
     url: clientFile.objectUrl,
     maxSize: clientFile.size,
     sentBytes: 0,
@@ -63,12 +63,13 @@ async function _uploadHostedImage(
   })
 
   const uploadResult = await uploadFile({
-    authToken: upload.authToken,
-    path: upload.path,
+    authToken: portive.authToken,
+    path: portive.path,
     file,
     onProgress(e) {
       setEntity(id, {
-        type: "loading",
+        status: "loading",
+        type: "image",
         url: clientFile.objectUrl,
         maxSize: clientFile.size,
         sentBytes: e.loaded,
@@ -79,7 +80,8 @@ async function _uploadHostedImage(
 
   if (uploadResult.status === "error") {
     setEntity(id, {
-      type: "error",
+      status: "error",
+      type: "image",
       url: clientFile.objectUrl,
       maxSize: clientFile.size,
       message: uploadResult.message,
@@ -92,7 +94,8 @@ async function _uploadHostedImage(
    * Set image as uploaded but continue to use the local image URL
    */
   setEntity(id, {
-    type: "uploaded",
+    status: "uploaded",
+    type: "image",
     url: uploadResult.data.url,
     maxSize: clientFile.size,
   })
@@ -102,9 +105,86 @@ async function _uploadHostedImage(
    * the cache so we can swap the local file for the remote file.
    */
   setEntity(id, {
-    type: "uploaded",
+    status: "uploaded",
+    type: "image",
     url: uploadResult.data.url,
     maxSize: clientFile.size,
+  })
+}
+
+/**
+ * This is the asynchronous part of `uploadHostedImage` that contains most of
+ * the meat of the function including uploading and setting the entity.
+ */
+async function uploadHostedFile(
+  editor: FullPortiveEditor,
+  id: string,
+  file: File
+) {
+  const portive = editor.portive
+  const { setEntity } = portive.useStore.getState()
+
+  const clientFile = await createClientFile(file)
+  if (clientFile.type !== "generic") {
+    throw new Error(`Expected clientFile.type to be generic`)
+  }
+
+  setEntity(id, {
+    status: "loading",
+    type: "generic",
+    url: clientFile.objectUrl,
+    sentBytes: 0,
+    totalBytes: file.size,
+  })
+  Transforms.insertNodes(editor, {
+    type: "block-file",
+    id,
+    children: [{ text: "" }],
+  })
+
+  const uploadResult = await uploadFile({
+    authToken: portive.authToken,
+    path: portive.path,
+    file,
+    onProgress(e) {
+      setEntity(id, {
+        status: "loading",
+        type: "generic",
+        url: clientFile.objectUrl,
+        sentBytes: e.loaded,
+        totalBytes: e.total,
+      })
+    },
+  })
+
+  if (uploadResult.status === "error") {
+    setEntity(id, {
+      status: "error",
+      type: "generic",
+      url: clientFile.objectUrl,
+      message: uploadResult.message,
+    })
+    console.error(uploadResult.message)
+    return
+  }
+
+  /**
+   * Set image as uploaded but continue to use the local image URL
+   */
+  setEntity(id, {
+    status: "uploaded",
+    type: "generic",
+    url: uploadResult.data.url,
+  })
+  await getImageSize(uploadResult.data.url)
+  /**
+   * After `getImageSize` executes, we know that the uploaded file is now in
+   * the cache so we can swap the local file for the remote file.
+   */
+  setEntity(id, {
+    status: "uploaded",
+    type: "generic",
+    url: uploadResult.data.url,
   })
 }
 
@@ -115,11 +195,12 @@ async function _uploadHostedImage(
  * of the upload in the editor. For example, how much upload progress there is
  * and when it's complete, sets the URL of the upload.
  */
-export function uploadHostedImage(
-  editor: FullPortivedHostedImageEditor,
-  file: File
-): string {
+export function upload(editor: FullPortiveEditor, file: File): string {
   const id = nanoid()
-  _uploadHostedImage(editor, id, file)
+  if (isHostedImage(file)) {
+    uploadHostedImage(editor, id, file)
+  } else {
+    uploadHostedFile(editor, id, file)
+  }
   return id
 }

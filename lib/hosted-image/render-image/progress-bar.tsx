@@ -1,11 +1,11 @@
-import { useHostedImage } from "./context"
+import { useHostedImageContext } from "./hosted-image-context"
 
 const BAR_HEIGHT = 16
 const MARGIN = 16
 
 export function ProgressBar() {
-  const { entity, size } = useHostedImage()
-  if (entity.type !== "loading") {
+  const { entity, size } = useHostedImageContext()
+  if (entity.status !== "loading") {
     return null
   }
   /**

@@ -4,7 +4,7 @@ import { ProgressBar } from "./progress-bar"
 import { RemoveIcon } from "./remove-icon"
 import { ErrorMessage } from "./error-message"
 import { ResizeControls } from "./resize-controls"
-import { useHostedImage } from "./context"
+import { useHostedImageContext } from "./hosted-image-context"
 
 /**
  * Display image controls that appear over the image.
@@ -26,7 +26,7 @@ export function ImageControls({
   element: HostedImageInterface
   children: React.ReactNode
 }) {
-  const { entity } = useHostedImage()
+  const { entity } = useHostedImageContext()
   const focused = useFocused()
   const selected = useSelected()
   const showResizeControls = focused && selected
@@ -62,7 +62,7 @@ export function ImageControls({
       {image}
       <ProgressBar />
       <ErrorMessage />
-      {entity.type === "error" ? <RemoveIcon element={element} /> : null}
+      {entity.status === "error" ? <RemoveIcon element={element} /> : null}
       {showResizeControls ? <ResizeControls element={element} /> : null}
     </span>
   )

@@ -1,8 +1,8 @@
-import { useHostedImage } from "./context"
+import { useHostedImageContext } from "./hosted-image-context"
 
 export function ErrorMessage() {
-  const { entity } = useHostedImage()
-  if (entity.type !== "error") return null
+  const { entity } = useHostedImageContext()
+  if (entity.status !== "error") return null
   return (
     <div
       style={{

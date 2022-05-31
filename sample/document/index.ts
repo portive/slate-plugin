@@ -1,4 +1,4 @@
-import { ImageEntity } from "~/lib/hosted-image"
+import { FileEntity } from "~/lib/hosted-image"
 import { Descendant } from "slate"
 
 const PORTRAIT_IMAGE =
@@ -48,40 +48,46 @@ export type EntityKeys =
   | "uploaded"
   | "error"
 
-export const initialEntities: Record<EntityKeys, ImageEntity> = {
+export const initialEntities: Record<EntityKeys, FileEntity> = {
   icon: {
-    type: "uploaded",
+    status: "uploaded",
+    type: "image",
     url: images.icon.url,
     maxSize: images.icon.originalSize,
   },
   zero: {
-    type: "loading",
+    status: "loading",
+    type: "image",
     url: images.landscape.url,
     sentBytes: 1000,
     totalBytes: 100000,
     maxSize: images.landscape.originalSize,
   },
   half: {
-    type: "loading",
+    status: "loading",
+    type: "image",
     url: images.landscape.url,
     sentBytes: 50000,
     totalBytes: 100000,
     maxSize: images.landscape.originalSize,
   },
   full: {
-    type: "loading",
+    status: "loading",
+    type: "image",
     url: images.landscape.url,
     maxSize: images.landscape.originalSize,
     sentBytes: 100000,
     totalBytes: 100000,
   },
   uploaded: {
-    type: "uploaded",
+    status: "uploaded",
+    type: "image",
     url: images.landscape.url,
     maxSize: images.landscape.originalSize,
   },
   error: {
-    type: "error",
+    status: "error",
+    type: "image",
     url: images.landscape.url,
     maxSize: images.landscape.originalSize,
     message:

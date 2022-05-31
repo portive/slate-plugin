@@ -1,5 +1,5 @@
 import create from "zustand"
-import { ImageFileEntityProps } from "../hosted-image/types"
+import { FileEntityProps } from "../hosted-image/types"
 import { Entity, EntityState } from "./types"
 
 export const createStore = <T>(
@@ -38,5 +38,5 @@ export const createStore = <T>(
  * https://stackoverflow.com/questions/62720954/typescript-how-to-create-a-generic-type-alias-for-a-generic-function
  */
 
-export const useImageStore = createStore<ImageFileEntityProps>()
+export const useImageStore = createStore<FileEntityProps>()
 export type UseImageStore = typeof useImageStore

@@ -10,7 +10,7 @@ export const HostedImageContext = React.createContext<{
   setSize: Dispatch<SetStateAction<[number, number]>>
 } | null>(null)
 
-export function useHostedImage() {
+export function useHostedImageContext() {
   const context = useContext(HostedImageContext)
   if (context == null) {
     throw new Error(`Expected context to not be null`)

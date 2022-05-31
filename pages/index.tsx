@@ -8,13 +8,16 @@ import {
 } from "slate-react"
 import React, { useCallback, useState } from "react"
 import {
+  HostedFileInterface,
   HostedImage,
   HostedImageInterface,
   handlePasteImage,
   handleDropImage,
-  withHostedImage,
-  PortiveHostedImageEditor,
+  withPortive,
+  PortiveEditor,
+  useEntity,
 } from "~/lib/hosted-image"
+import { HostedFile } from "~/lib/hosted-file"
 import { HistoryEditor, withHistory } from "slate-history"
 import { DiscriminatedRenderElementProps } from "~/lib/shared/types"
 import { env } from "~/lib/server-env"
@@ -30,13 +33,18 @@ type ParagraphElement = {
   type: "paragraph"
   children: (CustomText | InlineImageElement)[]
 }
+type BlockFileElement = { type: "block-file" } & HostedFileInterface
 type BlockImageElement = { type: "block-image" } & HostedImageInterface
 type InlineImageElement = { type: "inline-image" } & HostedImageInterface
-type CustomElement = ParagraphElement | BlockImageElement | InlineImageElement
+type CustomElement =
+  | ParagraphElement
+  | BlockFileElement
+  | BlockImageElement
+  | InlineImageElement
 
 declare module "slate" {
   interface CustomTypes {
-    Editor: BaseEditor & ReactEditor & HistoryEditor & PortiveHostedImageEditor
+    Editor: BaseEditor & ReactEditor & HistoryEditor & PortiveEditor
     Element: CustomElement
     Text: CustomText
   }
@@ -47,7 +55,7 @@ export default function Index({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [editor] = useState<Editor>(() => {
     const reactEditor = withReact(withHistory(createEditor()))
-    const editor = withHostedImage(
+    const editor = withPortive(
       {
         authToken,
         path: "demo",
@@ -72,7 +80,7 @@ export default function Index({
       const files = e.target.files
       if (files === null) return
       for (const file of files) {
-        editor.hostedImage.uploadHostedImage(file)
+        editor.portive.uploadFile(file)
       }
     },
     [editor]
@@ -121,6 +129,8 @@ export default function Index({
 function renderElement(props: RenderElementProps) {
   const element = props.element
   switch (element.type) {
+    case "block-file":
+      return <BlockFile {...props} element={element} />
     case "block-image":
       return <BlockImage {...props} element={element} />
     case "inline-image":
@@ -130,6 +140,48 @@ function renderElement(props: RenderElementProps) {
     default:
       throw new Error("Unexpected type")
   }
+}
+
+// function useEntity() {
+
+//   const editor = useSlateStatic()
+//   const entityFromStore = editor.portive.useStore(
+//     (state) => state.entities[element.id]
+//   )
+// }
+
+export function BlockFile({
+  attributes,
+  element,
+  children,
+}: DiscriminatedRenderElementProps<"block-file">) {
+  const entity = useEntity(element, (url) => {
+    return {
+      status: "uploaded",
+      type: "generic",
+      url: element.id,
+    }
+  })
+  return (
+    <div
+      {...attributes}
+      style={{
+        borderRadius: "0.5em",
+        border: "1px solid #e0e0e0",
+        margin: "8px 0",
+        padding: "1em",
+      }}
+      contentEditable={false}
+    >
+      <div style={{ display: "flex", gap: "1em" }}>
+        <div style={{ color: "#808080" }}>💾</div>
+        <div>
+          {new URL(entity.url).pathname}
+          {children}
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export function BlockImage({

@@ -10,11 +10,21 @@ import { Entity } from "../shared/types"
  */
 
 export type ImageFileEntityProps = {
+  type: "image"
   url: string
   maxSize: [number, number] // necessary for when the image is still a BLOB
 }
 
+export type GenericFileEntityProps = {
+  type: "generic"
+  url: string
+}
+
+export type FileEntityProps = GenericFileEntityProps | ImageFileEntityProps
+
 export type ImageEntity = Entity<ImageFileEntityProps>
+export type GenericEntity = Entity<GenericFileEntityProps>
+export type FileEntity = Entity<FileEntityProps>
 
 export type HostedImageOptions = {
   authToken: string | (() => Promisable<string>)
@@ -22,10 +32,10 @@ export type HostedImageOptions = {
   defaultResize: Resize
   minResizeWidth?: number
   maxResizeWidth?: number
-  initialEntities: Record<string, ImageEntity>
+  initialEntities: Record<string, FileEntity>
 }
 
-export type HostedImageEditorProp = {
+export type PortiveEditorProp = {
   authToken: string | (() => Promisable<string>)
   path: string
   defaultResize: Resize
@@ -33,17 +43,17 @@ export type HostedImageEditorProp = {
   maxResizeWidth: number
   // useStore: UseStore // store of entities. `initialEntities` is put into here initially.
   useStore: UseImageStore
-  uploadHostedImage: (file: File) => string
+  uploadFile: (file: File) => string
 }
 
-export type PortiveHostedImageEditor = {
-  hostedImage: HostedImageEditorProp
+export type PortiveEditor = {
+  portive: PortiveEditorProp
 }
 
-export type FullPortivedHostedImageEditor = BaseEditor &
+export type FullPortiveEditor = BaseEditor &
   ReactEditor &
   HistoryEditor &
-  PortiveHostedImageEditor
+  PortiveEditor
 
 type VoidChildren = [{ text: "" }]
 
@@ -62,6 +72,17 @@ export interface HostedImageInterface {
    * okay.
    */
   size: [number, number]
+  children: VoidChildren
+}
+
+export interface HostedFileInterface {
+  /**
+   * id is either a URL to the file which will contain at least one `/` or it
+   * is a string `id` to find an `ImageEntity` with the target of the
+   * `fileEneity` being a `url` or an Object URL to the file on the
+   * local computer of the browser.
+   */
+  id: string
   children: VoidChildren
 }
 

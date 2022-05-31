@@ -30,7 +30,7 @@ type ImageOrCanvas = HTMLImageElement | HTMLCanvasElement
  * @param  {number} height output image height
  * @return {array<number>} [ width, height ]
  */
-function getNewImageDimentions(
+function getNewImageDimensions(
   img: ImageOrCanvas,
   width: number,
   height: number
@@ -72,7 +72,7 @@ export function resize2Canvas(
     throw new Error("`img` is required.")
   }
   // Calculate the width and height of the new image
-  const newSize = getNewImageDimentions(img, width, height)
+  const newSize = getNewImageDimensions(img, width, height)
 
   // Draw to canvas
   const canvas = document.createElement("canvas")

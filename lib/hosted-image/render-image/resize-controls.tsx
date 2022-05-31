@@ -2,14 +2,14 @@ import React, { useCallback, useState } from "react"
 import { ReactEditor, useSlateStatic } from "slate-react"
 import { HostedImageInterface } from "../types"
 import { Element, Transforms } from "slate"
-import { useHostedImage } from "./context"
+import { useHostedImageContext } from "./hosted-image-context"
 
 export function ResizeControls({ element }: { element: HostedImageInterface }) {
-  const { entity, size, setSize } = useHostedImage()
+  const { entity, size, setSize } = useHostedImageContext()
   const editor = useSlateStatic()
   const [isResizing, setIsResizing] = useState(false)
 
-  if (entity.maxSize[0] < editor.hostedImage.minResizeWidth) return null
+  if (entity.maxSize[0] < editor.portive.minResizeWidth) return null
 
   let currentSize = size
 
@@ -18,10 +18,10 @@ export function ResizeControls({ element }: { element: HostedImageInterface }) {
       setIsResizing(true)
       const startX = e.clientX
       const startWidth = size[0]
-      const minWidth = editor.hostedImage.minResizeWidth
+      const minWidth = editor.portive.minResizeWidth
       const maxWidth = Math.min(
         entity.maxSize[0],
-        editor.hostedImage.maxResizeWidth
+        editor.portive.maxResizeWidth
       )
       /**
        * Handle resize dragging through an event handler on mouseMove on the

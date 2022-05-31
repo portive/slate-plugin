@@ -1,16 +1,12 @@
 import { createStore } from "../shared/use-store"
-import {
-  FullPortivedHostedImageEditor,
-  ImageFileEntityProps,
-  HostedImageOptions,
-} from "./types"
-import { uploadHostedImage } from "./upload-hosted-image"
+import { FullPortiveEditor, FileEntityProps, HostedImageOptions } from "./types"
+import { upload } from "./upload-hosted-image"
 export * from "./types"
 export * from "../shared/use-store"
-export * from "./render"
+export * from "./render-image"
 export * from "./handlers"
 
-export function withHostedImage<T extends FullPortivedHostedImageEditor>(
+export function withPortive<T extends FullPortiveEditor>(
   {
     authToken,
     path,
@@ -23,15 +19,15 @@ export function withHostedImage<T extends FullPortivedHostedImageEditor>(
   }: HostedImageOptions,
   editor: T
 ): T {
-  editor.hostedImage = {
+  editor.portive = {
     authToken,
     path,
     minResizeWidth,
     maxResizeWidth,
     defaultResize,
-    useStore: createStore<ImageFileEntityProps>({ entities: initialEntities }),
-    uploadHostedImage(file: File): string {
-      return uploadHostedImage(editor, file)
+    useStore: createStore<FileEntityProps>({ entities: initialEntities }),
+    uploadFile(file: File): string {
+      return upload(editor, file)
     },
   }
   return editor

@@ -1,4 +1,5 @@
 import { Editor } from "slate"
+import { isHostedImage } from "../api"
 
 export const handlePasteImage = (
   editor: Editor,
@@ -7,7 +8,7 @@ export const handlePasteImage = (
   const files = e.clipboardData.files
   if (files.length === 0) return false
   for (const file of files) {
-    editor.hostedImage.uploadHostedImage(file)
+    editor.portive.uploadFile(file)
   }
   return true
 }
@@ -19,7 +20,7 @@ export const handleDropImage = (
   const files = e.dataTransfer.files
   if (files.length === 0) return false
   for (const file of files) {
-    editor.hostedImage.uploadHostedImage(file)
+    editor.portive.uploadFile(file)
   }
   return true
 }

@@ -1,11 +1,15 @@
-import { HostedImageInterface, ImageEntity } from "../types"
+import {
+  HostedImageInterface,
+  FileEntityProps,
+  HostedFileInterface,
+} from "../types"
 import { useSlateStatic, useSelected, useFocused } from "slate-react"
 import { ImageControls } from "./image-controls"
 import { CSSProperties, useEffect, useState } from "react"
-import { HostedImageContext } from "./context"
+import { HostedImageContext } from "./hosted-image-context"
 import { useMemo } from "react"
 import { getSizeFromUrl } from "./utils"
-import { RenderElementPropsFor } from "../../shared/types"
+import { Entity, RenderElementPropsFor } from "../../shared/types"
 
 export function RenderHostedImage({
   attributes,
@@ -29,6 +33,25 @@ function useHighlightedStyle() {
   const highlighted = selected && focused
   const boxShadow = highlighted ? "0 0 0 3px DodgerBlue" : "none"
   return { boxShadow }
+}
+
+/**
+ * Takes an `element` (which is only needs for its `id`) and returns an
+ * Entity from it.
+ */
+export function useEntity(
+  element: HostedImageInterface | HostedFileInterface,
+  getEntityFromUrl: (url: string) => Entity<FileEntityProps>
+): Entity<FileEntityProps> {
+  const editor = useSlateStatic()
+  const entityFromStore = editor.portive.useStore(
+    (state) => state.entities[element.id]
+  )
+  if (element.id.includes("/")) {
+    return getEntityFromUrl(element.id)
+  } else {
+    return entityFromStore
+  }
 }
 
 /**
@@ -69,27 +92,24 @@ export function HostedImage({
   style?: CSSProperties
 }) {
   const editor = useSlateStatic()
-  const entityFromStore = editor.hostedImage.useStore(
-    (state) => state.entities[element.id]
-  )
+  const entity = useEntity(element, (url) => {
+    const maxSize = getSizeFromUrl(url)
+    return {
+      status: "uploaded",
+      type: "image",
+      url: element.id,
+      maxSize,
+    }
+  })
   const [size, setSize] = useState(element.size)
 
   useEffect(() => {
     setSize(element.size)
   }, [element.size[0], element.size[1]])
 
-  const entity = useMemo<ImageEntity>(() => {
-    if (element.id.includes("/")) {
-      const maxSize = getSizeFromUrl(element.id)
-      return {
-        type: "uploaded",
-        url: element.id,
-        maxSize,
-      }
-    } else {
-      return entityFromStore
-    }
-  }, [element.id, entityFromStore])
+  if (entity.type !== "image") {
+    throw new Error(`Expected entity to be of type image`)
+  }
 
   const highlightedStyle = useHighlightedStyle()
   return (

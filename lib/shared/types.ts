@@ -42,17 +42,17 @@ export type RenderElementPropsFor<T> = Omit<RenderElementProps, "element"> & {
 }
 
 export type FileLoadingEntity<T> = {
-  type: "loading"
+  status: "loading"
   sentBytes: number
   totalBytes: number
 } & T
 
 export type FileUploadedEntity<T> = {
-  type: "uploaded"
+  status: "uploaded"
 } & T
 
 export type FileErrorEntity<T> = {
-  type: "error"
+  status: "error"
   message: string
 } & T
 
