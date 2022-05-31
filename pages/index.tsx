@@ -14,7 +14,6 @@ import {
   handleDropImage,
   withHostedImage,
   PortiveHostedImageEditor,
-  ImageEntity,
 } from "~/lib/hosted-image"
 import { HistoryEditor, withHistory } from "slate-history"
 import { DiscriminatedRenderElementProps } from "~/lib/shared/types"
