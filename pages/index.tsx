@@ -20,6 +20,7 @@ import { HistoryEditor, withHistory } from "slate-history"
 import { DiscriminatedRenderElementProps } from "~/lib/shared/types"
 import { env } from "~/lib/server-env"
 import { InferGetServerSidePropsType } from "next"
+import { initialValue, initialEntities } from "~/sample/document"
 
 export async function getServerSideProps() {
   return { props: { authToken: env.PORTIVE_AUTH_TOKEN } }
@@ -42,113 +43,113 @@ declare module "slate" {
   }
 }
 
-const initialValue: Descendant[] = [
-  { type: "paragraph", children: [{ text: "Small image can't be resized" }] },
-  {
-    type: "paragraph",
-    children: [
-      { text: "Image is inline " },
-      {
-        type: "inline-image",
-        id: "RGVIrl9C5y2i5n95T7lAR",
-        size: [16, 16],
-        children: [{ text: "" }],
-      },
-      { text: " in the middle of text" },
-    ],
-  },
-  {
-    type: "block-image",
-    id: "RGVIrl9C5y2i5n95T7lAR",
-    size: [16, 16],
-    children: [{ text: "" }],
-  },
-  { type: "paragraph", children: [{ text: "In progress uploads" }] },
-  {
-    type: "block-image",
-    id: "fviZDsq2zVZ3PIe3vgVU9",
-    size: [256, 171],
-    children: [{ text: "" }],
-  },
-  {
-    type: "block-image",
-    id: "AtDtcNNMXEl3PNmkZbVmN",
-    size: [256, 171],
-    children: [{ text: "" }],
-  },
-  {
-    type: "block-image",
-    id: "CUSLBfyRv4nxZTr9CmBBW",
-    size: [256, 171],
-    children: [{ text: "" }],
-  },
-  {
-    type: "paragraph",
-    children: [{ text: "Completed upload in document value" }],
-  },
-  {
-    type: "block-image",
-    id: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
-    size: [256, 171],
-    children: [{ text: "" }],
-  },
-  { type: "paragraph", children: [{ text: "Completed upload in Store" }] },
-  {
-    type: "block-image",
-    id: "RwQIK7memACjhro80uwPN",
-    size: [256, 171],
-    children: [{ text: "" }],
-  },
-  { type: "paragraph", children: [{ text: "Failed upload" }] },
-  {
-    type: "block-image",
-    id: "KVFjpuYRvXDu0PuWIEsEP",
-    size: [256, 171],
-    children: [{ text: "" }],
-  },
-  { type: "paragraph", children: [{ text: "End of World" }] },
-]
+// const initialValue: Descendant[] = [
+//   { type: "paragraph", children: [{ text: "Small image can't be resized" }] },
+//   {
+//     type: "paragraph",
+//     children: [
+//       { text: "Image is inline " },
+//       {
+//         type: "inline-image",
+//         id: "RGVIrl9C5y2i5n95T7lAR",
+//         size: [16, 16],
+//         children: [{ text: "" }],
+//       },
+//       { text: " in the middle of text" },
+//     ],
+//   },
+//   {
+//     type: "block-image",
+//     id: "RGVIrl9C5y2i5n95T7lAR",
+//     size: [16, 16],
+//     children: [{ text: "" }],
+//   },
+//   { type: "paragraph", children: [{ text: "In progress uploads" }] },
+//   {
+//     type: "block-image",
+//     id: "fviZDsq2zVZ3PIe3vgVU9",
+//     size: [256, 171],
+//     children: [{ text: "" }],
+//   },
+//   {
+//     type: "block-image",
+//     id: "AtDtcNNMXEl3PNmkZbVmN",
+//     size: [256, 171],
+//     children: [{ text: "" }],
+//   },
+//   {
+//     type: "block-image",
+//     id: "CUSLBfyRv4nxZTr9CmBBW",
+//     size: [256, 171],
+//     children: [{ text: "" }],
+//   },
+//   {
+//     type: "paragraph",
+//     children: [{ text: "Completed upload in document value" }],
+//   },
+//   {
+//     type: "block-image",
+//     id: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
+//     size: [256, 171],
+//     children: [{ text: "" }],
+//   },
+//   { type: "paragraph", children: [{ text: "Completed upload in Store" }] },
+//   {
+//     type: "block-image",
+//     id: "RwQIK7memACjhro80uwPN",
+//     size: [256, 171],
+//     children: [{ text: "" }],
+//   },
+//   { type: "paragraph", children: [{ text: "Failed upload" }] },
+//   {
+//     type: "block-image",
+//     id: "KVFjpuYRvXDu0PuWIEsEP",
+//     size: [256, 171],
+//     children: [{ text: "" }],
+//   },
+//   { type: "paragraph", children: [{ text: "End of World" }] },
+// ]
 
-const initialEntities: Record<string, ImageEntity> = {
-  RGVIrl9C5y2i5n95T7lAR: {
-    type: "uploaded",
-    url: "https://files.wysimark.com/f/demo/2022/4/13/bu371qgo8qvrxrsknqfv9--44x44.png",
-    maxSize: [44, 44],
-  },
-  fviZDsq2zVZ3PIe3vgVU9: {
-    type: "loading",
-    url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
-    sentBytes: 1000,
-    totalBytes: 100000,
-    maxSize: [1024, 683],
-  },
-  AtDtcNNMXEl3PNmkZbVmN: {
-    type: "loading",
-    url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
-    sentBytes: 50000,
-    totalBytes: 100000,
-    maxSize: [1024, 683],
-  },
-  CUSLBfyRv4nxZTr9CmBBW: {
-    type: "loading",
-    url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
-    maxSize: [1024, 683],
-    sentBytes: 100000,
-    totalBytes: 100000,
-  },
-  RwQIK7memACjhro80uwPN: {
-    type: "uploaded",
-    url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
-    maxSize: [1024, 683],
-  },
-  KVFjpuYRvXDu0PuWIEsEP: {
-    type: "error",
-    url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
-    maxSize: [1024, 683],
-    message:
-      "Error in API props validation: StructError: At path: file -- Expected the value to satisfy a union of `object | object`, but received: [object Object]",
-  },
-}
+// const initialEntities: Record<string, ImageEntity> = {
+//   RGVIrl9C5y2i5n95T7lAR: {
+//     type: "uploaded",
+//     url: "https://files.wysimark.com/f/demo/2022/4/13/bu371qgo8qvrxrsknqfv9--44x44.png",
+//     maxSize: [44, 44],
+//   },
+//   fviZDsq2zVZ3PIe3vgVU9: {
+//     type: "loading",
+//     url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
+//     sentBytes: 1000,
+//     totalBytes: 100000,
+//     maxSize: [1024, 683],
+//   },
+//   AtDtcNNMXEl3PNmkZbVmN: {
+//     type: "loading",
+//     url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
+//     sentBytes: 50000,
+//     totalBytes: 100000,
+//     maxSize: [1024, 683],
+//   },
+//   CUSLBfyRv4nxZTr9CmBBW: {
+//     type: "loading",
+//     url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
+//     maxSize: [1024, 683],
+//     sentBytes: 100000,
+//     totalBytes: 100000,
+//   },
+//   RwQIK7memACjhro80uwPN: {
+//     type: "uploaded",
+//     url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
+//     maxSize: [1024, 683],
+//   },
+//   KVFjpuYRvXDu0PuWIEsEP: {
+//     type: "error",
+//     url: "https://files.wysimark.com/f/demo/2022/2/24/vbw6mr1jqcnqhniogsma6--1024x683.jpg?size=256x171",
+//     maxSize: [1024, 683],
+//     message:
+//       "Error in API props validation: StructError: At path: file -- Expected the value to satisfy a union of `object | object`, but received: [object Object]",
+//   },
+// }
 
 export default function Index({
   authToken,

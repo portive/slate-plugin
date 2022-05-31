@@ -48,7 +48,19 @@ export type FullPortivedHostedImageEditor = BaseEditor &
 type VoidChildren = [{ text: "" }]
 
 export interface HostedImageInterface {
+  /**
+   * id is either a URL to the image which will contain at least one `/` or it
+   * is a string `id` to find an `ImageEntity` with the target of the
+   * `imageEntity` being a `url` or an Object URL to the image on the
+   * local computer of the browser.
+   */
   id: string
+  /**
+   * The `size` is required to know what dimensions to display the image at.
+   * Remember that during the user doing a resize, the size of the displayed
+   * image may not match with the size of the image on the server and that is
+   * okay.
+   */
   size: [number, number]
   children: VoidChildren
 }

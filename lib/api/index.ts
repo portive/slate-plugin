@@ -57,7 +57,7 @@ export async function getUploadPolicy({
   } catch (e) {
     return {
       status: "error",
-      message: `Error during uploadImage. The error is: ${e}`,
+      message: `Error during getUploadPolicy. ${e}`,
     }
   }
 }

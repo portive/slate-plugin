@@ -3,14 +3,17 @@ import { Transforms } from "slate"
 import { FullPortivedHostedImageEditor } from "./types"
 import { resizeInside } from "./resize-inside"
 import { nanoid } from "nanoid"
-import { createClientFile, getUploadPolicy } from "~/lib/api"
+import { createClientFile } from "~/lib/api"
 import { uploadFile } from "~/lib/api"
 
 async function getImageSize(url: string): Promise<[number, number]> {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const image = new Image()
     image.addEventListener("load", function () {
       resolve([this.naturalWidth, this.naturalHeight])
+    })
+    image.addEventListener("error", function (e) {
+      reject(e)
     })
     image.src = url
   })
