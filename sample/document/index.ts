@@ -1,5 +1,5 @@
 import { ImageEntity } from "~/lib/hosted-image"
-import { createEditor, BaseEditor, Descendant, Editor } from "slate"
+import { Descendant } from "slate"
 
 const PORTRAIT_IMAGE =
   "https://files.dev.portive.com/f/demo/ktjairhr4jy5i3qr6ow43--1920x2880.jpg"
@@ -10,35 +10,34 @@ const SQUARE_IMAGE =
 const ICON_IMAGE =
   "https://files.dev.portive.com/f/demo/qckv9tvtxqh76y0kncow6--40x40.png"
 
-const IMAGE_URL_REGEXP =
-  /[/][a-zA-Z0-9]+--([0-9]+)x([0-9]+)[.][a-z]+(\?[^?]*)?$/i
+const IMAGE_PATH_REGEXP = /[/][a-zA-Z0-9]+--([0-9]+)x([0-9]+)[.][a-z]+/i
 
 type HostedFileInfo = {
   type: "image"
   url: string
-  size: [number, number] // current size
-  originalSize: [number, number] // size of image on server
+  originalSize: [number, number] // size of origin image on server
+  currentSize: [number, number] // current size
 }
 
-function getImageInfo(url: string): HostedFileInfo {
-  console.log({ url })
-  const match = url.match(IMAGE_URL_REGEXP)
+function getHostedImageInfo(url: string | URL): HostedFileInfo {
+  url = new URL(url)
+  const match = url.pathname.match(IMAGE_PATH_REGEXP)
   if (match === null) throw new Error(`Expected url to match an Image URL`)
   const width = parseInt(match[1])
   const height = parseInt(match[2])
   return {
     type: "image",
-    url: url,
-    size: [width, height],
+    url: url.href,
     originalSize: [width, height],
+    currentSize: [width, height],
   }
 }
 
 export const images: Record<string, HostedFileInfo> = {
-  portrait: getImageInfo(PORTRAIT_IMAGE),
-  landscape: getImageInfo(LANDSCAPE_IMAGE),
-  square: getImageInfo(SQUARE_IMAGE),
-  icon: getImageInfo(ICON_IMAGE),
+  portrait: getHostedImageInfo(PORTRAIT_IMAGE),
+  landscape: getHostedImageInfo(LANDSCAPE_IMAGE),
+  square: getHostedImageInfo(SQUARE_IMAGE),
+  icon: getHostedImageInfo(ICON_IMAGE),
 }
 
 export type EntityKeys =
