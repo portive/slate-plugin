@@ -51,6 +51,7 @@ export type PortiveEditorProp = {
   createGenericFile: (e: CreateGenericFileProps) => Element
   handlePaste: (e: React.ClipboardEvent) => boolean
   handleDrop: (e: React.DragEvent) => boolean
+  handleChangeInputFile: (e: React.ChangeEvent<HTMLInputElement>) => boolean
 }
 
 export type PortiveEditor = {

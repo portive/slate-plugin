@@ -1,7 +1,11 @@
 import { createStore } from "../shared/use-store"
 import { FullPortiveEditor, FileEntityProps, HostedImageOptions } from "./types"
 import { upload } from "./upload-hosted-image"
-import { handlePasteFile, handleDropFile } from "./handlers"
+import {
+  handleChangeInputFile,
+  handlePasteFile,
+  handleDropFile,
+} from "./handlers"
 export * from "./types"
 export * from "../shared/use-store"
 export * from "./render-image"
@@ -39,6 +43,9 @@ export function withPortive<T extends FullPortiveEditor>(
     },
     handlePaste(e) {
       return handlePasteFile(editor, e)
+    },
+    handleChangeInputFile(e) {
+      return handleChangeInputFile(editor, e)
     },
   }
   return editor

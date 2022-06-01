@@ -14,6 +14,7 @@ const $blockFile = css`
   border-radius: 0.5em;
   border: 1px solid #e0e0e0;
   margin: 8px 0;
+  max-width: 360px;
   .--container {
     display: flex;
     gap: 0.5em;
@@ -94,17 +95,19 @@ export function BlockFile({
             </div>
           )}
         </div>
-        <div className="--icon">
-          <a
-            href={entity.url}
-            target="_blank"
-            rel="noreferrer"
-            className="--icon-button --download-icon"
-            download
-          >
-            <DownloadIcon />
-          </a>
-        </div>
+        {entity.status === "uploaded" ? (
+          <div className="--icon">
+            <a
+              href={entity.url}
+              target="_blank"
+              rel="noreferrer"
+              className="--icon-button --download-icon"
+              download
+            >
+              <DownloadIcon />
+            </a>
+          </div>
+        ) : null}
         <div className="--icon">
           <div className="--icon-button --trash-icon" onClick={removeElement}>
             <TrashIcon />

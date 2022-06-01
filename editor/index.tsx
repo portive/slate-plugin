@@ -61,24 +61,17 @@ export function MyEditor({
     return editor
   })
 
-  const onChangeFile = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
-    (e) => {
-      const files = e.target.files
-      if (files === null) return
-      for (const file of files) {
-        editor.portive.uploadFile(file)
-      }
-    },
-    [editor]
-  )
-
   return (
     <div style={{ marginLeft: 240 }}>
       <h1 style={{ font: "bold 36px sans-serif" }}>
         Slate Hosted Upload Plugin Demo
       </h1>
       <p>
-        <input type="file" onChange={onChangeFile} multiple />
+        <input
+          type="file"
+          onChange={editor.portive.handleChangeInputFile}
+          multiple
+        />
       </p>
       <Slate editor={editor} value={initialValue}>
         <Editable
