@@ -136,11 +136,8 @@ async function uploadHostedFile(
     sentBytes: 0,
     totalBytes: file.size,
   })
-  Transforms.insertNodes(editor, {
-    type: "block-file",
-    id,
-    children: [{ text: "" }],
-  })
+  const genericFileElement = portive.createGenericFile({ id, file, clientFile })
+  Transforms.insertNodes(editor, genericFileElement)
 
   const uploadResult = await uploadFile({
     authToken: portive.authToken,

@@ -16,6 +16,8 @@ export function withPortive<T extends FullPortiveEditor>(
     maxResizeWidth = 1280,
     defaultResize,
     initialEntities,
+    createImageFile,
+    createGenericFile,
   }: HostedImageOptions,
   editor: T
 ): T {
@@ -29,6 +31,8 @@ export function withPortive<T extends FullPortiveEditor>(
     uploadFile(file: File): string {
       return upload(editor, file)
     },
+    createImageFile,
+    createGenericFile,
   }
   return editor
 }

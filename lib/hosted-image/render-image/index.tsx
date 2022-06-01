@@ -27,7 +27,7 @@ export function RenderHostedImage({
   )
 }
 
-function useHighlightedStyle() {
+export function useHighlightedStyle() {
   const selected = useSelected()
   const focused = useFocused()
   const highlighted = selected && focused

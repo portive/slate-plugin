@@ -1,6 +1,6 @@
 import { useFocused, useSelected } from "slate-react"
 import { HostedImageInterface } from "../types"
-import { ProgressBar } from "./progress-bar"
+import { ImageProgressBar } from "./progress-bar"
 import { RemoveIcon } from "./remove-icon"
 import { ErrorMessage } from "./error-message"
 import { ResizeControls } from "./resize-controls"
@@ -60,7 +60,7 @@ export function ImageControls({
       }}
     >
       {image}
-      <ProgressBar />
+      <ImageProgressBar />
       <ErrorMessage />
       {entity.status === "error" ? <RemoveIcon element={element} /> : null}
       {showResizeControls ? <ResizeControls element={element} /> : null}

@@ -1,9 +1,14 @@
-import { BaseEditor } from "slate"
+import { BaseEditor, Element } from "slate"
 import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { Promisable } from "type-fest"
 import { UseImageStore } from "../shared/use-store"
 import { Entity } from "../shared/types"
+import {
+  ClientFile,
+  ClientGenericFile,
+  ClientImageFile,
+} from "@portive/api-types"
 
 /**
  * Entity
@@ -33,6 +38,8 @@ export type HostedImageOptions = {
   minResizeWidth?: number
   maxResizeWidth?: number
   initialEntities: Record<string, FileEntity>
+  createImageFile: (e: CreateImageFileProps) => Element
+  createGenericFile: (e: CreateGenericFileProps) => Element
 }
 
 export type PortiveEditorProp = {
@@ -44,6 +51,8 @@ export type PortiveEditorProp = {
   // useStore: UseStore // store of entities. `initialEntities` is put into here initially.
   useStore: UseImageStore
   uploadFile: (file: File) => string
+  createImageFile: (e: CreateImageFileProps) => Element
+  createGenericFile: (e: CreateGenericFileProps) => Element
 }
 
 export type PortiveEditor = {
@@ -90,4 +99,16 @@ export type Resize = {
   type: "inside"
   width: number
   height: number
+}
+
+export type CreateImageFileProps = {
+  id: string
+  file: File
+  clientFile: ClientImageFile
+}
+
+export type CreateGenericFileProps = {
+  id: string
+  file: File
+  clientFile: ClientGenericFile
 }

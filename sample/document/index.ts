@@ -9,6 +9,10 @@ const SQUARE_IMAGE =
   "https://files.dev.portive.com/f/demo/hibbzu5uks7jrnl91yxei--1920x1920.jpg"
 const ICON_IMAGE =
   "https://files.dev.portive.com/f/demo/qckv9tvtxqh76y0kncow6--40x40.png"
+const TEXT_FILE =
+  "https://files.dev.portive.com/f/demo/jsyd2e136k4ki4i4f5sz7.txt"
+const PDF_FILE =
+  "https://files.dev.portive.com/f/demo/gxvst8tkd7ta0fmr4htp2.pdf"
 
 const IMAGE_PATH_REGEXP = /[/][a-zA-Z0-9]+--([0-9]+)x([0-9]+)[.][a-z]+/i
 
@@ -47,8 +51,40 @@ export type EntityKeys =
   | "full"
   | "uploaded"
   | "error"
+  | "text"
 
-export const initialEntities: Record<EntityKeys, FileEntity> = {
+export const initialEntities: Record<string, FileEntity> = {
+  pdf: {
+    status: "uploaded",
+    type: "generic",
+    url: PDF_FILE,
+  },
+  text: {
+    status: "uploaded",
+    type: "generic",
+    url: TEXT_FILE,
+  },
+  zeroText: {
+    status: "loading",
+    type: "generic",
+    url: TEXT_FILE,
+    sentBytes: 0,
+    totalBytes: 100000,
+  },
+  halfText: {
+    status: "loading",
+    type: "generic",
+    url: TEXT_FILE,
+    sentBytes: 5000,
+    totalBytes: 100000,
+  },
+  fullText: {
+    status: "loading",
+    type: "generic",
+    url: TEXT_FILE,
+    sentBytes: 10000,
+    totalBytes: 10000,
+  },
   icon: {
     status: "uploaded",
     type: "image",
@@ -59,16 +95,16 @@ export const initialEntities: Record<EntityKeys, FileEntity> = {
     status: "loading",
     type: "image",
     url: images.landscape.url,
-    sentBytes: 1000,
-    totalBytes: 100000,
+    sentBytes: 0,
+    totalBytes: 3541,
     maxSize: images.landscape.originalSize,
   },
   half: {
     status: "loading",
     type: "image",
     url: images.landscape.url,
-    sentBytes: 50000,
-    totalBytes: 100000,
+    sentBytes: 1770,
+    totalBytes: 3541,
     maxSize: images.landscape.originalSize,
   },
   full: {
@@ -76,8 +112,8 @@ export const initialEntities: Record<EntityKeys, FileEntity> = {
     type: "image",
     url: images.landscape.url,
     maxSize: images.landscape.originalSize,
-    sentBytes: 100000,
-    totalBytes: 100000,
+    sentBytes: 3541,
+    totalBytes: 3541,
   },
   uploaded: {
     status: "uploaded",
@@ -96,7 +132,42 @@ export const initialEntities: Record<EntityKeys, FileEntity> = {
 }
 
 export const initialValue: Descendant[] = [
-  { type: "paragraph", children: [{ text: "Small images can't be resized" }] },
+  { type: "paragraph", children: [{ text: "Generic files" }] },
+  {
+    type: "block-file",
+    id: "pdf",
+    filename: "sherlock-holmes.pdf",
+    bytes: 771277,
+    children: [{ text: "" }],
+  },
+  {
+    type: "block-file",
+    id: "text",
+    filename: "lorem-ipsum.txt",
+    bytes: 3541,
+    children: [{ text: "" }],
+  },
+  {
+    type: "block-file",
+    id: "zeroText",
+    filename: "lorem-ipsum.txt",
+    bytes: 3541,
+    children: [{ text: "" }],
+  },
+  {
+    type: "block-file",
+    id: "halfText",
+    filename: "lorem-ipsum.txt",
+    bytes: 3541,
+    children: [{ text: "" }],
+  },
+  {
+    type: "block-file",
+    id: "fullText",
+    filename: "lorem-ipsum.txt",
+    bytes: 3541,
+    children: [{ text: "" }],
+  },
   {
     type: "paragraph",
     children: [
@@ -107,7 +178,7 @@ export const initialValue: Descendant[] = [
         size: [40, 40],
         children: [{ text: "" }],
       },
-      { text: " in the middle of text" },
+      { text: " in the middle of text. Small images can't be resized." },
     ],
   },
   {
