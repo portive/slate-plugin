@@ -75,7 +75,7 @@ export const initialEntities: Record<string, FileEntity> = {
     status: "loading",
     type: "generic",
     url: TEXT_FILE,
-    sentBytes: 5000,
+    sentBytes: 50000,
     totalBytes: 100000,
   },
   fullText: {

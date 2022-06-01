@@ -1,5 +1,5 @@
 import { Transforms } from "slate"
-import { useSlateStatic } from "slate-react"
+import { useReadOnly, useSlateStatic } from "slate-react"
 import { css } from "emotion"
 import bytes from "bytes"
 import { useHighlightedStyle } from "~/lib/hosted-image"
@@ -67,6 +67,7 @@ export function BlockFile({
   children,
 }: DiscriminatedRenderElementProps<"block-file">) {
   const editor = useSlateStatic()
+  const readOnly = useReadOnly()
   const entity = useEntity(element, (url) => {
     return {
       status: "uploaded",
@@ -108,11 +109,13 @@ export function BlockFile({
             </a>
           </div>
         ) : null}
-        <div className="--icon">
-          <div className="--icon-button --trash-icon" onClick={removeElement}>
-            <TrashIcon />
+        {!readOnly ? (
+          <div className="--icon">
+            <div className="--icon-button --trash-icon" onClick={removeElement}>
+              <TrashIcon />
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
       {children}
     </div>
