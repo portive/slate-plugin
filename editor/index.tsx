@@ -1,12 +1,8 @@
 import { createEditor, Descendant, Editor } from "slate"
 import { FileEntity } from "~/lib/hosted-image"
 import { Slate, Editable, withReact } from "slate-react"
-import React, { useCallback, useState } from "react"
-import {
-  handlePasteFile,
-  handleDropFile,
-  withPortive,
-} from "~/lib/hosted-image"
+import React, { useState } from "react"
+import { withPortive } from "~/lib/hosted-image"
 import { withHistory } from "slate-history"
 import { renderElement } from "./render"
 import "./types"

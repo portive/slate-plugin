@@ -39,5 +39,5 @@ export const createStore = <T>(
  * https://stackoverflow.com/questions/62720954/typescript-how-to-create-a-generic-type-alias-for-a-generic-function
  */
 
-export const useImageStore = createStore<FileEntityProps>()
-export type UseImageStore = typeof useImageStore
+export const useEntityStore = createStore<FileEntityProps>()
+export type UseEntityStore = typeof useEntityStore
