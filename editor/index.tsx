@@ -72,20 +72,6 @@ export function MyEditor({
     [editor]
   )
 
-  const onPaste = useCallback(
-    (e: React.ClipboardEvent) => {
-      handlePasteFile(editor, e)
-    },
-    [editor]
-  )
-
-  const onDrop = useCallback(
-    (e: React.DragEvent) => {
-      handleDropFile(editor, e)
-    },
-    [editor]
-  )
-
   return (
     <div style={{ marginLeft: 240 }}>
       <h1 style={{ font: "bold 36px sans-serif" }}>
@@ -97,8 +83,8 @@ export function MyEditor({
       <Slate editor={editor} value={initialValue}>
         <Editable
           renderElement={renderElement}
-          onPaste={onPaste}
-          onDrop={onDrop}
+          onPaste={editor.portive.handlePaste}
+          onDrop={editor.portive.handleDrop}
           style={{
             font: "16px sans-serif",
             border: "1px solid #c0c0c0",

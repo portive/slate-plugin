@@ -4,11 +4,7 @@ import { HistoryEditor } from "slate-history"
 import { Promisable } from "type-fest"
 import { UseImageStore } from "../shared/use-store"
 import { Entity } from "../shared/types"
-import {
-  ClientFile,
-  ClientGenericFile,
-  ClientImageFile,
-} from "@portive/api-types"
+import { ClientGenericFile, ClientImageFile } from "@portive/api-types"
 
 /**
  * Entity
@@ -53,6 +49,8 @@ export type PortiveEditorProp = {
   uploadFile: (file: File) => string
   createImageFile: (e: CreateImageFileProps) => Element
   createGenericFile: (e: CreateGenericFileProps) => Element
+  handlePaste: (e: React.ClipboardEvent) => boolean
+  handleDrop: (e: React.DragEvent) => boolean
 }
 
 export type PortiveEditor = {
