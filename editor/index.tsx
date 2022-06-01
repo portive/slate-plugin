@@ -14,7 +14,7 @@ import "./types"
 export function MyEditor({
   authToken,
   initialValue,
-  initialEntities,
+  initialEntities = {},
 }: {
   authToken: string
   initialValue: Descendant[]
