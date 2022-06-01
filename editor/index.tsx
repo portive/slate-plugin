@@ -3,8 +3,8 @@ import { FileEntity } from "~/lib/hosted-image"
 import { Slate, Editable, withReact } from "slate-react"
 import React, { useCallback, useState } from "react"
 import {
-  handlePasteImage,
-  handleDropImage,
+  handlePasteFile,
+  handleDropFile,
   withPortive,
 } from "~/lib/hosted-image"
 import { withHistory } from "slate-history"
@@ -74,14 +74,14 @@ export function MyEditor({
 
   const onPaste = useCallback(
     (e: React.ClipboardEvent) => {
-      handlePasteImage(editor, e)
+      handlePasteFile(editor, e)
     },
     [editor]
   )
 
   const onDrop = useCallback(
     (e: React.DragEvent) => {
-      handleDropImage(editor, e)
+      handleDropFile(editor, e)
     },
     [editor]
   )

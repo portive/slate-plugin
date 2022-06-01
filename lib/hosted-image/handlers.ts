@@ -1,7 +1,6 @@
 import { Editor } from "slate"
-import { isHostedImage } from "../api"
 
-export const handlePasteImage = (
+export const handlePasteFile = (
   editor: Editor,
   e: React.ClipboardEvent
 ): boolean => {
@@ -13,10 +12,7 @@ export const handlePasteImage = (
   return true
 }
 
-export const handleDropImage = (
-  editor: Editor,
-  e: React.DragEvent
-): boolean => {
+export const handleDropFile = (editor: Editor, e: React.DragEvent): boolean => {
   const files = e.dataTransfer.files
   if (files.length === 0) return false
   for (const file of files) {

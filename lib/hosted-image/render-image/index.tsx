@@ -7,7 +7,6 @@ import { useSlateStatic, useSelected, useFocused } from "slate-react"
 import { ImageControls } from "./image-controls"
 import { CSSProperties, useEffect, useState } from "react"
 import { HostedImageContext } from "./hosted-image-context"
-import { useMemo } from "react"
 import { getSizeFromUrl } from "./utils"
 import { Entity, RenderElementPropsFor } from "../../shared/types"
 
