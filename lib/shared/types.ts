@@ -47,12 +47,3 @@ export type OriginState = {
   setOrigin: (originKey: string, origin: Origin) => void
   getOrigin: (originKey: string) => Origin
 }
-
-export type UploadPolicy = {
-  status: "success"
-  data: {
-    apiUrl: string
-    fileUrl: string
-    formFields: Record<string, string>
-  }
-}
