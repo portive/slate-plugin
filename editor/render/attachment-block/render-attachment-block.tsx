@@ -10,7 +10,7 @@ import { DiscriminatedRenderElementProps } from "~/lib/shared/types"
 import { FileProgressBar } from "~/lib/hosted-image/render-image/progress-bar"
 import { DownloadIcon, FileIcon, TrashIcon } from "~/lib/icons"
 
-const $blockFile = css`
+const $attachmentBlock = css`
   position: relative;
   border-radius: 0.5em;
   border: 1px solid #e0e0e0;
@@ -71,7 +71,7 @@ const $blockFile = css`
   }
 `
 
-export function BlockFile({
+export function AttachmentBlock({
   attributes,
   element,
   children,
@@ -90,7 +90,7 @@ export function BlockFile({
     Transforms.removeNodes(editor, { at })
   }, [editor, element])
   return (
-    <div {...attributes} className={$blockFile} style={highlightedStyle}>
+    <div {...attributes} className={$attachmentBlock} style={highlightedStyle}>
       <div className="--container" contentEditable={false}>
         <div className="--icon">
           <FileIcon />

@@ -5,6 +5,7 @@ import React, { useState } from "react"
 import { withPortive } from "~/lib/hosted-image"
 import { withHistory } from "slate-history"
 import { renderElement } from "./render"
+import { createGenericFile } from "~/editor/render/attachment-block"
 import "./types"
 
 export function MyEditor({
@@ -32,26 +33,16 @@ export function MyEditor({
           return {
             type: "block-image",
             id: e.id,
-            size: e.clientFile.size,
+            size: e.initialSize,
             children: [{ text: "" }],
           }
         },
-        createGenericFile(e) {
-          return {
-            id: e.id,
-            type: "block-file",
-            filename: e.clientFile.filename,
-            bytes: e.clientFile.bytes,
-            children: [{ text: "" }],
-          }
-        },
+        createGenericFile,
       },
       reactEditor
     )
     editor.isVoid = (element) => {
-      return ["block-file", "block-image", "inline-image"].includes(
-        element.type
-      )
+      return ["block-file", "file-block", "inline-image"].includes(element.type)
     }
     editor.isInline = (element) => {
       return element.type === "inline-image"

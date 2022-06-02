@@ -2,13 +2,13 @@ import { RenderElementProps } from "slate-react"
 import React from "react"
 import { HostedImage } from "~/lib/hosted-image"
 import { DiscriminatedRenderElementProps } from "~/lib/shared/types"
-import { BlockFile } from "./block-file"
+import { AttachmentBlock } from "./attachment-block"
 
 export function renderElement(props: RenderElementProps) {
   const element = props.element
   switch (element.type) {
     case "block-file":
-      return <BlockFile {...props} element={element} />
+      return <AttachmentBlock {...props} element={element} />
     case "block-image":
       return <BlockImage {...props} element={element} />
     case "inline-image":

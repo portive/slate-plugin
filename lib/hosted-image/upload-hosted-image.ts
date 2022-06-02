@@ -39,7 +39,7 @@ async function uploadHostedImage(
   /**
    * Get Image size
    */
-  const initialPreviewSize = resizeInside(
+  const initialSize = resizeInside(
     clientFile.size[0],
     clientFile.size[1],
     portive.defaultResize.width,
@@ -54,12 +54,14 @@ async function uploadHostedImage(
     sentBytes: 0,
     totalBytes: file.size,
   })
-  Transforms.insertNodes(editor, {
-    type: "block-image",
-    id,
-    size: initialPreviewSize,
-    children: [{ text: "" }],
-  })
+  const element = portive.createImageFile({ id, file, clientFile, initialSize })
+  Transforms.insertNodes(editor, element)
+  // {
+  //   type: "block-image",
+  //   id,
+  //   size: initialSize,
+  //   children: [{ text: "" }],
+  // })
 
   const uploadResult = await uploadFile({
     authToken: portive.authToken,

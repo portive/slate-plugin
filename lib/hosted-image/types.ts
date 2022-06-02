@@ -103,6 +103,7 @@ export type CreateImageFileProps = {
   id: string
   file: File
   clientFile: ClientImageFile
+  initialSize: [number, number]
 }
 
 export type CreateGenericFileProps = {
