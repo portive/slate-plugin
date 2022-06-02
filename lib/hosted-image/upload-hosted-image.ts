@@ -1,5 +1,4 @@
 import { Transforms } from "slate"
-// import { uploadFile } from "../shared/upload-file"
 import { FullPortiveEditor } from "./types"
 import { resizeInside } from "./resize-inside"
 import { nanoid } from "nanoid"

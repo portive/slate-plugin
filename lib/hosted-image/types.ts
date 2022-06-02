@@ -2,30 +2,30 @@ import { BaseEditor, Element } from "slate"
 import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { Promisable } from "type-fest"
-import { UseEntityStore } from "../shared/use-store"
-import { Entity } from "../shared/types"
+import { UseOriginStore } from "../shared/use-store"
+import { OriginStatus } from "../shared/types"
 import { ClientGenericFile, ClientImageFile } from "@portive/api-types"
 
 /**
  * Entity
  */
 
-export type ImageFileEntityProps = {
+export type ImageFileOriginProps = {
   type: "image"
   url: string
   maxSize: [number, number] // necessary for when the image is still a BLOB
 }
 
-export type GenericFileEntityProps = {
+export type GenericFileOriginProps = {
   type: "generic"
   url: string
 }
 
-export type FileEntityProps = GenericFileEntityProps | ImageFileEntityProps
+export type FileEntityProps = GenericFileOriginProps | ImageFileOriginProps
 
-export type ImageEntity = Entity<ImageFileEntityProps>
-export type GenericEntity = Entity<GenericFileEntityProps>
-export type FileEntity = Entity<FileEntityProps>
+export type ImageFileOrigin = OriginStatus<ImageFileOriginProps>
+export type GenericFileOrigin = OriginStatus<GenericFileOriginProps>
+export type FileOrigin = OriginStatus<FileEntityProps>
 
 export type HostedImageOptions = {
   authToken: string | (() => Promisable<string>)
@@ -33,7 +33,7 @@ export type HostedImageOptions = {
   defaultResize: Resize
   minResizeWidth?: number
   maxResizeWidth?: number
-  initialEntities: Record<string, FileEntity>
+  initialEntities: Record<string, FileOrigin>
   createImageFile: (e: CreateImageFileProps) => Element
   createGenericFile: (e: CreateGenericFileProps) => Element
 }
@@ -45,7 +45,7 @@ export type PortiveEditorProp = {
   minResizeWidth: number
   maxResizeWidth: number
   // useStore: UseStore // store of entities. `initialEntities` is put into here initially.
-  useStore: UseEntityStore
+  useStore: UseOriginStore
   uploadFile: (file: File) => string
   createImageFile: (e: CreateImageFileProps) => Element
   createGenericFile: (e: CreateGenericFileProps) => Element

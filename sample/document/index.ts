@@ -1,4 +1,4 @@
-import { FileEntity } from "~/lib/hosted-image"
+import { FileOrigin } from "~/lib/hosted-image"
 import { Descendant } from "slate"
 
 const PORTRAIT_IMAGE =
@@ -53,7 +53,7 @@ export type EntityKeys =
   | "error"
   | "text"
 
-export const initialEntities: Record<string, FileEntity> = {
+export const initialEntities: Record<string, FileOrigin> = {
   pdf: {
     status: "uploaded",
     type: "generic",

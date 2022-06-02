@@ -1,4 +1,4 @@
-import { FileEntity } from "../types"
+import { FileOrigin } from "../types"
 import { useHostedImageContext } from "./hosted-image-context"
 
 const BAR_HEIGHT = 16
@@ -61,7 +61,7 @@ export function FileProgressBar({
   entity,
 }: {
   className?: string
-  entity: FileEntity
+  entity: FileOrigin
 }) {
   if (entity.status !== "loading") {
     return null

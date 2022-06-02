@@ -1,5 +1,5 @@
 import { createEditor, Descendant, Editor } from "slate"
-import { FileEntity } from "~/lib/hosted-image"
+import { FileOrigin } from "~/lib/hosted-image"
 import { Slate, Editable, withReact } from "slate-react"
 import React, { useState } from "react"
 import { withPortive } from "~/lib/hosted-image"
@@ -15,7 +15,7 @@ export function MyEditor({
 }: {
   authToken: string
   initialValue: Descendant[]
-  initialEntities: Record<string, FileEntity>
+  initialEntities: Record<string, FileOrigin>
   isReadOnly: boolean
 }) {
   const [editor] = useState<Editor>(() => {

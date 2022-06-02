@@ -8,7 +8,7 @@ import { ImageControls } from "./image-controls"
 import { CSSProperties, useEffect, useState } from "react"
 import { HostedImageContext } from "./hosted-image-context"
 import { getSizeFromUrl } from "./utils"
-import { Entity, RenderElementPropsFor } from "../../shared/types"
+import { OriginStatus, RenderElementPropsFor } from "../../shared/types"
 
 export function RenderHostedImage({
   attributes,
@@ -40,8 +40,8 @@ export function useHighlightedStyle() {
  */
 export function useEntity(
   element: HostedImageInterface | HostedFileInterface,
-  getEntityFromUrl: (url: string) => Entity<FileEntityProps>
-): Entity<FileEntityProps> {
+  getEntityFromUrl: (url: string) => OriginStatus<FileEntityProps>
+): OriginStatus<FileEntityProps> {
   const editor = useSlateStatic()
   const entityFromStore = editor.portive.useStore(
     (state) => state.entities[element.id]

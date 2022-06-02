@@ -41,30 +41,30 @@ export type RenderElementPropsFor<T> = Omit<RenderElementProps, "element"> & {
   element: T
 }
 
-export type FileLoadingEntity<T> = {
+export type OriginLoadingStatus<T> = {
   status: "loading"
   sentBytes: number
   totalBytes: number
 } & T
 
-export type FileUploadedEntity<T> = {
+export type OriginUploadedStatus<T> = {
   status: "uploaded"
 } & T
 
-export type FileErrorEntity<T> = {
+export type OriginErrorStatus<T> = {
   status: "error"
   message: string
 } & T
 
-export type Entity<T> =
-  | FileLoadingEntity<T>
-  | FileUploadedEntity<T>
-  | FileErrorEntity<T>
+export type OriginStatus<T> =
+  | OriginLoadingStatus<T>
+  | OriginUploadedStatus<T>
+  | OriginErrorStatus<T>
 
 export type EntityState<T> = {
-  entities: Record<string, Entity<T>>
-  setEntity: (id: string, entity: Entity<T>) => void
-  getEntity: (id: string) => Entity<T>
+  entities: Record<string, T>
+  setEntity: (id: string, entity: T) => void
+  getEntity: (id: string) => T
 }
 
 export type UploadPolicy = {
