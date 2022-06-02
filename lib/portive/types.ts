@@ -30,7 +30,7 @@ export type FileOrigin = OriginStatus<FileOriginProps>
 export type HostedImageOptions = {
   authToken: string | (() => Promisable<string>)
   path: string
-  defaultResize: Resize
+  initialMaxSize: [number, number]
   minResizeWidth?: number
   maxResizeWidth?: number
   initialOrigins: Record<string, FileOrigin>
@@ -41,7 +41,7 @@ export type HostedImageOptions = {
 export type PortiveEditorProp = {
   authToken: string | (() => Promisable<string>)
   path: string
-  defaultResize: Resize
+  initialMaxSize: [number, number]
   minResizeWidth: number
   maxResizeWidth: number
   useStore: ReturnType<typeof createOriginStore>
@@ -91,12 +91,6 @@ export interface HostedFileInterface {
    */
   originKey: string
   children: VoidChildren
-}
-
-export type Resize = {
-  type: "inside"
-  width: number
-  height: number
 }
 
 export type CreateImageFileProps = {

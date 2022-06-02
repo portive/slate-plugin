@@ -42,8 +42,8 @@ async function uploadHostedImage(
   const initialSize = resizeInside(
     clientFile.size[0],
     clientFile.size[1],
-    portive.defaultResize.width,
-    portive.defaultResize.height
+    portive.initialMaxSize[0],
+    portive.initialMaxSize[1]
   )
 
   setOrigin(originKey, {

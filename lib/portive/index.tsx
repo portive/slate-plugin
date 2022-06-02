@@ -19,7 +19,7 @@ export function withPortive<T extends FullPortiveEditor>(
     // If the source image is less than this number, it cannot be resized
     minResizeWidth = 100,
     maxResizeWidth = 1280,
-    defaultResize,
+    initialMaxSize,
     initialOrigins,
     createImageFile,
     createGenericFile,
@@ -31,7 +31,7 @@ export function withPortive<T extends FullPortiveEditor>(
     path,
     minResizeWidth,
     maxResizeWidth,
-    defaultResize,
+    initialMaxSize,
     useStore: createOriginStore({ origins: initialOrigins }),
     uploadFile(file: File): string {
       return upload(editor, file)

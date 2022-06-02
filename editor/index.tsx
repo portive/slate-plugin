@@ -25,7 +25,7 @@ export function MyEditor({
       {
         authToken,
         path: "demo",
-        defaultResize: { type: "inside", width: 320, height: 320 },
+        initialMaxSize: [320, 320],
         minResizeWidth: 100,
         maxResizeWidth: 640,
         initialOrigins: initialOrigins,
