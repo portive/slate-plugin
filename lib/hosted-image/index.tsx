@@ -1,5 +1,5 @@
-import { createStore } from "../shared/use-store"
-import { FullPortiveEditor, HostedImageOptions, FileOrigin } from "./types"
+import { createOriginStore } from "../shared/origin-store"
+import { FullPortiveEditor, HostedImageOptions } from "./types"
 import { upload } from "./upload-hosted-image"
 import {
   handleChangeInputFile,
@@ -7,7 +7,7 @@ import {
   handleDropFile,
 } from "./handlers"
 export * from "./types"
-export * from "../shared/use-store"
+export * from "../shared/origin-store"
 export * from "./render-image"
 export * from "./handlers"
 
@@ -32,7 +32,7 @@ export function withPortive<T extends FullPortiveEditor>(
     minResizeWidth,
     maxResizeWidth,
     defaultResize,
-    useStore: createStore<FileOrigin>({ entities: initialEntities }),
+    useStore: createOriginStore({ origins: initialEntities }),
     uploadFile(file: File): string {
       return upload(editor, file)
     },

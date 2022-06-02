@@ -44,7 +44,7 @@ export function useEntity(
 ): OriginStatus<FileEntityProps> {
   const editor = useSlateStatic()
   const entityFromStore = editor.portive.useStore(
-    (state) => state.entities[element.id]
+    (state) => state.origins[element.id]
   )
   if (element.id.includes("/")) {
     return getEntityFromUrl(element.id)

@@ -62,9 +62,9 @@ export type OriginStatus<T> =
   | OriginErrorStatus<T>
 
 export type EntityState<T> = {
-  entities: Record<string, T>
-  setEntity: (id: string, entity: T) => void
-  getEntity: (id: string) => T
+  origins: Record<string, T>
+  setOrigin: (id: string, entity: T) => void
+  getOrigin: (id: string) => T
 }
 
 export type UploadPolicy = {

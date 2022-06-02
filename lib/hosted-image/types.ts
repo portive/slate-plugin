@@ -2,7 +2,7 @@ import { BaseEditor, Element } from "slate"
 import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { Promisable } from "type-fest"
-import { UseOriginStore } from "../shared/use-store"
+import { createOriginStore } from "../shared/origin-store"
 import { OriginStatus } from "../shared/types"
 import { ClientGenericFile, ClientImageFile } from "@portive/api-types"
 
@@ -45,7 +45,7 @@ export type PortiveEditorProp = {
   minResizeWidth: number
   maxResizeWidth: number
   // useStore: UseStore // store of entities. `initialEntities` is put into here initially.
-  useStore: UseOriginStore
+  useStore: ReturnType<typeof createOriginStore>
   uploadFile: (file: File) => string
   createImageFile: (e: CreateImageFileProps) => Element
   createGenericFile: (e: CreateGenericFileProps) => Element

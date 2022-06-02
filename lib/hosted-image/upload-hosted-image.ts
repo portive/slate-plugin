@@ -27,7 +27,7 @@ async function uploadHostedImage(
   file: File
 ) {
   const portive = editor.portive
-  const { setEntity } = portive.useStore.getState()
+  const { setOrigin: setEntity } = portive.useStore.getState()
 
   const clientFile = await createClientFile(file)
   if (clientFile.type !== "image") {
@@ -121,7 +121,7 @@ async function uploadHostedFile(
   file: File
 ) {
   const portive = editor.portive
-  const { setEntity } = portive.useStore.getState()
+  const { setOrigin: setEntity } = portive.useStore.getState()
 
   const clientFile = await createClientFile(file)
   if (clientFile.type !== "generic") {
