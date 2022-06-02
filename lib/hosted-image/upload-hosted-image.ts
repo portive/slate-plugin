@@ -19,7 +19,7 @@ async function getImageSize(url: string): Promise<[number, number]> {
 
 /**
  * This is the asynchronous part of `uploadHostedImage` that contains most of
- * the meat of the function including uploading and setting the entity.
+ * the meat of the function including uploading and setting the origin.
  */
 async function uploadHostedImage(
   editor: FullPortiveEditor,
@@ -27,7 +27,7 @@ async function uploadHostedImage(
   file: File
 ) {
   const portive = editor.portive
-  const { setOrigin: setEntity } = portive.useStore.getState()
+  const { setOrigin } = portive.useStore.getState()
 
   const clientFile = await createClientFile(file)
   if (clientFile.type !== "image") {
@@ -46,7 +46,7 @@ async function uploadHostedImage(
     portive.defaultResize.height
   )
 
-  setEntity(id, {
+  setOrigin(id, {
     status: "loading",
     type: "image",
     url: clientFile.objectUrl,
@@ -66,7 +66,7 @@ async function uploadHostedImage(
     path: portive.path,
     file,
     onProgress(e) {
-      setEntity(id, {
+      setOrigin(id, {
         status: "loading",
         type: "image",
         url: clientFile.objectUrl,
@@ -78,7 +78,7 @@ async function uploadHostedImage(
   })
 
   if (uploadResult.status === "error") {
-    setEntity(id, {
+    setOrigin(id, {
       status: "error",
       type: "image",
       url: clientFile.objectUrl,
@@ -92,7 +92,7 @@ async function uploadHostedImage(
   /**
    * Set image as uploaded but continue to use the local image URL
    */
-  setEntity(id, {
+  setOrigin(id, {
     status: "uploaded",
     type: "image",
     url: uploadResult.data.url,
@@ -103,7 +103,7 @@ async function uploadHostedImage(
    * After `getImageSize` executes, we know that the uploaded file is now in
    * the cache so we can swap the local file for the remote file.
    */
-  setEntity(id, {
+  setOrigin(id, {
     status: "uploaded",
     type: "image",
     url: uploadResult.data.url,
@@ -113,7 +113,7 @@ async function uploadHostedImage(
 
 /**
  * This is the asynchronous part of `uploadHostedImage` that contains most of
- * the meat of the function including uploading and setting the entity.
+ * the meat of the function including uploading and setting the origin.
  */
 async function uploadHostedFile(
   editor: FullPortiveEditor,
@@ -121,14 +121,14 @@ async function uploadHostedFile(
   file: File
 ) {
   const portive = editor.portive
-  const { setOrigin: setEntity } = portive.useStore.getState()
+  const { setOrigin } = portive.useStore.getState()
 
   const clientFile = await createClientFile(file)
   if (clientFile.type !== "generic") {
     throw new Error(`Expected clientFile.type to be generic`)
   }
 
-  setEntity(id, {
+  setOrigin(id, {
     status: "loading",
     type: "generic",
     url: clientFile.objectUrl,
@@ -143,7 +143,7 @@ async function uploadHostedFile(
     path: portive.path,
     file,
     onProgress(e) {
-      setEntity(id, {
+      setOrigin(id, {
         status: "loading",
         type: "generic",
         url: clientFile.objectUrl,
@@ -154,7 +154,7 @@ async function uploadHostedFile(
   })
 
   if (uploadResult.status === "error") {
-    setEntity(id, {
+    setOrigin(id, {
       status: "error",
       type: "generic",
       url: clientFile.objectUrl,
@@ -167,7 +167,7 @@ async function uploadHostedFile(
   /**
    * Set image as uploaded but continue to use the local image URL
    */
-  setEntity(id, {
+  setOrigin(id, {
     status: "uploaded",
     type: "generic",
     url: uploadResult.data.url,
@@ -177,7 +177,7 @@ async function uploadHostedFile(
    * After `getImageSize` executes, we know that the uploaded file is now in
    * the cache so we can swap the local file for the remote file.
    */
-  setEntity(id, {
+  setOrigin(id, {
     status: "uploaded",
     type: "generic",
     url: uploadResult.data.url,
@@ -187,7 +187,7 @@ async function uploadHostedFile(
 /**
  * This method starts the upload process. It creates a unique `id` which is
  * returned from the function. As the upload is progressing through its
- * upload stages, it is updating an `Entity` that is used to display the stage
+ * upload stages, it is updating an `Origin` that is used to display the stage
  * of the upload in the editor. For example, how much upload progress there is
  * and when it's complete, sets the URL of the upload.
  */

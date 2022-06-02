@@ -1,6 +1,6 @@
 import {
   HostedImageInterface,
-  FileEntityProps,
+  FileOriginProps,
   HostedFileInterface,
 } from "../types"
 import { useSlateStatic, useSelected, useFocused } from "slate-react"
@@ -35,21 +35,21 @@ export function useHighlightedStyle() {
 }
 
 /**
- * Takes an `element` (which is only needs for its `id`) and returns an
- * Entity from it.
+ * Takes an `element` (which it only needs for its `id`) and returns the
+ * origin from it.
  */
-export function useEntity(
+export function useOrigin(
   element: HostedImageInterface | HostedFileInterface,
-  getEntityFromUrl: (url: string) => OriginStatus<FileEntityProps>
-): OriginStatus<FileEntityProps> {
+  getOriginFromUrl: (url: string) => OriginStatus<FileOriginProps>
+): OriginStatus<FileOriginProps> {
   const editor = useSlateStatic()
-  const entityFromStore = editor.portive.useStore(
+  const originFromStore = editor.portive.useStore(
     (state) => state.origins[element.id]
   )
   if (element.id.includes("/")) {
-    return getEntityFromUrl(element.id)
+    return getOriginFromUrl(element.id)
   } else {
-    return entityFromStore
+    return originFromStore
   }
 }
 
@@ -70,10 +70,10 @@ export function useEntity(
  *
  * Another method is to to add `maxSize` to `useHostedImage` as part of the
  * `HostImageContext`. In this scenario, we either get the `maxSize` from the
- * `url` if it is valid, or we get it from the `Entity` if it is not.
+ * `url` if it is valid, or we get it from the `Origin` if it is not.
  *
  * We could prefer the `maxSize` from the `url` and if that fails, then we
- * fall back to the `Entity`.
+ * fall back to the `Origin`.
  *
  * # Saving
  *
@@ -91,7 +91,7 @@ export function HostedImage({
   style?: CSSProperties
 }) {
   const editor = useSlateStatic()
-  const entity = useEntity(element, (url) => {
+  const origin = useOrigin(element, (url) => {
     const maxSize = getSizeFromUrl(url)
     return {
       status: "uploaded",
@@ -106,26 +106,28 @@ export function HostedImage({
     setSize(element.size)
   }, [element.size[0], element.size[1]])
 
-  if (entity.type !== "image") {
-    throw new Error(`Expected entity to be of type image`)
+  if (origin.type !== "image") {
+    throw new Error(`Expected origin to be of type image`)
   }
 
   const highlightedStyle = useHighlightedStyle()
 
   const src = generateSrc({
-    originUrl: entity.url,
+    originUrl: origin.url,
     size: element.size,
-    maxSize: entity.maxSize,
+    maxSize: origin.maxSize,
   })
 
   const srcSet = generateSrcSet({
-    originUrl: entity.url,
+    originUrl: origin.url,
     size: element.size,
-    maxSize: entity.maxSize,
+    maxSize: origin.maxSize,
   })
 
   return (
-    <HostedImageContext.Provider value={{ editor, entity, size, setSize }}>
+    <HostedImageContext.Provider
+      value={{ editor, origin: origin, size, setSize }}
+    >
       <ImageControls element={element}>
         <img
           src={src}

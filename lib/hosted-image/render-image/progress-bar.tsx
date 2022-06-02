@@ -58,19 +58,19 @@ export function ProgressBar({
 
 export function FileProgressBar({
   className,
-  entity,
+  origin,
 }: {
   className?: string
-  entity: FileOrigin
+  origin: FileOrigin
 }) {
-  if (entity.status !== "loading") {
+  if (origin.status !== "loading") {
     return null
   }
   return (
     <ProgressBar
       className={className}
-      sentBytes={entity.sentBytes}
-      totalBytes={entity.totalBytes}
+      sentBytes={origin.sentBytes}
+      totalBytes={origin.totalBytes}
       width={256}
       height={16}
       style={{
@@ -81,15 +81,15 @@ export function FileProgressBar({
 }
 
 export function ImageProgressBar() {
-  const { entity, size } = useHostedImageContext()
-  if (entity.status !== "loading") {
+  const { origin, size } = useHostedImageContext()
+  if (origin.status !== "loading") {
     return null
   }
   const barLength = size[0] - MARGIN * 2
   return (
     <ProgressBar
-      sentBytes={entity.sentBytes}
-      totalBytes={entity.totalBytes}
+      sentBytes={origin.sentBytes}
+      totalBytes={origin.totalBytes}
       width={barLength}
       height={BAR_HEIGHT}
       style={{

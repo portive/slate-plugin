@@ -26,7 +26,7 @@ export function ImageControls({
   element: HostedImageInterface
   children: React.ReactNode
 }) {
-  const { entity } = useHostedImageContext()
+  const { origin } = useHostedImageContext()
   const focused = useFocused()
   const selected = useSelected()
   const showResizeControls = focused && selected
@@ -62,7 +62,7 @@ export function ImageControls({
       {image}
       <ImageProgressBar />
       <ErrorMessage />
-      {entity.status === "error" ? <RemoveIcon element={element} /> : null}
+      {origin.status === "error" ? <RemoveIcon element={element} /> : null}
       {showResizeControls ? <ResizeControls element={element} /> : null}
     </span>
   )

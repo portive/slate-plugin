@@ -5,7 +5,7 @@ import bytes from "bytes"
 import { useHighlightedStyle } from "~/lib/hosted-image"
 import { ReactEditor } from "slate-react"
 import React, { useCallback } from "react"
-import { useEntity } from "~/lib/hosted-image"
+import { useOrigin } from "~/lib/hosted-image"
 import { DiscriminatedRenderElementProps } from "~/lib/shared/types"
 import { FileProgressBar } from "~/lib/hosted-image/render-image/progress-bar"
 import { DownloadIcon, FileIcon, TrashIcon } from "~/lib/icons"
@@ -77,7 +77,7 @@ export function BlockFile({
   children,
 }: DiscriminatedRenderElementProps<"block-file">) {
   const editor = useSlateStatic()
-  const entity = useEntity(element, (url) => {
+  const origin = useOrigin(element, (url) => {
     return {
       status: "uploaded",
       type: "generic",
@@ -97,22 +97,22 @@ export function BlockFile({
         </div>
         <div className="--body">
           <div>{element.filename}</div>
-          {entity.status === "uploaded" ? (
+          {origin.status === "uploaded" ? (
             <div className="--description">{bytes(element.bytes)}</div>
           ) : null}
-          {entity.status === "loading" ? (
+          {origin.status === "loading" ? (
             <div>
-              <FileProgressBar className="--progress-bar" entity={entity} />
+              <FileProgressBar className="--progress-bar" origin={origin} />
             </div>
           ) : null}
-          {entity.status === "error" ? (
+          {origin.status === "error" ? (
             <div className="--error">Error uploading file</div>
           ) : null}
         </div>
-        {entity.status === "uploaded" ? (
+        {origin.status === "uploaded" ? (
           <div className="--icon">
             <a
-              href={entity.url}
+              href={origin.url}
               target="_blank"
               rel="noreferrer"
               className="--icon-button --download-icon"
@@ -122,7 +122,7 @@ export function BlockFile({
             </a>
           </div>
         ) : null}
-        {entity.status === "error" ? (
+        {origin.status === "error" ? (
           <div className="--icon">
             <div className="--icon-button --trash-icon" onClick={removeElement}>
               <TrashIcon />

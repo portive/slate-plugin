@@ -7,7 +7,7 @@ import { OriginStatus } from "../shared/types"
 import { ClientGenericFile, ClientImageFile } from "@portive/api-types"
 
 /**
- * Entity
+ * Origin
  */
 
 export type ImageFileOriginProps = {
@@ -21,11 +21,11 @@ export type GenericFileOriginProps = {
   url: string
 }
 
-export type FileEntityProps = GenericFileOriginProps | ImageFileOriginProps
+export type FileOriginProps = GenericFileOriginProps | ImageFileOriginProps
 
 export type ImageFileOrigin = OriginStatus<ImageFileOriginProps>
 export type GenericFileOrigin = OriginStatus<GenericFileOriginProps>
-export type FileOrigin = OriginStatus<FileEntityProps>
+export type FileOrigin = OriginStatus<FileOriginProps>
 
 export type HostedImageOptions = {
   authToken: string | (() => Promisable<string>)
@@ -33,7 +33,7 @@ export type HostedImageOptions = {
   defaultResize: Resize
   minResizeWidth?: number
   maxResizeWidth?: number
-  initialEntities: Record<string, FileOrigin>
+  initialOrigins: Record<string, FileOrigin>
   createImageFile: (e: CreateImageFileProps) => Element
   createGenericFile: (e: CreateGenericFileProps) => Element
 }
@@ -44,7 +44,6 @@ export type PortiveEditorProp = {
   defaultResize: Resize
   minResizeWidth: number
   maxResizeWidth: number
-  // useStore: UseStore // store of entities. `initialEntities` is put into here initially.
   useStore: ReturnType<typeof createOriginStore>
   uploadFile: (file: File) => string
   createImageFile: (e: CreateImageFileProps) => Element
@@ -68,8 +67,8 @@ type VoidChildren = [{ text: "" }]
 export interface HostedImageInterface {
   /**
    * id is either a URL to the image which will contain at least one `/` or it
-   * is a string `id` to find an `ImageEntity` with the target of the
-   * `imageEntity` being a `url` or an Object URL to the image on the
+   * is a string `id` to find an `ImageOrigin` with the target of the
+   * `imageOrigin` being a `url` or an Object URL to the image on the
    * local computer of the browser.
    */
   id: string
@@ -86,7 +85,7 @@ export interface HostedImageInterface {
 export interface HostedFileInterface {
   /**
    * id is either a URL to the file which will contain at least one `/` or it
-   * is a string `id` to find an `ImageEntity` with the target of the
+   * is a string `id` to find an `ImageOrigin` with the target of the
    * `fileEneity` being a `url` or an Object URL to the file on the
    * local computer of the browser.
    */

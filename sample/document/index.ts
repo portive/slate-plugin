@@ -44,16 +44,7 @@ export const images: Record<string, HostedFileInfo> = {
   icon: getHostedImageInfo(ICON_IMAGE),
 }
 
-export type EntityKeys =
-  | "icon"
-  | "zero"
-  | "half"
-  | "full"
-  | "uploaded"
-  | "error"
-  | "text"
-
-export const initialEntities: Record<string, FileOrigin> = {
+export const initialOrigins: Record<string, FileOrigin> = {
   pdf: {
     status: "uploaded",
     type: "generic",
@@ -222,7 +213,7 @@ export const initialValue: Descendant[] = [
   },
   {
     type: "paragraph",
-    children: [{ text: "Completed upload with entity id" }],
+    children: [{ text: "Completed upload with origin id" }],
   },
   {
     type: "block-image",

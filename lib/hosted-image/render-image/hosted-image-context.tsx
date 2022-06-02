@@ -5,7 +5,7 @@ import { Editor } from "slate"
 
 export const HostedImageContext = React.createContext<{
   editor: Editor
-  entity: ImageFileOrigin
+  origin: ImageFileOrigin
   size: [number, number]
   setSize: Dispatch<SetStateAction<[number, number]>>
 } | null>(null)

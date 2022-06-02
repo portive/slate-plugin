@@ -10,12 +10,12 @@ import "./types"
 export function MyEditor({
   authToken,
   initialValue,
-  initialEntities = {},
+  initialOrigins = {},
   isReadOnly,
 }: {
   authToken: string
   initialValue: Descendant[]
-  initialEntities: Record<string, FileOrigin>
+  initialOrigins: Record<string, FileOrigin>
   isReadOnly: boolean
 }) {
   const [editor] = useState<Editor>(() => {
@@ -27,7 +27,7 @@ export function MyEditor({
         defaultResize: { type: "inside", width: 320, height: 320 },
         minResizeWidth: 100,
         maxResizeWidth: 640,
-        initialEntities,
+        initialOrigins: initialOrigins,
         createImageFile(e) {
           return {
             type: "block-image",

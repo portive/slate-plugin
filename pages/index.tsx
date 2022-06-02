@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { env } from "~/lib/server-env"
 import { InferGetServerSidePropsType } from "next"
-import { initialValue, initialEntities } from "~/sample/document"
+import { initialValue, initialOrigins } from "~/sample/document"
 import { MyEditor } from "~/editor"
 
 export async function getServerSideProps() {
@@ -30,7 +30,7 @@ export default function Index({
       <MyEditor
         authToken={authToken}
         initialValue={initialValue}
-        initialEntities={initialEntities}
+        initialOrigins={initialOrigins}
         isReadOnly={isReadOnly}
       />
     </div>

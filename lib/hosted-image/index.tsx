@@ -20,7 +20,7 @@ export function withPortive<T extends FullPortiveEditor>(
     minResizeWidth = 100,
     maxResizeWidth = 1280,
     defaultResize,
-    initialEntities,
+    initialOrigins,
     createImageFile,
     createGenericFile,
   }: HostedImageOptions,
@@ -32,7 +32,7 @@ export function withPortive<T extends FullPortiveEditor>(
     minResizeWidth,
     maxResizeWidth,
     defaultResize,
-    useStore: createOriginStore({ origins: initialEntities }),
+    useStore: createOriginStore({ origins: initialOrigins }),
     uploadFile(file: File): string {
       return upload(editor, file)
     },
