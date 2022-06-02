@@ -41,8 +41,8 @@ export type RenderElementPropsFor<T> = Omit<RenderElementProps, "element"> & {
   element: T
 }
 
-export type OriginLoadingStatus<T> = {
-  status: "loading"
+export type OriginUploadingStatus<T> = {
+  status: "uploading"
   sentBytes: number
   totalBytes: number
 } & T
@@ -57,7 +57,7 @@ export type OriginErrorStatus<T> = {
 } & T
 
 export type OriginStatus<T> =
-  | OriginLoadingStatus<T>
+  | OriginUploadingStatus<T>
   | OriginUploadedStatus<T>
   | OriginErrorStatus<T>
 

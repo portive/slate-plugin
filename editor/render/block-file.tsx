@@ -100,7 +100,7 @@ export function BlockFile({
           {origin.status === "uploaded" ? (
             <div className="--description">{bytes(element.bytes)}</div>
           ) : null}
-          {origin.status === "loading" ? (
+          {origin.status === "uploading" ? (
             <div>
               <FileProgressBar className="--progress-bar" origin={origin} />
             </div>

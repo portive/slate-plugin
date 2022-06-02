@@ -47,7 +47,7 @@ async function uploadHostedImage(
   )
 
   setOrigin(id, {
-    status: "loading",
+    status: "uploading",
     type: "image",
     url: clientFile.objectUrl,
     maxSize: clientFile.size,
@@ -67,7 +67,7 @@ async function uploadHostedImage(
     file,
     onProgress(e) {
       setOrigin(id, {
-        status: "loading",
+        status: "uploading",
         type: "image",
         url: clientFile.objectUrl,
         maxSize: clientFile.size,
@@ -129,7 +129,7 @@ async function uploadHostedFile(
   }
 
   setOrigin(id, {
-    status: "loading",
+    status: "uploading",
     type: "generic",
     url: clientFile.objectUrl,
     sentBytes: 0,
@@ -144,7 +144,7 @@ async function uploadHostedFile(
     file,
     onProgress(e) {
       setOrigin(id, {
-        status: "loading",
+        status: "uploading",
         type: "generic",
         url: clientFile.objectUrl,
         sentBytes: e.loaded,

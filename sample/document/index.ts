@@ -56,21 +56,21 @@ export const initialOrigins: Record<string, FileOrigin> = {
     url: TEXT_FILE,
   },
   zeroText: {
-    status: "loading",
+    status: "uploading",
     type: "generic",
     url: TEXT_FILE,
     sentBytes: 0,
     totalBytes: 100000,
   },
   halfText: {
-    status: "loading",
+    status: "uploading",
     type: "generic",
     url: TEXT_FILE,
     sentBytes: 50000,
     totalBytes: 100000,
   },
   fullText: {
-    status: "loading",
+    status: "uploading",
     type: "generic",
     url: TEXT_FILE,
     sentBytes: 10000,
@@ -90,7 +90,7 @@ export const initialOrigins: Record<string, FileOrigin> = {
     maxSize: images.icon.originalSize,
   },
   zero: {
-    status: "loading",
+    status: "uploading",
     type: "image",
     url: images.landscape.url,
     sentBytes: 0,
@@ -98,7 +98,7 @@ export const initialOrigins: Record<string, FileOrigin> = {
     maxSize: images.landscape.originalSize,
   },
   half: {
-    status: "loading",
+    status: "uploading",
     type: "image",
     url: images.landscape.url,
     sentBytes: 1770,
@@ -106,7 +106,7 @@ export const initialOrigins: Record<string, FileOrigin> = {
     maxSize: images.landscape.originalSize,
   },
   full: {
-    status: "loading",
+    status: "uploading",
     type: "image",
     url: images.landscape.url,
     maxSize: images.landscape.originalSize,

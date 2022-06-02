@@ -63,7 +63,7 @@ export function FileProgressBar({
   className?: string
   origin: FileOrigin
 }) {
-  if (origin.status !== "loading") {
+  if (origin.status !== "uploading") {
     return null
   }
   return (
@@ -82,7 +82,7 @@ export function FileProgressBar({
 
 export function ImageProgressBar() {
   const { origin, size } = useHostedImageContext()
-  if (origin.status !== "loading") {
+  if (origin.status !== "uploading") {
     return null
   }
   const barLength = size[0] - MARGIN * 2
