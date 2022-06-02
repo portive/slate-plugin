@@ -1,4 +1,4 @@
-import { BaseEditor, Element } from "slate"
+import { BaseEditor, Descendant, Element } from "slate"
 import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { Promisable } from "type-fest"
@@ -38,6 +38,11 @@ export type HostedImageOptions = {
   createGenericFile: (e: CreateGenericFileProps) => Element
 }
 
+export type SaveResult = {
+  status: "success"
+  value: Descendant[]
+}
+
 export type PortiveEditorProp = {
   authToken: string | (() => Promisable<string>)
   path: string
@@ -51,6 +56,8 @@ export type PortiveEditorProp = {
   handlePaste: (e: React.ClipboardEvent) => boolean
   handleDrop: (e: React.DragEvent) => boolean
   handleChangeInputFile: (e: React.ChangeEvent<HTMLInputElement>) => boolean
+  save: () => Promise<SaveResult>
+  normalize: () => Descendant[]
 }
 
 export type PortiveEditor = {

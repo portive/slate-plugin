@@ -1,3 +1,4 @@
+import { Editor, Element, NodeEntry, Node, Descendant } from "slate"
 import { createOriginStore } from "../shared/origin-store"
 import { FullPortiveEditor, HostedImageOptions } from "./types"
 import { upload } from "./upload-hosted-image"
@@ -6,6 +7,7 @@ import {
   handlePasteFile,
   handleDropFile,
 } from "./handlers"
+import { normalizeOrigins } from "./save"
 export * from "./types"
 export * from "../shared/origin-store"
 export * from "./render-image"
@@ -26,13 +28,14 @@ export function withPortive<T extends FullPortiveEditor>(
   }: HostedImageOptions,
   editor: T
 ): T {
+  const useStore = createOriginStore({ origins: initialOrigins })
   editor.portive = {
     authToken,
     path,
     minResizeWidth,
     maxResizeWidth,
     initialMaxSize,
-    useStore: createOriginStore({ origins: initialOrigins }),
+    useStore,
     uploadFile(file: File): string {
       return upload(editor, file)
     },
@@ -46,6 +49,13 @@ export function withPortive<T extends FullPortiveEditor>(
     },
     handleChangeInputFile(e) {
       return handleChangeInputFile(editor, e)
+    },
+    async save() {
+      return { status: "success", value: [] }
+    },
+    normalize() {
+      const origins = editor.portive.useStore.getState().origins
+      return normalizeOrigins(editor.children, origins)
     },
   }
   return editor

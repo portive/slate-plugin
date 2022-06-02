@@ -1,6 +1,6 @@
 import { BaseEditor } from "slate"
 import { ReactEditor } from "slate-react"
-import { HostedImageInterface, PortiveEditor } from "~/lib/portive"
+import { PortiveEditor } from "~/lib/portive"
 import { HistoryEditor } from "slate-history"
 import { AttachmentBlockElement } from "~/editor/render/attachment-block"
 
@@ -9,8 +9,30 @@ type ParagraphElement = {
   type: "paragraph"
   children: (CustomText | InlineImageElement)[]
 }
-type BlockImageElement = { type: "block-image" } & HostedImageInterface
-type InlineImageElement = { type: "inline-image" } & HostedImageInterface
+type BlockImageElement = {
+  type: "block-image"
+  /**
+   * Must include originKey
+   */
+  originKey: string
+  /**
+   * Must include `size` (consider switching to `mods.size`)
+   */
+  size: [number, number]
+  children: [{ text: "" }]
+}
+type InlineImageElement = {
+  type: "inline-image"
+  /**
+   * Must include originKey
+   */
+  originKey: string
+  /**
+   * Must include `size` (consider switching to `mods.size`)
+   */
+  size: [number, number]
+  children: [{ text: "" }]
+}
 type CustomElement =
   | ParagraphElement
   | AttachmentBlockElement
