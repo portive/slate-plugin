@@ -1,7 +1,7 @@
 import { HostedFileInterface } from "~/lib/hosted-image"
 
 export type AttachmentBlockElement = {
-  type: "block-file"
+  type: "attachment-block"
   filename: string
   bytes: number
 } & HostedFileInterface

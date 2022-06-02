@@ -42,7 +42,9 @@ export function MyEditor({
       reactEditor
     )
     editor.isVoid = (element) => {
-      return ["block-file", "file-block", "inline-image"].includes(element.type)
+      return ["attachment-block", "block-image", "inline-image"].includes(
+        element.type
+      )
     }
     editor.isInline = (element) => {
       return element.type === "inline-image"

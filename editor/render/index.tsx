@@ -7,7 +7,7 @@ import { AttachmentBlock } from "./attachment-block"
 export function renderElement(props: RenderElementProps) {
   const element = props.element
   switch (element.type) {
-    case "block-file":
+    case "attachment-block":
       return <AttachmentBlock {...props} element={element} />
     case "block-image":
       return <BlockImage {...props} element={element} />

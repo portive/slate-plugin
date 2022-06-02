@@ -75,7 +75,7 @@ export function AttachmentBlock({
   attributes,
   element,
   children,
-}: DiscriminatedRenderElementProps<"block-file">) {
+}: DiscriminatedRenderElementProps<"attachment-block">) {
   const editor = useSlateStatic()
   const origin = useOrigin(element, (url) => {
     return {

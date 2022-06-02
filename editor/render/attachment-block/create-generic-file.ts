@@ -6,7 +6,7 @@ export function createGenericFile(
 ): AttachmentBlockElement {
   return {
     id: e.id,
-    type: "block-file",
+    type: "attachment-block",
     filename: e.clientFile.filename,
     bytes: e.clientFile.bytes,
     children: [{ text: "" }],
