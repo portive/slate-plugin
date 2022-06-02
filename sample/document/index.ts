@@ -85,6 +85,13 @@ export const initialEntities: Record<string, FileEntity> = {
     sentBytes: 10000,
     totalBytes: 10000,
   },
+  errorText: {
+    status: "error",
+    type: "generic",
+    message:
+      "Error in API props validation: StructError: At path: file -- Expected the value to satisfy a union of `object | object`, but received: [object Object]",
+    url: TEXT_FILE,
+  },
   icon: {
     status: "uploaded",
     type: "image",
@@ -164,6 +171,13 @@ export const initialValue: Descendant[] = [
   {
     type: "block-file",
     id: "fullText",
+    filename: "lorem-ipsum.txt",
+    bytes: 3541,
+    children: [{ text: "" }],
+  },
+  {
+    type: "block-file",
+    id: "errorText",
     filename: "lorem-ipsum.txt",
     bytes: 3541,
     children: [{ text: "" }],

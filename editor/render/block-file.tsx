@@ -1,5 +1,5 @@
 import { Transforms } from "slate"
-import { useReadOnly, useSlateStatic } from "slate-react"
+import { useSlateStatic } from "slate-react"
 import { css } from "emotion"
 import bytes from "bytes"
 import { useHighlightedStyle } from "~/lib/hosted-image"
@@ -15,6 +15,7 @@ const $blockFile = css`
   border: 1px solid #e0e0e0;
   margin: 8px 0;
   max-width: 360px;
+  background: white;
   .--container {
     display: flex;
     gap: 0.5em;
@@ -59,6 +60,10 @@ const $blockFile = css`
   .--progress-bar {
     margin-top: 0.25em;
   }
+  .--error {
+    margin-top: 0.25em;
+    color: red;
+  }
 `
 
 export function BlockFile({
@@ -67,7 +72,6 @@ export function BlockFile({
   children,
 }: DiscriminatedRenderElementProps<"block-file">) {
   const editor = useSlateStatic()
-  const readOnly = useReadOnly()
   const entity = useEntity(element, (url) => {
     return {
       status: "uploaded",
@@ -90,11 +94,15 @@ export function BlockFile({
           <div>{element.filename}</div>
           {entity.status === "uploaded" ? (
             <div className="--description">{bytes(element.bytes)}</div>
-          ) : (
+          ) : null}
+          {entity.status === "loading" ? (
             <div>
               <FileProgressBar className="--progress-bar" entity={entity} />
             </div>
-          )}
+          ) : null}
+          {entity.status === "error" ? (
+            <div className="--error">Error uploading file</div>
+          ) : null}
         </div>
         {entity.status === "uploaded" ? (
           <div className="--icon">
@@ -109,7 +117,7 @@ export function BlockFile({
             </a>
           </div>
         ) : null}
-        {!readOnly ? (
+        {entity.status === "error" ? (
           <div className="--icon">
             <div className="--icon-button --trash-icon" onClick={removeElement}>
               <TrashIcon />
