@@ -1,5 +1,5 @@
 {
-  "name": "slate-upload-plugin",
+  "name": "slate-plugin",
   "description": "Upload resizable images and file attachments into Slate editors. Fully customizable.",
   "keywords": [
     "slate",
