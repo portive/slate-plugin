@@ -1,4 +1,4 @@
-import { CreateGenericFileProps } from "~/lib/hosted-image"
+import { CreateGenericFileProps } from "~/lib/portive"
 import { AttachmentBlockElement } from "./types"
 
 export function createGenericFile(

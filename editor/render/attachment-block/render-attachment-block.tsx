@@ -2,13 +2,13 @@ import { Transforms } from "slate"
 import { useSlateStatic } from "slate-react"
 import { css } from "emotion"
 import bytes from "bytes"
-import { useHighlightedStyle } from "~/lib/hosted-image"
+import { useHighlightedStyle } from "~/lib/portive"
 import { ReactEditor } from "slate-react"
 import React, { useCallback } from "react"
-import { useOrigin } from "~/lib/hosted-image"
+import { useOrigin } from "~/lib/portive"
 import { DiscriminatedRenderElementProps } from "~/lib/shared/types"
-import { FileProgressBar } from "~/lib/hosted-image/render-image/progress-bar"
-import { DownloadIcon, FileIcon, TrashIcon } from "~/lib/icons"
+import { FileProgressBar } from "~/lib/portive/render-image/progress-bar"
+import { DownloadIcon, FileIcon, TrashIcon } from "~/lib/portive/icons"
 
 const $attachmentBlock = css`
   position: relative;

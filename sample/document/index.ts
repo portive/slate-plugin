@@ -1,4 +1,4 @@
-import { FileOrigin } from "~/lib/hosted-image"
+import { FileOrigin } from "~/lib/portive"
 import { Descendant } from "slate"
 
 const PORTRAIT_IMAGE =

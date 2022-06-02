@@ -1,6 +1,6 @@
 import { BaseEditor } from "slate"
 import { ReactEditor } from "slate-react"
-import { HostedImageInterface, PortiveEditor } from "~/lib/hosted-image"
+import { HostedImageInterface, PortiveEditor } from "~/lib/portive"
 import { HistoryEditor } from "slate-history"
 import { AttachmentBlockElement } from "~/editor/render/attachment-block"
 

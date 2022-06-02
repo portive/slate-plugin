@@ -1,4 +1,4 @@
-import { HostedFileInterface } from "~/lib/hosted-image"
+import { HostedFileInterface } from "~/lib/portive"
 
 export type AttachmentBlockElement = {
   type: "attachment-block"

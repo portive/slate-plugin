@@ -1,5 +1,5 @@
 import create from "zustand"
-import { FileOrigin } from "../hosted-image/types"
+import { FileOrigin } from "../portive/types"
 import { OriginState } from "./types"
 
 export const createOriginStore = (
