@@ -11,10 +11,12 @@ export function MyEditor({
   authToken,
   initialValue,
   initialEntities = {},
+  isReadOnly,
 }: {
   authToken: string
   initialValue: Descendant[]
   initialEntities: Record<string, FileEntity>
+  isReadOnly: boolean
 }) {
   const [editor] = useState<Editor>(() => {
     const reactEditor = withReact(withHistory(createEditor()))
@@ -57,22 +59,8 @@ export function MyEditor({
     return editor
   })
 
-  const [isReadOnly, setIsReadOnly] = useState(false)
-
   return (
-    <div style={{ marginLeft: 240 }}>
-      <h1 style={{ font: "bold 36px sans-serif" }}>
-        Slate Hosted Upload Plugin Demo
-      </h1>
-      <p>
-        <input
-          id="readOnly"
-          type="checkbox"
-          checked={isReadOnly}
-          onClick={() => setIsReadOnly(!isReadOnly)}
-        />
-        <label htmlFor="readOnly">Read Only Mode</label>
-      </p>
+    <>
       <p>
         <input
           type="file"
@@ -95,6 +83,6 @@ export function MyEditor({
           }}
         />
       </Slate>
-    </div>
+    </>
   )
 }
