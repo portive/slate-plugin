@@ -1,4 +1,3 @@
-import { Editor, Element, NodeEntry, Node, Descendant } from "slate"
 import { createOriginStore } from "../shared/origin-store"
 import { FullPortiveEditor, HostedImageOptions } from "./types"
 import { upload } from "./upload-hosted-image"
