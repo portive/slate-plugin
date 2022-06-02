@@ -11,6 +11,7 @@ import { FileProgressBar } from "~/lib/hosted-image/render-image/progress-bar"
 import { DownloadIcon, FileIcon, TrashIcon } from "~/lib/icons"
 
 const $blockFile = css`
+  position: relative;
   border-radius: 0.5em;
   border: 1px solid #e0e0e0;
   margin: 8px 0;
@@ -45,8 +46,12 @@ const $blockFile = css`
   }
   .--trash-icon {
     cursor: pointer;
+    transition: color 0.1s, background-color 0.1s;
+    color: #d00000;
+    background: #f8f0f0;
     &:hover {
       color: red;
+      background: #ffe0e0;
     }
   }
   .--body {
@@ -62,7 +67,7 @@ const $blockFile = css`
   }
   .--error {
     margin-top: 0.25em;
-    color: red;
+    color: #d00000;
   }
 `
 

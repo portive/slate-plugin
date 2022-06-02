@@ -111,11 +111,25 @@ export function HostedImage({
   }
 
   const highlightedStyle = useHighlightedStyle()
+
+  const src = generateSrc({
+    originUrl: entity.url,
+    size: element.size,
+    maxSize: entity.maxSize,
+  })
+
+  const srcSet = generateSrcSet({
+    originUrl: entity.url,
+    size: element.size,
+    maxSize: entity.maxSize,
+  })
+
   return (
     <HostedImageContext.Provider value={{ editor, entity, size, setSize }}>
       <ImageControls element={element}>
         <img
-          src={entity.url}
+          src={src}
+          srcSet={srcSet}
           width={size[0]}
           height={size[1]}
           className={className}
@@ -124,4 +138,47 @@ export function HostedImage({
       </ImageControls>
     </HostedImageContext.Provider>
   )
+}
+
+function generateSrcSet({
+  originUrl,
+  size,
+  maxSize,
+}: {
+  originUrl: string
+  size: [number, number]
+  maxSize: [number, number]
+}) {
+  /**
+   * If it's a url from `createObjectURL` then just return it
+   */
+  if (originUrl.startsWith("blob:")) return originUrl
+  const src1x = generateSrc({
+    originUrl,
+    size,
+    maxSize,
+  })
+  const src2x = generateSrc({
+    originUrl,
+    size: [size[0] * 2, size[1] * 2],
+    maxSize,
+  })
+  return `${src1x}, ${src2x} 2x`
+}
+
+function generateSrc({
+  originUrl,
+  size,
+  maxSize,
+}: {
+  originUrl: string
+  size: [number, number]
+  maxSize: [number, number]
+}) {
+  /**
+   * If it's a url from `createObjectURL` then just return it
+   */
+  if (originUrl.startsWith("blob:")) return originUrl
+  if (size[0] >= maxSize[0] || size[1] >= maxSize[1]) return originUrl
+  return `${originUrl}?size=${size[0]}x${size[1]}`
 }
