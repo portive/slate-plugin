@@ -23,7 +23,7 @@ export default function Index({
           id="readOnly"
           type="checkbox"
           checked={isReadOnly}
-          onClick={() => setIsReadOnly(!isReadOnly)}
+          onChange={() => setIsReadOnly(!isReadOnly)}
         />
         <label htmlFor="readOnly">Read Only Mode</label>
       </p>
