@@ -63,8 +63,8 @@ export type OriginStatus<T> =
 
 export type OriginState<T> = {
   origins: Record<string, T>
-  setOrigin: (id: string, origin: T) => void
-  getOrigin: (id: string) => T
+  setOrigin: (originKey: string, origin: T) => void
+  getOrigin: (originKey: string) => T
 }
 
 export type UploadPolicy = {

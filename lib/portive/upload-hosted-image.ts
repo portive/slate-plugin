@@ -124,7 +124,7 @@ async function uploadHostedImage(
  */
 async function uploadHostedFile(
   editor: FullPortiveEditor,
-  id: string,
+  originKey: string,
   file: File
 ) {
   const portive = editor.portive
@@ -135,7 +135,7 @@ async function uploadHostedFile(
     throw new Error(`Expected clientFile.type to be generic`)
   }
 
-  setOrigin(id, {
+  setOrigin(originKey, {
     status: "uploading",
     type: "generic",
     url: clientFile.objectUrl,
@@ -143,7 +143,7 @@ async function uploadHostedFile(
     totalBytes: file.size,
   })
   const genericFileElement = portive.createGenericFile({
-    originKey: id,
+    originKey: originKey,
     file,
     clientFile,
   })
@@ -154,7 +154,7 @@ async function uploadHostedFile(
     path: portive.path,
     file,
     onProgress(e) {
-      setOrigin(id, {
+      setOrigin(originKey, {
         status: "uploading",
         type: "generic",
         url: clientFile.objectUrl,
@@ -165,7 +165,7 @@ async function uploadHostedFile(
   })
 
   if (uploadResult.status === "error") {
-    setOrigin(id, {
+    setOrigin(originKey, {
       status: "error",
       type: "generic",
       url: clientFile.objectUrl,
@@ -178,7 +178,7 @@ async function uploadHostedFile(
   /**
    * Set image as uploaded but continue to use the local image URL
    */
-  setOrigin(id, {
+  setOrigin(originKey, {
     status: "uploaded",
     type: "generic",
     url: uploadResult.data.url,
@@ -188,7 +188,7 @@ async function uploadHostedFile(
    * After `getImageSize` executes, we know that the uploaded file is now in
    * the cache so we can swap the local file for the remote file.
    */
-  setOrigin(id, {
+  setOrigin(originKey, {
     status: "uploaded",
     type: "generic",
     url: uploadResult.data.url,

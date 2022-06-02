@@ -11,18 +11,20 @@ export const createOriginStore = (
 ) => {
   return create<OriginState<FileOrigin>>((set, get) => ({
     origins,
-    setOrigin(id: string, origin: FileOrigin): void {
+    setOrigin(originKey: string, origin: FileOrigin): void {
       set((state: OriginState<FileOrigin>) => ({
         origins: {
           ...state.origins,
-          [id]: origin,
+          [originKey]: origin,
         },
       }))
     },
-    getOrigin(id: string): FileOrigin {
-      const origin = get().origins[id]
+    getOrigin(originKey: string): FileOrigin {
+      const origin = get().origins[originKey]
       if (origin === undefined) {
-        throw new Error(`Expected origin with id "${id}" but could not find it`)
+        throw new Error(
+          `Expected origin with id "${originKey}" but could not find it`
+        )
       }
       return origin
     },
