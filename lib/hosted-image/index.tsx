@@ -1,5 +1,5 @@
 import { createStore } from "../shared/use-store"
-import { FullPortiveEditor, FileEntityProps, HostedImageOptions } from "./types"
+import { FullPortiveEditor, HostedImageOptions, FileOrigin } from "./types"
 import { upload } from "./upload-hosted-image"
 import {
   handleChangeInputFile,
@@ -32,7 +32,7 @@ export function withPortive<T extends FullPortiveEditor>(
     minResizeWidth,
     maxResizeWidth,
     defaultResize,
-    useStore: createStore<FileEntityProps>({ entities: initialEntities }),
+    useStore: createStore<FileOrigin>({ entities: initialEntities }),
     uploadFile(file: File): string {
       return upload(editor, file)
     },
