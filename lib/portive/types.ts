@@ -71,7 +71,7 @@ export interface HostedImageInterface {
    * `imageOrigin` being a `url` or an Object URL to the image on the
    * local computer of the browser.
    */
-  id: string
+  originKey: string
   /**
    * The `size` is required to know what dimensions to display the image at.
    * Remember that during the user doing a resize, the size of the displayed
@@ -89,7 +89,7 @@ export interface HostedFileInterface {
    * `fileEneity` being a `url` or an Object URL to the file on the
    * local computer of the browser.
    */
-  id: string
+  originKey: string
   children: VoidChildren
 }
 
@@ -100,14 +100,14 @@ export type Resize = {
 }
 
 export type CreateImageFileProps = {
-  id: string
+  originKey: string
   file: File
   clientFile: ClientImageFile
   initialSize: [number, number]
 }
 
 export type CreateGenericFileProps = {
-  id: string
+  originKey: string
   file: File
   clientFile: ClientGenericFile
 }

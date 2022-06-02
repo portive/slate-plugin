@@ -23,7 +23,7 @@ async function getImageSize(url: string): Promise<[number, number]> {
  */
 async function uploadHostedImage(
   editor: FullPortiveEditor,
-  id: string,
+  originKey: string,
   file: File
 ) {
   const portive = editor.portive
@@ -46,7 +46,7 @@ async function uploadHostedImage(
     portive.defaultResize.height
   )
 
-  setOrigin(id, {
+  setOrigin(originKey, {
     status: "uploading",
     type: "image",
     url: clientFile.objectUrl,
@@ -54,7 +54,12 @@ async function uploadHostedImage(
     sentBytes: 0,
     totalBytes: file.size,
   })
-  const element = portive.createImageFile({ id, file, clientFile, initialSize })
+  const element = portive.createImageFile({
+    originKey: originKey,
+    file,
+    clientFile,
+    initialSize,
+  })
   Transforms.insertNodes(editor, element)
   // {
   //   type: "block-image",
@@ -68,7 +73,7 @@ async function uploadHostedImage(
     path: portive.path,
     file,
     onProgress(e) {
-      setOrigin(id, {
+      setOrigin(originKey, {
         status: "uploading",
         type: "image",
         url: clientFile.objectUrl,
@@ -80,7 +85,7 @@ async function uploadHostedImage(
   })
 
   if (uploadResult.status === "error") {
-    setOrigin(id, {
+    setOrigin(originKey, {
       status: "error",
       type: "image",
       url: clientFile.objectUrl,
@@ -94,7 +99,7 @@ async function uploadHostedImage(
   /**
    * Set image as uploaded but continue to use the local image URL
    */
-  setOrigin(id, {
+  setOrigin(originKey, {
     status: "uploaded",
     type: "image",
     url: uploadResult.data.url,
@@ -105,7 +110,7 @@ async function uploadHostedImage(
    * After `getImageSize` executes, we know that the uploaded file is now in
    * the cache so we can swap the local file for the remote file.
    */
-  setOrigin(id, {
+  setOrigin(originKey, {
     status: "uploaded",
     type: "image",
     url: uploadResult.data.url,
@@ -137,7 +142,11 @@ async function uploadHostedFile(
     sentBytes: 0,
     totalBytes: file.size,
   })
-  const genericFileElement = portive.createGenericFile({ id, file, clientFile })
+  const genericFileElement = portive.createGenericFile({
+    originKey: id,
+    file,
+    clientFile,
+  })
   Transforms.insertNodes(editor, genericFileElement)
 
   const uploadResult = await uploadFile({

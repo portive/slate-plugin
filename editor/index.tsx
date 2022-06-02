@@ -32,7 +32,7 @@ export function MyEditor({
         createImageFile(e) {
           return {
             type: "block-image",
-            id: e.id,
+            originKey: e.originKey,
             size: e.initialSize,
             children: [{ text: "" }],
           }

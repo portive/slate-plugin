@@ -44,10 +44,10 @@ export function useOrigin(
 ): OriginStatus<FileOriginProps> {
   const editor = useSlateStatic()
   const originFromStore = editor.portive.useStore(
-    (state) => state.origins[element.id]
+    (state) => state.origins[element.originKey]
   )
-  if (element.id.includes("/")) {
-    return getOriginFromUrl(element.id)
+  if (element.originKey.includes("/")) {
+    return getOriginFromUrl(element.originKey)
   } else {
     return originFromStore
   }
@@ -96,7 +96,7 @@ export function HostedImage({
     return {
       status: "uploaded",
       type: "image",
-      url: element.id,
+      url: element.originKey,
       maxSize,
     }
   })
