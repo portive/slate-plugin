@@ -1,14 +1,10 @@
-import {
-  HostedImageInterface,
-  FileOriginProps,
-  HostedFileInterface,
-} from "../types"
+import { HostedImageInterface, HostedFileInterface, Origin } from "../types"
 import { useSlateStatic, useSelected, useFocused } from "slate-react"
 import { ImageControls } from "./image-controls"
 import { CSSProperties, useEffect, useState } from "react"
 import { HostedImageContext } from "./hosted-image-context"
 import { getSizeFromUrl } from "./utils"
-import { OriginStatus, RenderElementPropsFor } from "../../shared/types"
+import { RenderElementPropsFor } from "../../shared/types"
 
 export function RenderHostedImage({
   attributes,
@@ -40,8 +36,8 @@ export function useHighlightedStyle() {
  */
 export function useOrigin(
   element: HostedImageInterface | HostedFileInterface,
-  getOriginFromUrl: (url: string) => OriginStatus<FileOriginProps>
-): OriginStatus<FileOriginProps> {
+  getOriginFromUrl: (url: string) => Origin
+): Origin {
   const editor = useSlateStatic()
   const originFromStore = editor.portive.useStore(
     (state) => state.origins[element.originKey]
@@ -106,22 +102,18 @@ export function HostedImage({
     setSize(element.size)
   }, [element.size[0], element.size[1]])
 
-  if (origin.type !== "image") {
-    throw new Error(`Expected origin to be of type image`)
-  }
-
   const highlightedStyle = useHighlightedStyle()
 
   const src = generateSrc({
     originUrl: origin.url,
     size: element.size,
-    maxSize: origin.maxSize,
+    maxSize: element.originSize,
   })
 
   const srcSet = generateSrcSet({
     originUrl: origin.url,
     size: element.size,
-    maxSize: origin.maxSize,
+    maxSize: element.originSize,
   })
 
   return (

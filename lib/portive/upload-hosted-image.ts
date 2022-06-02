@@ -46,27 +46,28 @@ async function uploadHostedImage(
     portive.initialMaxSize[1]
   )
 
+  const url = clientFile.objectUrl
+
+  // const template = {
+  //   type: "image",
+  //   url: clientFile.objectUrl,
+  //   maxSize: clientFile.size,
+  // } as const
+
   setOrigin(originKey, {
+    url,
     status: "uploading",
-    type: "image",
-    url: clientFile.objectUrl,
-    maxSize: clientFile.size,
     sentBytes: 0,
     totalBytes: file.size,
   })
   const element = portive.createImageFile({
     originKey: originKey,
+    originSize: clientFile.size,
     file,
     clientFile,
     initialSize,
   })
   Transforms.insertNodes(editor, element)
-  // {
-  //   type: "block-image",
-  //   id,
-  //   size: initialSize,
-  //   children: [{ text: "" }],
-  // })
 
   const uploadResult = await uploadFile({
     authToken: portive.authToken,
@@ -74,10 +75,8 @@ async function uploadHostedImage(
     file,
     onProgress(e) {
       setOrigin(originKey, {
+        url,
         status: "uploading",
-        type: "image",
-        url: clientFile.objectUrl,
-        maxSize: clientFile.size,
         sentBytes: e.loaded,
         totalBytes: e.total,
       })
@@ -86,10 +85,8 @@ async function uploadHostedImage(
 
   if (uploadResult.status === "error") {
     setOrigin(originKey, {
+      url,
       status: "error",
-      type: "image",
-      url: clientFile.objectUrl,
-      maxSize: clientFile.size,
       message: uploadResult.message,
     })
     console.error(uploadResult.message)
@@ -100,10 +97,8 @@ async function uploadHostedImage(
    * Set image as uploaded but continue to use the local image URL
    */
   setOrigin(originKey, {
+    url,
     status: "uploaded",
-    type: "image",
-    url: uploadResult.data.url,
-    maxSize: clientFile.size,
   })
   await getImageSize(uploadResult.data.url)
   /**
@@ -111,10 +106,8 @@ async function uploadHostedImage(
    * the cache so we can swap the local file for the remote file.
    */
   setOrigin(originKey, {
-    status: "uploaded",
-    type: "image",
     url: uploadResult.data.url,
-    maxSize: clientFile.size,
+    status: "uploaded",
   })
 }
 
@@ -137,7 +130,6 @@ async function uploadHostedFile(
 
   setOrigin(originKey, {
     status: "uploading",
-    type: "generic",
     url: clientFile.objectUrl,
     sentBytes: 0,
     totalBytes: file.size,
@@ -156,7 +148,6 @@ async function uploadHostedFile(
     onProgress(e) {
       setOrigin(originKey, {
         status: "uploading",
-        type: "generic",
         url: clientFile.objectUrl,
         sentBytes: e.loaded,
         totalBytes: e.total,
@@ -167,7 +158,6 @@ async function uploadHostedFile(
   if (uploadResult.status === "error") {
     setOrigin(originKey, {
       status: "error",
-      type: "generic",
       url: clientFile.objectUrl,
       message: uploadResult.message,
     })
@@ -176,23 +166,22 @@ async function uploadHostedFile(
   }
 
   /**
-   * Set image as uploaded but continue to use the local image URL
+   * Set file as uploaded with endpoint url. Unlike image, we set this
+   * immediately.
    */
   setOrigin(originKey, {
     status: "uploaded",
-    type: "generic",
     url: uploadResult.data.url,
   })
-  await getImageSize(uploadResult.data.url)
-  /**
-   * After `getImageSize` executes, we know that the uploaded file is now in
-   * the cache so we can swap the local file for the remote file.
-   */
-  setOrigin(originKey, {
-    status: "uploaded",
-    type: "generic",
-    url: uploadResult.data.url,
-  })
+  // await getImageSize(uploadResult.data.url)
+  // /**
+  //  * After `getImageSize` executes, we know that the uploaded file is now in
+  //  * the cache so we can swap the local file for the remote file.
+  //  */
+  // setOrigin(originKey, {
+  //   status: "uploaded",
+  //   url: uploadResult.data.url,
+  // })
 }
 
 /**

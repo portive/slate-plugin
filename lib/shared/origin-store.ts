@@ -1,25 +1,25 @@
 import create from "zustand"
-import { FileOrigin } from "../portive/types"
+import { Origin } from "../portive/types"
 import { OriginState } from "./types"
 
 export const createOriginStore = (
   {
     origins: origins = {},
   }: {
-    origins: Record<string, FileOrigin>
+    origins: Record<string, Origin>
   } = { origins: {} }
 ) => {
-  return create<OriginState<FileOrigin>>((set, get) => ({
+  return create<OriginState>((set, get) => ({
     origins,
-    setOrigin(originKey: string, origin: FileOrigin): void {
-      set((state: OriginState<FileOrigin>) => ({
+    setOrigin(originKey: string, origin: Origin): void {
+      set((state: OriginState) => ({
         origins: {
           ...state.origins,
           [originKey]: origin,
         },
       }))
     },
-    getOrigin(originKey: string): FileOrigin {
+    getOrigin(originKey: string): Origin {
       const origin = get().origins[originKey]
       if (origin === undefined) {
         throw new Error(

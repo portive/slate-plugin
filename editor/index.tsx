@@ -1,5 +1,5 @@
 import { createEditor, Descendant, Editor } from "slate"
-import { FileOrigin } from "~/lib/portive"
+import { Origin } from "~/lib/portive"
 import { Slate, Editable, withReact } from "slate-react"
 import React, { useState } from "react"
 import { withPortive } from "~/lib/portive"
@@ -16,7 +16,7 @@ export function MyEditor({
 }: {
   authToken: string
   initialValue: Descendant[]
-  initialOrigins: Record<string, FileOrigin>
+  initialOrigins: Record<string, Origin>
   isReadOnly: boolean
 }) {
   const [editor] = useState<Editor>(() => {
@@ -33,6 +33,7 @@ export function MyEditor({
           return {
             type: "block-image",
             originKey: e.originKey,
+            originSize: e.originSize,
             size: e.initialSize,
             children: [{ text: "" }],
           }

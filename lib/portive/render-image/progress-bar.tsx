@@ -1,4 +1,4 @@
-import { FileOrigin } from "../types"
+import { Origin } from "../types"
 import { useHostedImageContext } from "./hosted-image-context"
 
 const BAR_HEIGHT = 16
@@ -61,7 +61,7 @@ export function FileProgressBar({
   origin,
 }: {
   className?: string
-  origin: FileOrigin
+  origin: Origin
 }) {
   if (origin.status !== "uploading") {
     return null

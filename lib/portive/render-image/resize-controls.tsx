@@ -5,11 +5,11 @@ import { Element, Transforms } from "slate"
 import { useHostedImageContext } from "./hosted-image-context"
 
 export function ResizeControls({ element }: { element: HostedImageInterface }) {
-  const { origin, size, setSize } = useHostedImageContext()
+  const { size, setSize } = useHostedImageContext()
   const editor = useSlateStatic()
   const [isResizing, setIsResizing] = useState(false)
 
-  if (origin.maxSize[0] < editor.portive.minResizeWidth) return null
+  if (element.originSize[0] < editor.portive.minResizeWidth) return null
 
   let currentSize = size
 
@@ -20,7 +20,7 @@ export function ResizeControls({ element }: { element: HostedImageInterface }) {
       const startWidth = size[0]
       const minWidth = editor.portive.minResizeWidth
       const maxWidth = Math.min(
-        origin.maxSize[0],
+        element.originSize[0],
         editor.portive.maxResizeWidth
       )
       /**
@@ -43,7 +43,7 @@ export function ResizeControls({ element }: { element: HostedImageInterface }) {
         /**
          * Calculate the inverseAspect (used to calculate height)
          */
-        const inverseAspect = origin.maxSize[1] / origin.maxSize[0]
+        const inverseAspect = element.originSize[1] / element.originSize[0]
 
         /**
          * Calculate height

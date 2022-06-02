@@ -12,9 +12,10 @@ type ParagraphElement = {
 type BlockImageElement = {
   type: "block-image"
   /**
-   * Must include originKey
+   * Must include originKey and originSize
    */
   originKey: string
+  originSize: [number, number]
   /**
    * Must include `size` (consider switching to `mods.size`)
    */
@@ -24,16 +25,17 @@ type BlockImageElement = {
 type InlineImageElement = {
   type: "inline-image"
   /**
-   * Must include originKey
+   * Must include originKey and originSize
    */
   originKey: string
+  originSize: [number, number]
   /**
    * Must include `size` (consider switching to `mods.size`)
    */
   size: [number, number]
   children: [{ text: "" }]
 }
-type CustomElement =
+export type CustomElement =
   | ParagraphElement
   | AttachmentBlockElement
   | BlockImageElement

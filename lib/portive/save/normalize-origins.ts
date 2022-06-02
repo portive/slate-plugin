@@ -1,5 +1,5 @@
 import { Descendant } from "slate"
-import { FileOrigin } from "../types"
+import { Origin } from "../types"
 
 type MaybeOriginNode = {
   originKey?: string
@@ -12,7 +12,7 @@ type MaybeOriginNode = {
  */
 function _normalizeOrigins(
   nodes: MaybeOriginNode[],
-  origins: Record<string, FileOrigin>
+  origins: Record<string, Origin>
 ): MaybeOriginNode[] {
   const nextNodes: MaybeOriginNode[] = []
   for (const node of nodes) {
@@ -42,7 +42,7 @@ function _normalizeOrigins(
            * If it's not found, we skip over it because we don't want it in our
            * normalized value.
            */
-          const origin: FileOrigin | undefined = origins[node.originKey]
+          const origin: Origin | undefined = origins[node.originKey]
           if (origin && origin.status === "uploaded") {
             nextNodes.push({ ...node, originKey: origin.url })
           }
@@ -91,7 +91,7 @@ function _normalizeOrigins(
  */
 export function normalizeOrigins(
   nodes: Descendant[],
-  origins: Record<string, FileOrigin>
+  origins: Record<string, Origin>
 ): Descendant[] {
   return _normalizeOrigins(nodes as MaybeOriginNode[], origins) as Descendant[]
 }

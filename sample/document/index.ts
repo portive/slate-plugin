@@ -1,4 +1,4 @@
-import { FileOrigin } from "~/lib/portive"
+import { Origin } from "~/lib/portive"
 import { Descendant } from "slate"
 
 const PORTRAIT_IMAGE =
@@ -19,7 +19,7 @@ const IMAGE_PATH_REGEXP = /[/][a-zA-Z0-9]+--([0-9]+)x([0-9]+)[.][a-z]+/i
 type HostedFileInfo = {
   type: "image"
   url: string
-  originalSize: [number, number] // size of origin image on server
+  originSize: [number, number] // size of origin image on server
   currentSize: [number, number] // current size
 }
 
@@ -32,7 +32,7 @@ function getHostedImageInfo(url: string | URL): HostedFileInfo {
   return {
     type: "image",
     url: url.href,
-    originalSize: [width, height],
+    originSize: [width, height],
     currentSize: [width, height],
   }
 }
@@ -44,86 +44,68 @@ export const images: Record<string, HostedFileInfo> = {
   icon: getHostedImageInfo(ICON_IMAGE),
 }
 
-export const initialOrigins: Record<string, FileOrigin> = {
+export const initialOrigins: Record<string, Origin> = {
   pdf: {
     status: "uploaded",
-    type: "generic",
     url: PDF_FILE,
   },
   text: {
     status: "uploaded",
-    type: "generic",
     url: TEXT_FILE,
   },
   zeroText: {
     status: "uploading",
-    type: "generic",
     url: TEXT_FILE,
     sentBytes: 0,
     totalBytes: 100000,
   },
   halfText: {
     status: "uploading",
-    type: "generic",
     url: TEXT_FILE,
     sentBytes: 50000,
     totalBytes: 100000,
   },
   fullText: {
     status: "uploading",
-    type: "generic",
     url: TEXT_FILE,
     sentBytes: 10000,
     totalBytes: 10000,
   },
   errorText: {
     status: "error",
-    type: "generic",
     message:
       "Error in API props validation: StructError: At path: file -- Expected the value to satisfy a union of `object | object`, but received: [object Object]",
     url: TEXT_FILE,
   },
   icon: {
     status: "uploaded",
-    type: "image",
     url: images.icon.url,
-    maxSize: images.icon.originalSize,
   },
   zero: {
     status: "uploading",
-    type: "image",
     url: images.landscape.url,
     sentBytes: 0,
     totalBytes: 3541,
-    maxSize: images.landscape.originalSize,
   },
   half: {
     status: "uploading",
-    type: "image",
     url: images.landscape.url,
     sentBytes: 1770,
     totalBytes: 3541,
-    maxSize: images.landscape.originalSize,
   },
   full: {
     status: "uploading",
-    type: "image",
     url: images.landscape.url,
-    maxSize: images.landscape.originalSize,
     sentBytes: 3541,
     totalBytes: 3541,
   },
   uploaded: {
     status: "uploaded",
-    type: "image",
     url: images.landscape.url,
-    maxSize: images.landscape.originalSize,
   },
   error: {
     status: "error",
-    type: "image",
     url: images.landscape.url,
-    maxSize: images.landscape.originalSize,
     message:
       "Error in API props validation: StructError: At path: file -- Expected the value to satisfy a union of `object | object`, but received: [object Object]",
   },
@@ -180,6 +162,7 @@ export const initialValue: Descendant[] = [
       {
         type: "inline-image",
         originKey: "icon",
+        originSize: images.icon.originSize,
         size: [40, 40],
         children: [{ text: "" }],
       },
@@ -189,6 +172,7 @@ export const initialValue: Descendant[] = [
   {
     type: "block-image",
     originKey: "icon",
+    originSize: images.icon.originSize,
     size: [40, 40],
     children: [{ text: "" }],
   },
@@ -196,18 +180,21 @@ export const initialValue: Descendant[] = [
   {
     type: "block-image",
     originKey: "zero",
+    originSize: images.landscape.originSize,
     size: [256, 192],
     children: [{ text: "" }],
   },
   {
     type: "block-image",
     originKey: "half",
+    originSize: images.landscape.originSize,
     size: [256, 192],
     children: [{ text: "" }],
   },
   {
     type: "block-image",
     originKey: "full",
+    originSize: images.landscape.originSize,
     size: [256, 192],
     children: [{ text: "" }],
   },
@@ -218,6 +205,7 @@ export const initialValue: Descendant[] = [
   {
     type: "block-image",
     originKey: "uploaded",
+    originSize: images.landscape.originSize,
     size: [256, 192],
     children: [{ text: "" }],
   },
@@ -225,6 +213,7 @@ export const initialValue: Descendant[] = [
   {
     type: "block-image",
     originKey: images.landscape.url,
+    originSize: images.landscape.originSize,
     size: [256, 192],
     children: [{ text: "" }],
   },
@@ -232,6 +221,7 @@ export const initialValue: Descendant[] = [
   {
     type: "block-image",
     originKey: "error",
+    originSize: images.landscape.originSize,
     size: [256, 192],
     children: [{ text: "" }],
   },

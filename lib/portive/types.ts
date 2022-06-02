@@ -3,29 +3,31 @@ import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { Promisable } from "type-fest"
 import { createOriginStore } from "../shared/origin-store"
-import { OriginStatus } from "../shared/types"
 import { ClientGenericFile, ClientImageFile } from "@portive/api-types"
 
 /**
  * Origin
  */
 
-export type ImageFileOriginProps = {
-  type: "image"
+export type OriginUploading = {
   url: string
-  maxSize: [number, number] // necessary for when the image is still a BLOB
+  status: "uploading"
+  sentBytes: number
+  totalBytes: number
 }
 
-export type GenericFileOriginProps = {
-  type: "generic"
+export type OriginUploaded = {
   url: string
+  status: "uploaded"
 }
 
-export type FileOriginProps = GenericFileOriginProps | ImageFileOriginProps
+export type OriginError = {
+  url: string
+  status: "error"
+  message: string
+}
 
-export type ImageFileOrigin = OriginStatus<ImageFileOriginProps>
-export type GenericFileOrigin = OriginStatus<GenericFileOriginProps>
-export type FileOrigin = OriginStatus<FileOriginProps>
+export type Origin = OriginUploading | OriginUploaded | OriginError
 
 export type HostedImageOptions = {
   authToken: string | (() => Promisable<string>)
@@ -33,7 +35,7 @@ export type HostedImageOptions = {
   initialMaxSize: [number, number]
   minResizeWidth?: number
   maxResizeWidth?: number
-  initialOrigins: Record<string, FileOrigin>
+  initialOrigins: Record<string, Origin>
   createImageFile: (e: CreateImageFileProps) => Element
   createGenericFile: (e: CreateGenericFileProps) => Element
 }
@@ -79,6 +81,7 @@ export interface HostedImageInterface {
    * local computer of the browser.
    */
   originKey: string
+  originSize: [number, number]
   /**
    * The `size` is required to know what dimensions to display the image at.
    * Remember that during the user doing a resize, the size of the displayed
@@ -102,9 +105,10 @@ export interface HostedFileInterface {
 
 export type CreateImageFileProps = {
   originKey: string
+  originSize: [number, number]
+  initialSize: [number, number]
   file: File
   clientFile: ClientImageFile
-  initialSize: [number, number]
 }
 
 export type CreateGenericFileProps = {

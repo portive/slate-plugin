@@ -1,5 +1,6 @@
 import { Element } from "slate"
 import { RenderElementProps } from "slate-react"
+import { Origin } from "../portive"
 
 /**
  * Take one type and narrows it using a second type, usually on a type field
@@ -41,30 +42,10 @@ export type RenderElementPropsFor<T> = Omit<RenderElementProps, "element"> & {
   element: T
 }
 
-export type OriginUploadingStatus<T> = {
-  status: "uploading"
-  sentBytes: number
-  totalBytes: number
-} & T
-
-export type OriginUploadedStatus<T> = {
-  status: "uploaded"
-} & T
-
-export type OriginErrorStatus<T> = {
-  status: "error"
-  message: string
-} & T
-
-export type OriginStatus<T> =
-  | OriginUploadingStatus<T>
-  | OriginUploadedStatus<T>
-  | OriginErrorStatus<T>
-
-export type OriginState<T> = {
-  origins: Record<string, T>
-  setOrigin: (originKey: string, origin: T) => void
-  getOrigin: (originKey: string) => T
+export type OriginState = {
+  origins: Record<string, Origin>
+  setOrigin: (originKey: string, origin: Origin) => void
+  getOrigin: (originKey: string) => Origin
 }
 
 export type UploadPolicy = {
