@@ -1,6 +1,5 @@
 import create from "zustand"
-import { Origin } from "../portive/types"
-import { OriginState } from "./types"
+import { Origin, OriginState } from "./types"
 
 export const createOriginStore = (
   {

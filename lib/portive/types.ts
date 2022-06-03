@@ -2,7 +2,7 @@ import { BaseEditor, Descendant, Element } from "slate"
 import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { Promisable } from "type-fest"
-import { createOriginStore } from "../shared/origin-store"
+import { createOriginStore } from "./origin-store"
 import { ClientGenericFile, ClientImageFile } from "@portive/api-types"
 
 /**
@@ -28,6 +28,12 @@ export type OriginError = {
 }
 
 export type Origin = OriginUploading | OriginUploaded | OriginError
+
+export type OriginState = {
+  origins: Record<string, Origin>
+  setOrigin: (originKey: string, origin: Origin) => void
+  getOrigin: (originKey: string) => Origin
+}
 
 export type HostedImageOptions = {
   authToken: string | (() => Promisable<string>)

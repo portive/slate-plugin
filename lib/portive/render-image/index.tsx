@@ -4,7 +4,7 @@ import { ImageControls } from "./image-controls"
 import { CSSProperties, useEffect, useState } from "react"
 import { HostedImageContext } from "./hosted-image-context"
 import { getSizeFromUrl } from "./utils"
-import { RenderElementPropsFor } from "../../shared/types"
+import { RenderElementPropsFor } from "../type-utils"
 
 export function RenderHostedImage({
   attributes,

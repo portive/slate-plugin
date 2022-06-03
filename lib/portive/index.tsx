@@ -1,4 +1,4 @@
-import { createOriginStore } from "../shared/origin-store"
+import { createOriginStore } from "./origin-store"
 import { FullPortiveEditor, HostedImageOptions } from "./types"
 import { upload } from "./upload-hosted-image"
 import {
@@ -8,7 +8,7 @@ import {
 } from "./handlers"
 import { normalizeOrigins } from "./save"
 export * from "./types"
-export * from "../shared/origin-store"
+export * from "./origin-store"
 export * from "./render-image"
 export * from "./handlers"
 

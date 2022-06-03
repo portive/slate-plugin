@@ -1,6 +1,5 @@
 import { Element } from "slate"
 import { RenderElementProps } from "slate-react"
-import { Origin } from "../portive"
 
 /**
  * Take one type and narrows it using a second type, usually on a type field
@@ -40,10 +39,4 @@ export type DiscriminatedRenderElementProps<T extends Element["type"]> =
  */
 export type RenderElementPropsFor<T> = Omit<RenderElementProps, "element"> & {
   element: T
-}
-
-export type OriginState = {
-  origins: Record<string, Origin>
-  setOrigin: (originKey: string, origin: Origin) => void
-  getOrigin: (originKey: string) => Origin
 }
