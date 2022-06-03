@@ -6,7 +6,7 @@ import { useHighlightedStyle } from "~/lib/portive"
 import { ReactEditor } from "slate-react"
 import React, { useCallback } from "react"
 import { useOrigin } from "~/lib/portive"
-import { DiscriminatedRenderElementProps } from "~/lib/portive/type-utils"
+import { DiscriminatedRenderElementProps } from "~/lib/portive/types/type-utils"
 import { FileProgressBar } from "~/lib/portive/render-image/progress-bar"
 import { DownloadIcon, FileIcon, TrashIcon } from "~/lib/portive/icons"
 

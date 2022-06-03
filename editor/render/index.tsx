@@ -1,7 +1,7 @@
 import { RenderElementProps } from "slate-react"
 import React from "react"
 import { HostedImage } from "~/lib/portive"
-import { DiscriminatedRenderElementProps } from "~/lib/portive/type-utils"
+import { DiscriminatedRenderElementProps } from "~/lib/portive/types/type-utils"
 import { AttachmentBlock } from "./attachment-block"
 
 export function renderElement(props: RenderElementProps) {
