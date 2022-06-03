@@ -6,6 +6,9 @@ import EventEmitter from "eventemitter3"
 describe("normalize", () => {
   // unused event target
   const eventEmitter = new EventEmitter<OriginEventTypes>()
+  const finish = new Promise<Origin>(() => {
+    /* empty */
+  })
 
   it("should normalize an originKey", async () => {
     const origins: Record<string, Origin> = {
@@ -24,6 +27,7 @@ describe("normalize", () => {
         sentBytes: 500,
         totalBytes: 1000,
         eventEmitter,
+        finish,
       },
     }
     const nodes = [{ originKey: "a" }] as Descendant[]

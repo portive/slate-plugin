@@ -5,6 +5,7 @@ import { nanoid } from "nanoid"
 import { createClientFile, isHostedImage, uploadFile } from "~/lib/api"
 import { ClientFile } from "@portive/api-types"
 import EventEmitter from "eventemitter3"
+import Defer from "p-defer"
 
 /**
  * Executes the `uploadSteps`:
@@ -32,6 +33,16 @@ async function uploadSteps({
   const { setOrigin } = editor.portive.useStore.getState()
   const url = clientFile.objectUrl
 
+  /**
+   * We create a deferredFinish which is an object with a `promise` and a way
+   * to `resolve` or `reject` the Promise outside of the Promise. We use
+   * `p-defer` library to do this. The `finish` Promise gets added to the
+   * `origin` object so we can await `origin.finish` during the save process
+   * to wait for all the files to finish uploading.
+   */
+  const deferredFinish = Defer<Origin>()
+  const finish = deferredFinish.promise
+
   const eventEmitter = new EventEmitter<OriginEventTypes>()
 
   /**
@@ -43,6 +54,7 @@ async function uploadSteps({
     sentBytes: 0,
     totalBytes: file.size,
     eventEmitter,
+    finish,
   })
 
   /**
@@ -65,6 +77,7 @@ async function uploadSteps({
         sentBytes: e.loaded,
         totalBytes: e.total,
         eventEmitter,
+        finish,
       }
       setOrigin(originKey, origin)
       eventEmitter.emit("progress", origin)
@@ -82,6 +95,7 @@ async function uploadSteps({
     }
     setOrigin(originKey, origin)
     eventEmitter.emit("error", origin)
+    deferredFinish.resolve(origin)
     console.error(uploadResult.message)
     return
   }
@@ -95,6 +109,7 @@ async function uploadSteps({
   }
   setOrigin(originKey, origin)
   eventEmitter.emit("complete", origin)
+  deferredFinish.resolve(origin)
 }
 
 /**
