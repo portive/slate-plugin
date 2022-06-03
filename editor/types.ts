@@ -5,10 +5,30 @@ import { HistoryEditor } from "slate-history"
 import { AttachmentBlockElement } from "~/editor/render/attachment-block"
 
 type CustomText = { text: string }
+
 type ParagraphElement = {
   type: "paragraph"
   children: (CustomText | InlineImageElement)[]
 }
+
+type BlockQuoteElement = {
+  type: "block-quote"
+  children: Array<
+    | ParagraphElement
+    | BlockQuoteElement
+    | MinOriginElement
+    | BlockImageElement
+    | InlineImageElement
+    | AttachmentBlockElement
+  >
+}
+
+type MinOriginElement = {
+  type: "min-origin"
+  originKey: string
+  children: [{ text: "" }]
+}
+
 type BlockImageElement = {
   type: "block-image"
   /**
@@ -22,6 +42,7 @@ type BlockImageElement = {
   size: [number, number]
   children: [{ text: "" }]
 }
+
 type InlineImageElement = {
   type: "inline-image"
   /**
@@ -35,8 +56,11 @@ type InlineImageElement = {
   size: [number, number]
   children: [{ text: "" }]
 }
+
 export type CustomElement =
   | ParagraphElement
+  | BlockQuoteElement
+  | MinOriginElement
   | AttachmentBlockElement
   | BlockImageElement
   | InlineImageElement

@@ -50,7 +50,7 @@ export function withPortive<T extends FullPortiveEditor>(
       return handleChangeInputFile(editor, e)
     },
     async save() {
-      return { status: "success", value: [] }
+      return { status: "success", value: editor.portive.normalize() }
     },
     normalize() {
       const origins = editor.portive.useStore.getState().origins

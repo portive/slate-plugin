@@ -6,6 +6,7 @@ import { withHistory } from "slate-history"
 import { FullPortiveEditor, Origin } from "../../types"
 import "~/editor/types" // use the types from our demo editor for testing
 import { mockOrigin } from "./mock-origin"
+import { createOriginStore } from "../../origin-store"
 
 function mockEditor(
   value: Descendant[],
@@ -24,16 +25,52 @@ function mockEditor(
     },
     withReact(withHistory(createEditor()))
   )
+  editor.children = value
+  editor.portive.useStore = createOriginStore({ origins })
   return editor
 }
 
+/**
+ * Disabled the warning because we want to have log available but sometimes we
+ * don't need it.
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function log(x: unknown) {
+  console.log(JSON.stringify(x))
+}
+
 describe("editor.portive.save", () => {
-  it("should save a simple document", async () => {
-    const editor = mockEditor(
-      [{ type: "paragraph", children: [{ text: "" }] }],
-      {}
-    )
-    const result = await editor.portive.save()
-    console.log(result)
+  describe("check that it normalizes", () => {
+    it("should save a simple document", async () => {
+      const editor = mockEditor(
+        [{ type: "paragraph", children: [{ text: "" }] }],
+        {}
+      )
+      const result = await editor.portive.save()
+      expect(result).toEqual({
+        status: "success",
+        value: [{ type: "paragraph", children: [{ text: "" }] }],
+      })
+    })
+
+    it("should remove a node with an originKey that doesn't match", async () => {
+      const editor = mockEditor(
+        [
+          {
+            type: "attachment-block",
+            originKey: "missing",
+            filename: "hello.txt",
+            bytes: 5,
+            children: [{ text: "" }],
+          },
+        ],
+        {}
+      )
+      const result = await editor.portive.save()
+      expect(result).toEqual({ status: "success", value: [] })
+    })
   })
+
+  // describe("wait for promises to complete", () => {
+  // })
 })
