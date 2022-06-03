@@ -5,6 +5,7 @@ import { withPortive } from "~/lib/portive"
 import { withHistory } from "slate-history"
 import { FullPortiveEditor, Origin } from "../../types"
 import "~/editor/types" // use the types from our demo editor for testing
+import { mockOrigin } from "./mock-origin"
 
 function mockEditor(
   value: Descendant[],

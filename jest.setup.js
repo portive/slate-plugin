@@ -1,3 +1,6 @@
-const dotenv = require("dotenv")
+/**
+ * Uncomment below to enable dotenv variables in unit tests
+ */
 
-dotenv.config({ path: "./.env/test.env" })
+// const dotenv = require("dotenv")
+// dotenv.config({ path: "./.env/test.env" })

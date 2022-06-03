@@ -1,6 +1,7 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 
 const fs = require("fs")
+const esmModules = require("./jest.esm-modules").join("|")
 
 /**
  * Make sure the file `tsconfig.ts-jest.json` was copied into the directory.
@@ -15,8 +16,6 @@ if (!fs.existsSync("tsconfig.ts-jest.json")) {
   console.log()
   throw new Error("tsconfig.ts-jest.json does not exist but is required.")
 }
-
-const esmModules = require("./jest.esm-modules").join("|")
 
 module.exports = {
   setupFiles: ["./jest.setup.js"],

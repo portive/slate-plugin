@@ -1,8 +1,7 @@
 /**
  * Next.js insists on using the main `tsconfig.json` file so this is actually
  * the config file for Next.js
- */
-{
+ */{
   "extends": "./tsconfig.custom.json",
   "compilerOptions": {
     /**
@@ -13,6 +12,7 @@
     "sourceMap": true,
     "incremental": true,
     "jsx": "preserve",
-    "allowJs": true
+    "allowJs": true,
+    "moduleResolution": "node"
   }
 }

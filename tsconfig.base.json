@@ -53,6 +53,16 @@
      * extending tsconfig.base.json.
      */
     // "module": "commonjs",
+    /**
+     * Setting this to `node` means that TypeScript won't support `exports`.
+     * We are keeping it like this for now because there's a likelihood that
+     * others have it set up this way and we want our imported libraries to
+     * break if they are.
+     *
+     * https://github.com/microsoft/TypeScript/issues/33079#issuecomment-1043271180
+     *
+     * To fix the breakage, we would use `node12` or greater or `nodenext`
+     */
     "moduleResolution": "node",
     "paths": {
       "~/*": ["*"],
