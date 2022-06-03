@@ -1,8 +1,12 @@
 import { Descendant } from "slate"
 import { normalizeOrigins } from ".."
-import { Origin } from "../../types"
+import { Origin, OriginEventTypes } from "../../types"
+import EventEmitter from "eventemitter3"
 
 describe("normalize", () => {
+  // unused event target
+  const eventEmitter = new EventEmitter<OriginEventTypes>()
+
   it("should normalize an originKey", async () => {
     const origins: Record<string, Origin> = {
       a: { status: "uploaded", url: "/fake.txt" },
@@ -19,6 +23,7 @@ describe("normalize", () => {
         url: "/fake.txt",
         sentBytes: 500,
         totalBytes: 1000,
+        eventEmitter,
       },
     }
     const nodes = [{ originKey: "a" }] as Descendant[]

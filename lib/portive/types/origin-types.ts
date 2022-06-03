@@ -1,12 +1,17 @@
+import EventEmitter from "eventemitter3"
+
 /**
  * Origin
  */
+
+export type OriginEventTypes = "progress" | "complete" | "error"
 
 export type OriginUploading = {
   url: string
   status: "uploading"
   sentBytes: number
   totalBytes: number
+  eventEmitter: EventEmitter<OriginEventTypes>
 }
 
 export type OriginUploaded = {
@@ -22,8 +27,11 @@ export type OriginError = {
 
 export type Origin = OriginUploading | OriginUploaded | OriginError
 
+export type GetOrigin = (originKey: string) => Origin
+export type SetOrigin = (originKey: string, origin: Origin) => void
+
 export type OriginState = {
   origins: Record<string, Origin>
-  setOrigin: (originKey: string, origin: Origin) => void
-  getOrigin: (originKey: string) => Origin
+  getOrigin: GetOrigin
+  setOrigin: SetOrigin
 }

@@ -1,6 +1,6 @@
 import { createOriginStore } from "./origin-store"
 import { FullPortiveEditor, HostedImageOptions } from "./types"
-import { upload } from "./upload-hosted-image"
+import { upload } from "./upload-file"
 import {
   handleChangeInputFile,
   handlePasteFile,

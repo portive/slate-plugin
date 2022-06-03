@@ -1,5 +1,6 @@
-import { Origin } from "~/lib/portive"
+import { Origin, OriginEventTypes } from "~/lib/portive"
 import { Descendant } from "slate"
+import EventEmitter from "eventemitter3"
 
 const PORTRAIT_IMAGE =
   "https://files.dev.portive.com/f/demo/ktjairhr4jy5i3qr6ow43--1920x2880.jpg"
@@ -44,6 +45,13 @@ export const images: Record<string, HostedFileInfo> = {
   icon: getHostedImageInfo(ICON_IMAGE),
 }
 
+/**
+ * A fake `eventTarget`. Normally, you can add listeners to this `eventTarget`
+ * and then listen for progress events. For this demo, we won't actually
+ * dispatch any events so we just share the same `eventTarget`.
+ */
+const eventEmitter = new EventEmitter<OriginEventTypes>()
+
 export const initialOrigins: Record<string, Origin> = {
   pdf: {
     status: "uploaded",
@@ -58,18 +66,21 @@ export const initialOrigins: Record<string, Origin> = {
     url: TEXT_FILE,
     sentBytes: 0,
     totalBytes: 100000,
+    eventEmitter,
   },
   halfText: {
     status: "uploading",
     url: TEXT_FILE,
     sentBytes: 50000,
     totalBytes: 100000,
+    eventEmitter,
   },
   fullText: {
     status: "uploading",
     url: TEXT_FILE,
     sentBytes: 10000,
     totalBytes: 10000,
+    eventEmitter,
   },
   errorText: {
     status: "error",
@@ -86,18 +97,21 @@ export const initialOrigins: Record<string, Origin> = {
     url: images.landscape.url,
     sentBytes: 0,
     totalBytes: 3541,
+    eventEmitter,
   },
   half: {
     status: "uploading",
     url: images.landscape.url,
     sentBytes: 1770,
     totalBytes: 3541,
+    eventEmitter,
   },
   full: {
     status: "uploading",
     url: images.landscape.url,
     sentBytes: 3541,
     totalBytes: 3541,
+    eventEmitter,
   },
   uploaded: {
     status: "uploaded",

@@ -32,8 +32,10 @@ export type HostedImageOptions = {
   minResizeWidth?: number
   maxResizeWidth?: number
   initialOrigins: Record<string, Origin>
-  createImageFile: (e: CreateImageFileProps) => Element
-  createGenericFile: (e: CreateGenericFileProps) => Element
+  createImageFile: (e: CreateImageFileProps) => Element & { originKey: string }
+  createGenericFile: (
+    e: CreateGenericFileProps
+  ) => Element & { originKey: string }
 }
 
 export type PortiveEditorProp = {
@@ -44,8 +46,10 @@ export type PortiveEditorProp = {
   maxResizeWidth: number
   useStore: ReturnType<typeof createOriginStore>
   uploadFile: (file: File) => string
-  createImageFile: (e: CreateImageFileProps) => Element
-  createGenericFile: (e: CreateGenericFileProps) => Element
+  createImageFile: (e: CreateImageFileProps) => Element & { originKey: string }
+  createGenericFile: (
+    e: CreateGenericFileProps
+  ) => Element & { originKey: string }
   handlePaste: (e: React.ClipboardEvent) => boolean
   handleDrop: (e: React.DragEvent) => boolean
   handleChangeInputFile: (e: React.ChangeEvent<HTMLInputElement>) => boolean
