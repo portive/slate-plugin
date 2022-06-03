@@ -1,11 +1,13 @@
 # Slate Plugin for Hosted Resizable Images and Hosted File Attachments
 
-This Slate plugin adds support for beautiful and slick uploads of images and attachments to Slate.
+This Slate plugin adds support for beautiful and intuitive uploads of images and attachments to Slate through paste, drag and drop and using <input type="file">.
 
-The plugin works with Portive, a hosted back-end service for rich editors. Portive is the official hosted back-end for:
+The plugin works with Portive, a hosted back-end service for rich editors, which is the official hosted back-end for:
 
 - Plate: Rich text editor plugin system for Slate &amp; React
-- Wysimark: The Rich Editor for Markdown based on Slate
+- Wysimark: The Rich Editor for Markdown
+
+> The Portive back-end is created by MeZine Inc., a successful Internet company that's been in business since 2010 and whose founder is [Sunny Hirai "thesunny" a core contributor to Slate](https://github.com/ianstormtaylor/slate/graphs/contributors).
 
 Features of Uploaded Images
 

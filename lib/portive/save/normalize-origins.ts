@@ -7,6 +7,10 @@ type MaybeOriginNode = {
   [key: string]: unknown
 }
 
+export function isUrl(originKey: string) {
+  return originKey.includes("/")
+}
+
 /**
  * Recursive part of `normalizeOrigins` function with correct types.
  */
@@ -29,7 +33,7 @@ function _normalizeOrigins(
          * If the `originKey` looks like a `url` (i.e. it includes a `/` in it)
          * then we keep it as it is.
          */
-        if (node.originKey.includes("/")) {
+        if (isUrl(node.originKey)) {
           nextNodes.push(node)
         } else {
           /**

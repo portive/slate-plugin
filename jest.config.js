@@ -16,6 +16,8 @@ if (!fs.existsSync("tsconfig.ts-jest.json")) {
   throw new Error("tsconfig.ts-jest.json does not exist but is required.")
 }
 
+const esmModules = require("./jest.esm-modules").join("|")
+
 module.exports = {
   setupFiles: ["./jest.setup.js"],
   globals: {
@@ -41,6 +43,16 @@ module.exports = {
    */
   preset: "ts-jest",
   testEnvironment: "node",
+  /**
+   * The `transform` and `transformIgnorePatterns` is necessary to support
+   * `esm` modules.
+   *
+   * https://github.com/kulshekhar/ts-jest/issues/970
+   */
+  transform: {
+    "^.+\\.[tj]sx?$": "ts-jest",
+  },
+  transformIgnorePatterns: [`node_modules/(?!${esmModules})`],
   /**
    * This needs to match the `paths` entry in `tsconfig.base.json` or
    * `tsconfig.custom.json`.
