@@ -173,15 +173,6 @@ async function uploadHostedFile(
     status: "uploaded",
     url: uploadResult.data.url,
   })
-  // await getImageSize(uploadResult.data.url)
-  // /**
-  //  * After `getImageSize` executes, we know that the uploaded file is now in
-  //  * the cache so we can swap the local file for the remote file.
-  //  */
-  // setOrigin(originKey, {
-  //   status: "uploaded",
-  //   url: uploadResult.data.url,
-  // })
 }
 
 /**
