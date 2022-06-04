@@ -43,6 +43,13 @@ async function uploadSteps({
   const deferredFinish = Defer<Origin>()
   const finish = deferredFinish.promise
 
+  /**
+   * The purpose of adding an eventEmitter is to track progress of an `Origin`
+   * that's in the middle of `uploading`. Specifically, before we `save` the
+   * page, we may want to display the uploading progress of any files that
+   * have not finished uploading. This will allow the user to know, and wait
+   * for, the files to finish uploading.
+   */
   const eventEmitter = new EventEmitter<OriginEventTypes>()
 
   /**
