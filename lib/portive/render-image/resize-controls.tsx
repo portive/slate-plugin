@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from "react"
 import { ReactEditor, useSlateStatic } from "slate-react"
-import { HostedImageInterface } from "../types"
+import { ImageFileInterface } from "../types"
 import { Element, Transforms } from "slate"
 import { useHostedImageContext } from "./hosted-image-context"
 
-export function ResizeControls({ element }: { element: HostedImageInterface }) {
+export function ResizeControls({ element }: { element: ImageFileInterface }) {
   const { size, setSize } = useHostedImageContext()
   const editor = useSlateStatic()
   const [isResizing, setIsResizing] = useState(false)

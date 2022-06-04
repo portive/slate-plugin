@@ -1,4 +1,4 @@
-import { HostedImageInterface, HostedFileInterface, Origin } from "../types"
+import { ImageFileInterface, GenericFileInterface, Origin } from "../types"
 import { useSlateStatic, useSelected, useFocused } from "slate-react"
 import { ImageControls } from "./image-controls"
 import { CSSProperties, useEffect, useState } from "react"
@@ -9,7 +9,7 @@ export function RenderHostedImage({
   attributes,
   element,
   children,
-}: RenderElementPropsFor<HostedImageInterface>) {
+}: RenderElementPropsFor<ImageFileInterface>) {
   return (
     <div {...attributes} style={{ margin: "8px 0" }}>
       <HostedImage
@@ -34,7 +34,7 @@ export function useHighlightedStyle() {
  * origin from it.
  */
 export function useOrigin(
-  element: HostedImageInterface | HostedFileInterface
+  element: ImageFileInterface | GenericFileInterface
 ): Origin {
   const editor = useSlateStatic()
   const originFromStore = editor.portive.useStore(
@@ -83,7 +83,7 @@ export function HostedImage({
   className,
   style,
 }: {
-  element: HostedImageInterface
+  element: ImageFileInterface
   className?: string
   style?: CSSProperties
 }) {

@@ -1,7 +1,7 @@
 import { RenderElementPropsFor } from "~/lib/portive/types/type-utils"
 import { HostedImage } from "~/lib/portive"
 import { AssertType } from "@thesunny/assert-type"
-import { HostedImageInterface } from "../../types"
+import { ImageFileInterface } from "../../types"
 
 export const ELEMENT_TYPE = "image-block"
 
@@ -20,7 +20,7 @@ export type ImageBlockElement = {
 }
 
 AssertType.Equal<typeof ELEMENT_TYPE, ImageBlockElement["type"]>(true)
-AssertType.Extends<ImageBlockElement, HostedImageInterface>(true)
+AssertType.Extends<ImageBlockElement, ImageFileInterface>(true)
 
 export function ImageBlock({
   attributes,

@@ -1,7 +1,7 @@
 import { DiscriminatedRenderElementProps } from "~/lib/portive/types/type-utils"
 import { AssertType } from "@thesunny/assert-type"
 import { HostedImage } from "~/lib/portive"
-import { HostedImageInterface } from "../../types"
+import { ImageFileInterface } from "../../types"
 
 export const ELEMENT_TYPE = "image-inline"
 
@@ -20,7 +20,7 @@ export type ImageInlineElement = {
 }
 
 AssertType.Equal<typeof ELEMENT_TYPE, ImageInlineElement["type"]>(true)
-AssertType.Extends<ImageInlineElement, HostedImageInterface>(true)
+AssertType.Extends<ImageInlineElement, ImageFileInterface>(true)
 
 export function ImageInline({
   attributes,

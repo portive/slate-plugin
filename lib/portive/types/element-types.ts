@@ -1,6 +1,6 @@
 type VoidChildren = [{ text: "" }]
 
-export interface HostedImageInterface {
+export interface ImageFileInterface {
   /**
    * id is either a URL to the image which will contain at least one `/` or it
    * is a string `id` to find an `ImageOrigin` with the target of the
@@ -19,7 +19,7 @@ export interface HostedImageInterface {
   children: VoidChildren
 }
 
-export interface HostedFileInterface {
+export interface GenericFileInterface {
   /**
    * id is either a URL to the file which will contain at least one `/` or it
    * is a string `id` to find an `ImageOrigin` with the target of the
