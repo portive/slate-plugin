@@ -1,4 +1,4 @@
-import { BaseEditor } from "slate"
+import { BaseEditor, BaseText } from "slate"
 import { ReactEditor } from "slate-react"
 import { PortiveEditor } from "~/lib/portive"
 import { HistoryEditor } from "slate-history"
@@ -6,7 +6,7 @@ import { AttachmentBlockElement } from "~/lib/portive/element-presets/attachment
 import { ImageBlockElement } from "~/lib/portive/element-presets/image-block"
 import { ImageInlineElement } from "~/lib/portive/element-presets/image-inline"
 
-type CustomText = { text: string }
+type CustomText = BaseText
 
 type ParagraphElement = {
   type: "paragraph"

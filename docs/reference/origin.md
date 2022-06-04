@@ -1,6 +1,6 @@
 # Origin
 
-An `Origin` object represents a URL in one of three upload states.
+An `Origin` object is the return value for the [`useOrigin`](./use-origin.md) hook and gives us the progress of an upload including the current URL for the uploading or uploaded file.
 
 ```ts
 export type OriginUploading = {

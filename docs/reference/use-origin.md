@@ -10,7 +10,7 @@ function SimpleAttachment({
   element,
   children,
 }: RenderElementProps) {
-  const origin = useOrigin(element)
+  const origin = useOrigin(element.originKey)
   return (
     <div {...attributes}>
       <div>
@@ -23,8 +23,6 @@ function SimpleAttachment({
 }
 ```
 
-### `useOrigin: (element: { originKey: string }) => Origin`
+### `useOrigin: (originKey: string) => Origin`
 
-When called during the render of an `Element`, returns an `Origin` object.
-
-> TODO: This should take an `originKey: string` argument now that we don't rely on any other properties of the `Element`
+When called during the render of an `Element` with an [`originKey`](./origin.md) returns an `Origin` object.
