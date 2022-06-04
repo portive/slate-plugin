@@ -14,6 +14,7 @@ export * from "./render-image"
 export * from "./handlers"
 
 export function withPortive<T extends FullPortiveEditor>(
+  editor: T,
   {
     authToken,
     path,
@@ -25,8 +26,7 @@ export function withPortive<T extends FullPortiveEditor>(
     initialOrigins,
     createImageFile,
     createGenericFile,
-  }: HostedImageOptions,
-  editor: T
+  }: HostedImageOptions
 ): T {
   const useStore = createOriginStore({ origins: initialOrigins })
   editor.portive = {

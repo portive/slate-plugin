@@ -68,27 +68,24 @@ export function MyEditor({
 }) {
   const [editor] = useState<Editor>(() => {
     const reactEditor = withReact(withHistory(createEditor()))
-    const editor = withPortive(
-      {
-        authToken,
-        path: "demo",
-        initialMaxSize: [320, 320],
-        minResizeWidth: 100,
-        maxResizeWidth: 640,
-        initialOrigins: initialOrigins,
-        createImageFile(e) {
-          return {
-            type: "image-block",
-            originKey: e.originKey,
-            originSize: e.originSize,
-            size: e.initialSize,
-            children: [{ text: "" }],
-          }
-        },
-        createGenericFile,
+    const editor = withPortive(reactEditor, {
+      authToken,
+      path: "demo",
+      initialMaxSize: [320, 320],
+      minResizeWidth: 100,
+      maxResizeWidth: 640,
+      initialOrigins: initialOrigins,
+      createImageFile(e) {
+        return {
+          type: "image-block",
+          originKey: e.originKey,
+          originSize: e.originSize,
+          size: e.initialSize,
+          children: [{ text: "" }],
+        }
       },
-      reactEditor
-    )
+      createGenericFile,
+    })
     editor.isVoid = (element) => {
       return ["attachment-block", "image-block", "image-inline"].includes(
         element.type

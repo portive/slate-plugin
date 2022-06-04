@@ -13,19 +13,16 @@ function mockEditor(
   value: Descendant[],
   origins: Record<string, Origin>
 ): FullPortiveEditor {
-  const editor = withPortive(
-    {
-      authToken: "", // we won't be uploading
-      path: "test",
-      initialMaxSize: [320, 320],
-      minResizeWidth: 100,
-      maxResizeWidth: 640,
-      initialOrigins: origins,
-      createImageFile: {} as any, // we won't be creating
-      createGenericFile: {} as any, // we won't be creating
-    },
-    withReact(withHistory(createEditor()))
-  )
+  const editor = withPortive(withReact(withHistory(createEditor())), {
+    authToken: "", // we won't be uploading
+    path: "test",
+    initialMaxSize: [320, 320],
+    minResizeWidth: 100,
+    maxResizeWidth: 640,
+    initialOrigins: origins,
+    createImageFile: {} as any, // we won't be creating
+    createGenericFile: {} as any, // we won't be creating
+  })
   editor.children = value
   editor.portive.useStore = createOriginStore({ origins })
   return editor
