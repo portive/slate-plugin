@@ -1,15 +1,11 @@
 import { Descendant } from "slate"
 import { normalizeOrigins } from ".."
-import { Origin, OriginEventTypes } from "../../types"
+import { Origin, OriginEventTypes, OriginUploading } from "../../types"
 import EventEmitter from "eventemitter3"
+import { FakePromise } from "fake-promise"
+import { resolve } from "./test-utils"
 
 describe("normalize", () => {
-  // unused event target
-  const eventEmitter = new EventEmitter<OriginEventTypes>()
-  const finish = new Promise<Origin>(() => {
-    /* empty */
-  })
-
   it("should normalize an originKey", async () => {
     const origins: Record<string, Origin> = {
       a: { status: "uploaded", url: "/fake.txt" },
@@ -20,7 +16,9 @@ describe("normalize", () => {
   })
 
   it("should skip an element with origin still uploading", async () => {
-    const origins: Record<string, Origin> = {
+    const eventEmitter = new EventEmitter<OriginEventTypes>()
+    const finish = new FakePromise<Origin>()
+    const origins: Record<string, OriginUploading> = {
       a: {
         status: "uploading",
         url: "/fake.txt",
@@ -33,6 +31,7 @@ describe("normalize", () => {
     const nodes = [{ originKey: "a" }] as Descendant[]
     const normalizedNodes = normalizeOrigins(nodes, origins)
     expect(normalizedNodes).toEqual([])
+    resolve(finish)
   })
 
   it("should skip an element with origin in an error state", async () => {

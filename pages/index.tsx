@@ -14,10 +14,9 @@ export default function Index({
   const [isReadOnly, setIsReadOnly] = useState(false)
 
   return (
-    <div style={{ marginLeft: 240 }}>
-      <h1 style={{ font: "bold 36px sans-serif" }}>
-        Slate Hosted Upload Plugin Demo
-      </h1>
+    <div style={{ marginLeft: 240, font: "16px sans-serif" }}>
+      <h1>Slate Portive</h1>
+      <h2>Image and Attachments Plugin</h2>
       <p>
         <input
           id="readOnly"

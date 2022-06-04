@@ -6,10 +6,9 @@ import { createOriginStore } from "../origin-store"
 import { ClientGenericFile, ClientImageFile } from "@portive/api-types"
 import { Origin } from "./origin-types"
 
-export type SaveResult = {
-  status: "success"
-  value: Descendant[]
-}
+export type SaveResult =
+  | { status: "timeout"; value: Descendant[]; finishes: Promise<Origin>[] }
+  | { status: "complete"; value: Descendant[] }
 
 export type CreateImageFileProps = {
   originKey: string
@@ -53,7 +52,7 @@ export type PortiveEditorProp = {
   handlePaste: (e: React.ClipboardEvent) => boolean
   handleDrop: (e: React.DragEvent) => boolean
   handleChangeInputFile: (e: React.ChangeEvent<HTMLInputElement>) => boolean
-  save: () => Promise<SaveResult>
+  save: (timeoutInMs: number) => Promise<SaveResult>
   normalize: () => Descendant[]
 }
 

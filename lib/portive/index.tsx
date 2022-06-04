@@ -6,7 +6,8 @@ import {
   handlePasteFile,
   handleDropFile,
 } from "./handlers"
-import { normalizeOrigins } from "./save"
+import { normalizeOrigins, save } from "./save"
+import { getOrigins } from "./save/get-origins"
 export * from "./types"
 export * from "./origin-store"
 export * from "./render-image"
@@ -49,11 +50,14 @@ export function withPortive<T extends FullPortiveEditor>(
     handleChangeInputFile(e) {
       return handleChangeInputFile(editor, e)
     },
-    async save() {
-      return { status: "success", value: editor.portive.normalize() }
+    async save(timeoutInMs: number) {
+      if (typeof timeoutInMs !== "number") {
+        throw new Error(`Please provide a timeout argument that is a number`)
+      }
+      return await save(editor, timeoutInMs)
     },
     normalize() {
-      const origins = editor.portive.useStore.getState().origins
+      const origins = getOrigins(editor)
       return normalizeOrigins(editor.children, origins)
     },
   }

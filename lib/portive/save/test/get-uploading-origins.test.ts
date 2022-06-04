@@ -1,6 +1,7 @@
 import { Descendant } from "slate"
 import { getUploadingOrigins } from "../get-uploading-origins"
 import { mockOrigin } from "./mock-origin"
+import { resolve } from "./test-utils"
 
 describe("getUploadingOrigins", () => {
   it("should get uploading origins", async () => {
@@ -41,5 +42,8 @@ describe("getUploadingOrigins", () => {
     ]
     const uploadingOrigins = getUploadingOrigins(value, origins)
     expect(uploadingOrigins.length).toEqual(3)
+    resolve(origins.uploading1.finish)
+    resolve(origins.uploading2.finish)
+    resolve(origins.uploading3.finish)
   })
 })

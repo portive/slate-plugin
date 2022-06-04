@@ -7,6 +7,7 @@ import { FullPortiveEditor, Origin } from "../../types"
 import "~/editor/types" // use the types from our demo editor for testing
 import { mockOrigin } from "./mock-origin"
 import { createOriginStore } from "../../origin-store"
+import { resolve } from "./test-utils"
 
 function mockEditor(
   value: Descendant[],
@@ -36,7 +37,7 @@ function mockEditor(
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function log(x: unknown) {
-  console.log(JSON.stringify(x))
+  console.log(JSON.stringify(x, null, 2))
 }
 
 describe("editor.portive.save", () => {
@@ -46,9 +47,9 @@ describe("editor.portive.save", () => {
         [{ type: "paragraph", children: [{ text: "" }] }],
         {}
       )
-      const result = await editor.portive.save()
+      const result = await editor.portive.save(100)
       expect(result).toEqual({
-        status: "success",
+        status: "complete",
         value: [{ type: "paragraph", children: [{ text: "" }] }],
       })
     })
@@ -57,20 +58,150 @@ describe("editor.portive.save", () => {
       const editor = mockEditor(
         [
           {
-            type: "attachment-block",
+            type: "min-origin",
             originKey: "missing",
-            filename: "hello.txt",
-            bytes: 5,
             children: [{ text: "" }],
           },
         ],
         {}
       )
-      const result = await editor.portive.save()
-      expect(result).toEqual({ status: "success", value: [] })
+      const result = await editor.portive.save(100)
+      expect(result).toEqual({ status: "complete", value: [] })
     })
   })
 
-  // describe("wait for promises to complete", () => {
-  // })
+  describe("wait for promises to complete", () => {
+    it("should timeout if uploads are not complete before timeout", async () => {
+      const origins = {
+        error: mockOrigin.error("landscape"),
+        uploaded: mockOrigin.uploaded("landscape"),
+        uploading1: mockOrigin.uploading("landscape", 0.25),
+        uploading2: mockOrigin.uploading("landscape", 0.5),
+      }
+      const editor = mockEditor(
+        [
+          {
+            type: "min-origin",
+            originKey: "error",
+            children: [{ text: "" }],
+          },
+          {
+            type: "min-origin",
+            originKey: "uploaded",
+            children: [{ text: "" }],
+          },
+          {
+            type: "min-origin",
+            originKey: "uploading1",
+            children: [{ text: "" }],
+          },
+          {
+            type: "min-origin",
+            originKey: "uploading2",
+            children: [{ text: "" }],
+          },
+        ],
+        origins
+      )
+      const result = await editor.portive.save(10)
+      expect(result).toEqual({
+        status: "timeout",
+        value: [
+          {
+            type: "min-origin",
+            originKey:
+              "https://files.dev.portive.com/f/demo/4q494y5quamrcrwvce23n--1920x1281.jpg",
+            children: [{ text: "" }],
+          },
+        ],
+        finishes: expect.any(Array),
+      })
+      resolve(origins.uploading1.finish)
+      resolve(origins.uploading2.finish)
+    })
+
+    it.only("should wait until upload is complete then save", async () => {
+      const origins = {
+        error: mockOrigin.error("landscape"),
+        uploaded: mockOrigin.uploaded("landscape"),
+        uploading1: mockOrigin.uploading("landscape", 0.25),
+        uploading2: mockOrigin.uploading("landscape", 0.5),
+      }
+      const editor = mockEditor(
+        [
+          {
+            type: "min-origin",
+            originKey: "error",
+            children: [{ text: "" }],
+          },
+          {
+            type: "min-origin",
+            originKey: "uploaded",
+            children: [{ text: "" }],
+          },
+          {
+            type: "min-origin",
+            originKey: "uploading1",
+            children: [{ text: "" }],
+          },
+          {
+            type: "min-origin",
+            originKey: "uploading2",
+            children: [{ text: "" }],
+          },
+        ],
+        origins
+      )
+      const { setOrigin } = editor.portive.useStore.getState()
+      const promise = editor.portive.save(1000)
+      setOrigin("uploading1", mockOrigin.uploaded("landscape"))
+      resolve(origins.uploading1.finish)
+      setOrigin("uploading2", mockOrigin.uploaded("landscape"))
+      resolve(origins.uploading2.finish)
+
+      const result = await promise
+      /**
+       * Should contain 3 origin elements
+       */
+      expect(result.value.length).toEqual(3)
+      /**
+       * With these values
+       */
+      expect(result).toEqual({
+        status: "complete",
+        value: [
+          {
+            type: "min-origin",
+            originKey:
+              "https://files.dev.portive.com/f/demo/4q494y5quamrcrwvce23n--1920x1281.jpg",
+            children: [
+              {
+                text: "",
+              },
+            ],
+          },
+          {
+            type: "min-origin",
+            originKey:
+              "https://files.dev.portive.com/f/demo/4q494y5quamrcrwvce23n--1920x1281.jpg",
+            children: [
+              {
+                text: "",
+              },
+            ],
+          },
+          {
+            type: "min-origin",
+            originKey:
+              "https://files.dev.portive.com/f/demo/4q494y5quamrcrwvce23n--1920x1281.jpg",
+            children: [
+              {
+                text: "",
+              },
+            ],
+          },
+        ],
+      })
+    })
+  })
 })
