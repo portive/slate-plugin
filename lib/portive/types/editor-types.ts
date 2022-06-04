@@ -3,7 +3,6 @@ import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { Promisable } from "type-fest"
 import { createOriginStore } from "../origin-store"
-import { ClientGenericFile, ClientImageFile } from "@portive/api-types"
 import { Origin } from "./origin-types"
 
 export type SaveResult =

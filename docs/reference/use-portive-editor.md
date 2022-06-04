@@ -93,10 +93,10 @@ type ImageElementInterface = {
 
 When a user starts uploading a file, it is handled in one of two ways:
 
-1. If it is a supported image file type (e.g. `.gif`, `.jpg`, `.jpeg`, `.png` or `.webp`) then `createImageFileElement` is called (this method)
-2. If it is not a supported image file type `createGenericFileElement` is called
+1. If it is a supported image file type (e.g. `.gif`, `.jpg`, `.jpeg`, `.png` or `.webp`) then this method `createImageFileElement` is called
+2. If it is not a supported image file type then a different method `createGenericFileElement` is called
 
-The result of the callback is an Image `Element` which must include (but is not limited to) these props:
+The result of the callback is an Image `Element` which must include but is not limited to these props:
 
 - `originKey` which is a `string` the file's `Origin` (i.e. where it comes from and also its current uploading state).
 - `originSize` which are the dimensions of the image a the `Origin`
@@ -120,6 +120,41 @@ usePortive(editor, {
 ```
 
 ### `createGenericFileElement: (e: CreateGenericFileElementEvent) => Element & { originKey: string }`
+
+```ts
+type CreateGenericFileEvent = {
+  originKey: string
+  file: File
+}
+
+type GenericElementInterface = {
+  originKey: string
+}
+```
+
+1. If it is a supported image file type (e.g. `.gif`, `.jpg`, `.jpeg`, `.png` or `.webp`) then a different method `createImageFileElement` is called
+2. If it is not a supported image file type then this method `createGenericFileElement` is called
+
+The result of the callback is a Generic File `Element` (i.e. usually an Element that represents a file attachment) which must include but is not limited to this prop:
+
+- `originKey` which is a `string` the file's `Origin` (i.e. where it comes from and also its current uploading state).
+
+Typically, several of these properties are used to provide information for an attachment Element. for example:
+
+```ts
+usePortive(editor, {
+  // ...
+  createGenericFileElement(e) {
+    return {
+      type: "my-attachment-type", // the type for the image element desired
+      originKey: e.originKey,
+      originalFilename: e.file.filename,
+      sizeInBytes: e.file.size,
+      children: [{ text: "" }], // the `children` on a `Void` element
+    }
+  },
+})
+```
 
 ### `initialOrigins?: Record<string, Origin> = {}`
 

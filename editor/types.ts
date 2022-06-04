@@ -3,12 +3,14 @@ import { ReactEditor } from "slate-react"
 import { PortiveEditor } from "~/lib/portive"
 import { HistoryEditor } from "slate-history"
 import { AttachmentBlockElement } from "~/lib/portive/element-presets/attachment-block"
+import { ImageBlockElement } from "~/lib/portive/element-presets/image-block"
+import { ImageInlineElement } from "~/lib/portive/element-presets/image-inline"
 
 type CustomText = { text: string }
 
 type ParagraphElement = {
   type: "paragraph"
-  children: (CustomText | InlineImageElement)[]
+  children: (CustomText | ImageInlineElement)[]
 }
 
 type BlockQuoteElement = {
@@ -17,8 +19,8 @@ type BlockQuoteElement = {
     | ParagraphElement
     | BlockQuoteElement
     | MinOriginElement
-    | BlockImageElement
-    | InlineImageElement
+    | ImageBlockElement
+    | ImageInlineElement
     | AttachmentBlockElement
   >
 }
@@ -29,41 +31,13 @@ type MinOriginElement = {
   children: [{ text: "" }]
 }
 
-type BlockImageElement = {
-  type: "image-block"
-  /**
-   * Must include originKey and originSize
-   */
-  originKey: string
-  originSize: [number, number]
-  /**
-   * Must include `size` (consider switching to `mods.size`)
-   */
-  size: [number, number]
-  children: [{ text: "" }]
-}
-
-type InlineImageElement = {
-  type: "image-inline"
-  /**
-   * Must include originKey and originSize
-   */
-  originKey: string
-  originSize: [number, number]
-  /**
-   * Must include `size` (consider switching to `mods.size`)
-   */
-  size: [number, number]
-  children: [{ text: "" }]
-}
-
 export type CustomElement =
   | ParagraphElement
   | BlockQuoteElement
   | MinOriginElement
   | AttachmentBlockElement
-  | BlockImageElement
-  | InlineImageElement
+  | ImageBlockElement
+  | ImageInlineElement
 
 declare module "slate" {
   interface CustomTypes {
