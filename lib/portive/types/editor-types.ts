@@ -15,13 +15,11 @@ export type CreateImageFileProps = {
   originSize: [number, number]
   initialSize: [number, number]
   file: File
-  clientFile: ClientImageFile
 }
 
 export type CreateGenericFileProps = {
   originKey: string
   file: File
-  clientFile: ClientGenericFile
 }
 
 export type HostedImageOptions = {
@@ -37,7 +35,7 @@ export type HostedImageOptions = {
   ) => Element & { originKey: string }
 }
 
-export type PortiveEditorProp = {
+export type PortiveObject = {
   authToken: string | (() => Promisable<string>)
   path: string
   initialMaxSize: [number, number]
@@ -57,7 +55,7 @@ export type PortiveEditorProp = {
 }
 
 export type PortiveEditor = {
-  portive: PortiveEditorProp
+  portive: PortiveObject
 }
 
 export type FullPortiveEditor = BaseEditor &

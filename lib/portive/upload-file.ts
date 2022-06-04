@@ -151,7 +151,6 @@ async function uploadHostedImage(
     originKey: originKey,
     originSize: clientFile.size,
     file,
-    clientFile,
     initialSize,
   })
 
@@ -177,7 +176,6 @@ async function uploadHostedFile(
   const element = portive.createGenericFile({
     originKey: originKey,
     file,
-    clientFile,
   })
 
   await uploadSteps({ editor, originKey, file, clientFile, element })

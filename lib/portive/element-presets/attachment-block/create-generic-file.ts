@@ -7,8 +7,8 @@ export function createGenericFile(
   return {
     originKey: e.originKey,
     type: "attachment-block",
-    filename: e.clientFile.filename,
-    bytes: e.clientFile.bytes,
+    filename: e.file.name,
+    bytes: e.file.size,
     children: [{ text: "" }],
   }
 }
