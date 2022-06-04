@@ -78,13 +78,7 @@ export function AttachmentBlock({
   children,
 }: RenderElementPropsFor<AttachmentBlockElement>) {
   const editor = useSlateStatic()
-  const origin = useOrigin(element, (url) => {
-    return {
-      status: "uploaded",
-      type: "generic",
-      url,
-    }
-  })
+  const origin = useOrigin(element)
   const highlightedStyle = useHighlightedStyle()
   const removeElement = useCallback(() => {
     const at = ReactEditor.findPath(editor, element)

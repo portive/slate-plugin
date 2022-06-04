@@ -3,7 +3,6 @@ import { useSlateStatic, useSelected, useFocused } from "slate-react"
 import { ImageControls } from "./image-controls"
 import { CSSProperties, useEffect, useState } from "react"
 import { HostedImageContext } from "./hosted-image-context"
-import { getSizeFromUrl } from "./utils"
 import { RenderElementPropsFor } from "../types/type-utils"
 
 export function RenderHostedImage({
@@ -35,15 +34,17 @@ export function useHighlightedStyle() {
  * origin from it.
  */
 export function useOrigin(
-  element: HostedImageInterface | HostedFileInterface,
-  getOriginFromUrl: (url: string) => Origin
+  element: HostedImageInterface | HostedFileInterface
 ): Origin {
   const editor = useSlateStatic()
   const originFromStore = editor.portive.useStore(
     (state) => state.origins[element.originKey]
   )
   if (element.originKey.includes("/")) {
-    return getOriginFromUrl(element.originKey)
+    return {
+      status: "uploaded",
+      url: element.originKey,
+    }
   } else {
     return originFromStore
   }
@@ -87,15 +88,7 @@ export function HostedImage({
   style?: CSSProperties
 }) {
   const editor = useSlateStatic()
-  const origin = useOrigin(element, (url) => {
-    const maxSize = getSizeFromUrl(url)
-    return {
-      status: "uploaded",
-      type: "image",
-      url: element.originKey,
-      maxSize,
-    }
-  })
+  const origin = useOrigin(element)
   const [size, setSize] = useState(element.size)
 
   useEffect(() => {
