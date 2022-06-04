@@ -2,7 +2,7 @@ import { BaseEditor } from "slate"
 import { ReactEditor } from "slate-react"
 import { PortiveEditor } from "~/lib/portive"
 import { HistoryEditor } from "slate-history"
-import { AttachmentBlockElement } from "~/editor/render/attachment-block"
+import { AttachmentBlockElement } from "~/lib/portive/element-presets/attachment-block"
 
 type CustomText = { text: string }
 
@@ -30,7 +30,7 @@ type MinOriginElement = {
 }
 
 type BlockImageElement = {
-  type: "block-image"
+  type: "image-block"
   /**
    * Must include originKey and originSize
    */
@@ -44,7 +44,7 @@ type BlockImageElement = {
 }
 
 type InlineImageElement = {
-  type: "inline-image"
+  type: "image-inline"
   /**
    * Must include originKey and originSize
    */

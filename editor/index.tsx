@@ -4,8 +4,8 @@ import { Slate, Editable, withReact } from "slate-react"
 import React, { useCallback, useState } from "react"
 import { withPortive } from "~/lib/portive"
 import { withHistory } from "slate-history"
-import { renderElement } from "./render"
-import { createGenericFile } from "~/editor/render/attachment-block"
+import { renderElement } from "./render-element"
+import { createGenericFile } from "~/lib/portive/element-presets/attachment-block"
 import delay from "delay"
 import { css } from "emotion"
 import "./types"
@@ -78,7 +78,7 @@ export function MyEditor({
         initialOrigins: initialOrigins,
         createImageFile(e) {
           return {
-            type: "block-image",
+            type: "image-block",
             originKey: e.originKey,
             originSize: e.originSize,
             size: e.initialSize,
@@ -90,12 +90,12 @@ export function MyEditor({
       reactEditor
     )
     editor.isVoid = (element) => {
-      return ["attachment-block", "block-image", "inline-image"].includes(
+      return ["attachment-block", "image-block", "image-inline"].includes(
         element.type
       )
     }
     editor.isInline = (element) => {
-      return element.type === "inline-image"
+      return element.type === "image-inline"
     }
     return editor
   })

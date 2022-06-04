@@ -183,7 +183,7 @@ export const initialValue: Descendant[] = [
     children: [
       { text: "Image is inline " },
       {
-        type: "inline-image",
+        type: "image-inline",
         originKey: "icon",
         originSize: images.icon.originSize,
         size: [40, 40],
@@ -193,7 +193,7 @@ export const initialValue: Descendant[] = [
     ],
   },
   {
-    type: "block-image",
+    type: "image-block",
     originKey: "icon",
     originSize: images.icon.originSize,
     size: [40, 40],
@@ -201,21 +201,21 @@ export const initialValue: Descendant[] = [
   },
   { type: "paragraph", children: [{ text: "In progress uploads" }] },
   {
-    type: "block-image",
+    type: "image-block",
     originKey: "zero",
     originSize: images.landscape.originSize,
     size: [256, 192],
     children: [{ text: "" }],
   },
   {
-    type: "block-image",
+    type: "image-block",
     originKey: "half",
     originSize: images.landscape.originSize,
     size: [256, 192],
     children: [{ text: "" }],
   },
   {
-    type: "block-image",
+    type: "image-block",
     originKey: "full",
     originSize: images.landscape.originSize,
     size: [256, 192],
@@ -226,7 +226,7 @@ export const initialValue: Descendant[] = [
     children: [{ text: "Completed upload with origin id" }],
   },
   {
-    type: "block-image",
+    type: "image-block",
     originKey: "uploaded",
     originSize: images.landscape.originSize,
     size: [256, 192],
@@ -234,7 +234,7 @@ export const initialValue: Descendant[] = [
   },
   { type: "paragraph", children: [{ text: "Completed upload with URL id" }] },
   {
-    type: "block-image",
+    type: "image-block",
     originKey: images.landscape.url,
     originSize: images.landscape.originSize,
     size: [256, 192],
@@ -242,7 +242,7 @@ export const initialValue: Descendant[] = [
   },
   { type: "paragraph", children: [{ text: "Failed upload" }] },
   {
-    type: "block-image",
+    type: "image-block",
     originKey: "error",
     originSize: images.landscape.originSize,
     size: [256, 192],
