@@ -1,4 +1,4 @@
-import { ImageFileInterface, GenericFileInterface, Origin } from "../types"
+import { ImageFileInterface, Origin } from "../types"
 import { useSlateStatic, useSelected, useFocused } from "slate-react"
 import { ImageControls } from "./image-controls"
 import { CSSProperties, useEffect, useState } from "react"
@@ -33,17 +33,15 @@ export function useHighlightedStyle() {
  * Takes an `element` (which it only needs for its `id`) and returns the
  * origin from it.
  */
-export function useOrigin(
-  element: ImageFileInterface | GenericFileInterface
-): Origin {
+export function useOrigin(originKey: string): Origin {
   const editor = useSlateStatic()
   const originFromStore = editor.portive.useStore(
-    (state) => state.origins[element.originKey]
+    (state) => state.origins[originKey]
   )
-  if (element.originKey.includes("/")) {
+  if (originKey.includes("/")) {
     return {
       status: "uploaded",
-      url: element.originKey,
+      url: originKey,
     }
   } else {
     return originFromStore
@@ -88,7 +86,7 @@ export function HostedImage({
   style?: CSSProperties
 }) {
   const editor = useSlateStatic()
-  const origin = useOrigin(element)
+  const origin = useOrigin(element.originKey)
   const [size, setSize] = useState(element.size)
 
   useEffect(() => {
