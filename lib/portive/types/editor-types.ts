@@ -9,7 +9,7 @@ export type SaveResult =
   | { status: "timeout"; value: Descendant[]; finishes: Promise<Origin>[] }
   | { status: "complete"; value: Descendant[] }
 
-export type CreateImageFileElementProps = {
+export type CreateImageFileElementEvent = {
   type: "image"
   originKey: string
   originSize: [number, number]
@@ -17,15 +17,15 @@ export type CreateImageFileElementProps = {
   file: File
 }
 
-export type CreateGenericFileElementProps = {
+export type CreateGenericFileElementEvent = {
   type: "generic"
   originKey: string
   file: File
 }
 
-export type CreateElementProps =
-  | CreateImageFileElementProps
-  | CreateGenericFileElementProps
+export type CreateFileElementEvent =
+  | CreateImageFileElementEvent
+  | CreateGenericFileElementEvent
 
 export type HostedImageOptions = {
   authToken: string | (() => Promisable<string>)
@@ -34,7 +34,7 @@ export type HostedImageOptions = {
   minResizeWidth?: number
   maxResizeWidth?: number
   initialOrigins: Record<string, Origin>
-  createElement: (e: CreateElementProps) => Element & { originKey: string }
+  createElement: (e: CreateFileElementEvent) => Element & { originKey: string }
 }
 
 export type UploadFileOptions = { at?: Location }
@@ -47,7 +47,7 @@ export type PortiveObject = {
   maxResizeWidth: number
   useStore: ReturnType<typeof createOriginStore>
   uploadFile: (file: File, options?: UploadFileOptions) => string
-  createElement: (e: CreateElementProps) => Element & { originKey: string }
+  createElement: (e: CreateFileElementEvent) => Element & { originKey: string }
   handlePaste: (e: React.ClipboardEvent) => boolean
   handleDrop: (e: React.DragEvent) => boolean
   handleInputFileChange: (e: React.ChangeEvent<HTMLInputElement>) => boolean

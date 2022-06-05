@@ -1,5 +1,3 @@
-type VoidChildren = [{ text: "" }]
-
 export interface ImageFileInterface {
   /**
    * id is either a URL to the image which will contain at least one `/` or it
@@ -16,7 +14,6 @@ export interface ImageFileInterface {
    * okay.
    */
   size: [number, number]
-  children: VoidChildren
 }
 
 export interface GenericFileInterface {
@@ -27,5 +24,4 @@ export interface GenericFileInterface {
    * local computer of the browser.
    */
   originKey: string
-  children: VoidChildren
 }

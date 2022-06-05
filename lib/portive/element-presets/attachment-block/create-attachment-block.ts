@@ -1,8 +1,8 @@
-import { CreateGenericFileElementProps } from "~/lib/portive"
+import { CreateGenericFileElementEvent } from "~/lib/portive"
 import { AttachmentBlockElement } from "./types"
 
 export function createAttachmentBlock(
-  e: CreateGenericFileElementProps
+  e: CreateGenericFileElementEvent
 ): AttachmentBlockElement {
   return {
     originKey: e.originKey,

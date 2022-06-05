@@ -1,14 +1,14 @@
 # Uploading Files
 
-Earlier, we added `editor.portive.handlePaste` and `editor.portive.handleDrop` to the `Editable` component which starts the upload process when a user drops or pastes an images into the Editor.
+In [Getting Started](./01-getting-started.md), we added support for uploading by pasting files into or dropping files on the editor.
 
-Often, we also want the user to be able to use a system file picker to select the files they want to upload.
+Sometimes, we want the user to be able to use a system file picker to select the files they want to upload. This might be by clicking an upload file icon to open the file picker.
 
-Developers may also wish to have lower level access to precisely control specific [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) objects they want to upload.
+Developers may also wish to have lower level access to upload specific [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) objects. They might use this to pick specific files to upload or upload files from a Component that generates them (maybe a Component that generates a graph for example).
 
 ## Upload from `<input type=file />`
 
-To upload from an `<input type="file" />` element, add the `editor.portive.onInputFileChangeHandler` to `onChange`.
+To upload from an `<input type="file" />` element, add the `editor.portive.onInputFileChangeHandler` to the `onChange` attribute.
 
 ```tsx
 const App = () => {
@@ -40,7 +40,7 @@ const App = () => {
 
 To upload specific files, use the `editor.portive.uploadFile` method.
 
-In this example, we only allow upload of `pdf` files.
+In this example, we check if a file is a `pdf` and only allow upload of those `pdf` files.
 
 ```tsx
 const App = () => {
@@ -65,7 +65,7 @@ const App = () => {
 
   return (
     <>
-      {/* ✅ Upload on change. `multiple` enables multi-file uploads */}
+      {/* ✅ use the `uploadPdfs` callback with individual `uploadFile` */}
       <input type="file" onChange={uploadPdfs} multiple />
       <Slate editor={editor} value={initialValue}>
         <Editable

@@ -76,15 +76,18 @@ export function useOrigin(originKey: string): Origin {
  * which returns `Promise`.
  */
 
+type ImageProps = React.HTMLAttributes<HTMLImageElement>
+
 export function HostedImage({
   element,
   className,
   style,
+  ...imageProps
 }: {
   element: ImageFileInterface
   className?: string
   style?: CSSProperties
-}) {
+} & ImageProps) {
   const editor = useSlateStatic()
   const origin = useOrigin(element.originKey)
   const [size, setSize] = useState(element.size)
@@ -119,6 +122,7 @@ export function HostedImage({
           height={size[1]}
           className={className}
           style={{ ...highlightedStyle, ...style, display: "block" }}
+          {...imageProps}
         />
       </ImageControls>
     </HostedImageContext.Provider>

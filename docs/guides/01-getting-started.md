@@ -9,22 +9,22 @@ yarn add slate-portive
 npm install --save slate-portive
 ```
 
-### Introducing `slate-portive` Presets
+### Presets
 
-Presets are a great way to start with `slate-portive`. They are easy to setup and includes the features most people want like image resizing and a progress bar during uploads. Later, you can create your own custom Elements or modify a Preset.
+Presets are a great way to start with `slate-portive`. They are easy to setup and includes the features most people want like image resizing and an upload progress bar. Later, we'll show you how to create your own custom Elements or modify a Preset.
 
-This Getting Started guide leads you through setting up `slate-portive` with two presets:
+This Getting Started guide leads you through setting up `slate-portive` with two of the presets:
 
-- `ImageBlock`: An image preset that is a void block that shows the image with drag resize controls and an upload progress bar
-- `AttachmentBlock`: An attachment preset that is a void block that shows the original filename, file size and an upload progress bar
+- `ImageBlock`: An image preset that is a `void` `block` that shows the image with drag resize controls and an upload progress bar
+- `AttachmentBlock`: An attachment preset that is a `void` `block` that shows the original filename, file size and an upload progress bar
 
-### Setting Up Types
+### Configure Types
 
 > 🌞 If you aren't using TypeScript skip this step.
 >
-> If you are using TypeScript, read the [Slate Documentation for TypeScript](https://docs.slatejs.org/concepts/12-typescript) first.
+> If you are using TypeScript, read the [Slate Documentation for TypeScript](https://docs.slatejs.org/concepts/12-typescript) if you aren't familiar with CustomTypes already.
 
-Add the `ImageBlockElement` and `AttachmentBlockElement` to your `CustomTypes`.
+Add the `ImageBlockElement` and `AttachmentBlockElement` to your `CustomTypes`. In this example, we include a `ParagraphElement`
 
 ```ts
 import { BaseEditor, BaseText } from "slate"
@@ -89,6 +89,8 @@ const App = () => {
 
 Create a `renderElement` function that triages rendering to `AttachmentBlock` and `ImageBlock` and add it to the `Editable` component.
 
+Also create a default `initialValue` and set it on the `Editable` component.
+
 ```tsx
 import { useState } from "react"
 import { createEditor } from "slate"
@@ -100,6 +102,9 @@ import {
   createAttachmentBlock,
   withPortive,
 } from "slate-portive"
+
+// ✅ Add the `initialValue`
+const initialValue: Descendant[] = [{ type: "paragraph" }]
 
 // ✅ Add render code for `ImageBlock` and `AttachmentBlock`
 function renderElement(props: RenderElementProps) {
@@ -190,6 +195,8 @@ declare module "slate" {
   }
 }
 
+const initialValue: Descendant[] = [{ type: "paragraph" }]
+
 function renderElement(props: RenderElementProps) {
   const element = props.element
   switch (element.type) {
@@ -231,3 +238,7 @@ const App = () => {
   )
 }
 ```
+
+🎉 Congratulations! You have an Editor that supports images and attachments.
+
+Next, learn how to [save the document](./02-saving-document.md).
