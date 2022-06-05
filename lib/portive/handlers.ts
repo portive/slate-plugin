@@ -29,6 +29,11 @@ export const handlePasteFile = (
 export const handleDropFile = (editor: Editor, e: React.DragEvent): boolean => {
   const files = e.dataTransfer.files
   if (files.length === 0) return false
+  /**
+   * When we drop a file, the selection won't move automatically to the drop
+   * location. Find the location from the event and upload the files at that
+   * location.
+   */
   const at = ReactEditor.findEventRange(editor, e)
   uploadFiles(editor, files, { at })
   e.preventDefault()
