@@ -112,8 +112,8 @@ describe("editor.portive.save", () => {
         ],
         finishes: expect.any(Array),
       })
-      resolve(origins.uploading1.finish)
-      resolve(origins.uploading2.finish)
+      resolve(origins.uploading1.finishPromise)
+      resolve(origins.uploading2.finishPromise)
     })
 
     it.only("should wait until upload is complete then save", async () => {
@@ -151,9 +151,9 @@ describe("editor.portive.save", () => {
       const { setOrigin } = editor.portive.useStore.getState()
       const promise = editor.portive.save()
       setOrigin("uploading1", mockOrigin.uploaded("landscape"))
-      resolve(origins.uploading1.finish)
+      resolve(origins.uploading1.finishPromise)
       setOrigin("uploading2", mockOrigin.uploaded("landscape"))
-      resolve(origins.uploading2.finish)
+      resolve(origins.uploading2.finishPromise)
 
       const result = await promise
       /**

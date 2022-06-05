@@ -91,14 +91,14 @@ export const mockOrigin = {
     if (percentComplete > 1)
       throw new Error(`percentComplete must be 1 or less`)
     const eventEmitter = new EventEmitter<OriginEventTypes>()
-    const finish = new FakePromise<Origin>()
+    const finishPromise = new FakePromise<Origin>()
     return {
       ...origin,
       status: "uploading",
       sentBytes: 100000 * percentComplete,
       totalBytes: 100000,
       eventEmitter,
-      finish,
+      finishPromise,
     }
   },
 }

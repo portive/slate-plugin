@@ -17,7 +17,7 @@ describe("normalize", () => {
 
   it("should skip an element with origin still uploading", async () => {
     const eventEmitter = new EventEmitter<OriginEventTypes>()
-    const finish = new FakePromise<Origin>()
+    const finishPromise = new FakePromise<Origin>()
     const origins: Record<string, OriginUploading> = {
       a: {
         status: "uploading",
@@ -25,13 +25,13 @@ describe("normalize", () => {
         sentBytes: 500,
         totalBytes: 1000,
         eventEmitter,
-        finish,
+        finishPromise,
       },
     }
     const nodes = [{ originKey: "a" }] as Descendant[]
     const normalizedNodes = normalizeOrigins(nodes, origins)
     expect(normalizedNodes).toEqual([])
-    resolve(finish)
+    resolve(finishPromise)
   })
 
   it("should skip an element with origin in an error state", async () => {

@@ -12,7 +12,7 @@ export async function save(
 ): Promise<SaveResult> {
   const origins = getOrigins(editor)
   const uploadingOrigins = getUploadingOrigins(editor.children, origins)
-  const finishPromises = uploadingOrigins.map((origin) => origin.finish)
+  const finishPromises = uploadingOrigins.map((origin) => origin.finishPromise)
   const timeoutPromise = delay(maxTimeoutInMs, { value: "timeout" })
   const result = await Promise.race([
     Promise.all(finishPromises),
@@ -20,7 +20,9 @@ export async function save(
   ])
   if (result === "timeout") {
     const uploadingOrigins = getUploadingOrigins(editor.children, origins)
-    const finishPromises = uploadingOrigins.map((origin) => origin.finish)
+    const finishPromises = uploadingOrigins.map(
+      (origin) => origin.finishPromise
+    )
     return {
       status: "timeout",
       value: editor.portive.normalize(),

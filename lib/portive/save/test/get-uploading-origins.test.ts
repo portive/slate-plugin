@@ -42,8 +42,8 @@ describe("getUploadingOrigins", () => {
     ]
     const uploadingOrigins = getUploadingOrigins(value, origins)
     expect(uploadingOrigins.length).toEqual(3)
-    resolve(origins.uploading1.finish)
-    resolve(origins.uploading2.finish)
-    resolve(origins.uploading3.finish)
+    resolve(origins.uploading1.finishPromise)
+    resolve(origins.uploading2.finishPromise)
+    resolve(origins.uploading3.finishPromise)
   })
 })

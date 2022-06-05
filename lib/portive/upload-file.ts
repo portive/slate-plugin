@@ -48,7 +48,7 @@ async function uploadSteps({
    * to wait for all the files to finish uploading.
    */
   const deferredFinish = Defer<Origin>()
-  const finish = deferredFinish.promise
+  const finishPromise = deferredFinish.promise
 
   /**
    * The purpose of adding an eventEmitter is to track progress of an `Origin`
@@ -68,7 +68,7 @@ async function uploadSteps({
     sentBytes: 0,
     totalBytes: file.size,
     eventEmitter,
-    finish,
+    finishPromise,
   })
 
   /**
@@ -91,7 +91,7 @@ async function uploadSteps({
         sentBytes: e.loaded,
         totalBytes: e.total,
         eventEmitter,
-        finish,
+        finishPromise: finishPromise,
       }
       setOrigin(originKey, origin)
       eventEmitter.emit("progress", origin)

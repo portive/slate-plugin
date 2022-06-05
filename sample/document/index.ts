@@ -51,7 +51,7 @@ export const images: Record<string, HostedFileInfo> = {
  * dispatch any events so we just share the same `eventTarget`.
  */
 const eventEmitter = new EventEmitter<OriginEventTypes>()
-const finish = new Promise<Origin>(() => {
+const finishPromise = new Promise<Origin>(() => {
   /* empty */
 })
 
@@ -70,7 +70,7 @@ export const initialOrigins: Record<string, Origin> = {
     sentBytes: 0,
     totalBytes: 100000,
     eventEmitter,
-    finish,
+    finishPromise,
   },
   halfText: {
     status: "uploading",
@@ -78,7 +78,7 @@ export const initialOrigins: Record<string, Origin> = {
     sentBytes: 50000,
     totalBytes: 100000,
     eventEmitter,
-    finish,
+    finishPromise,
   },
   fullText: {
     status: "uploading",
@@ -86,7 +86,7 @@ export const initialOrigins: Record<string, Origin> = {
     sentBytes: 10000,
     totalBytes: 10000,
     eventEmitter,
-    finish,
+    finishPromise,
   },
   errorText: {
     status: "error",
@@ -104,7 +104,7 @@ export const initialOrigins: Record<string, Origin> = {
     sentBytes: 0,
     totalBytes: 3541,
     eventEmitter,
-    finish,
+    finishPromise,
   },
   half: {
     status: "uploading",
@@ -112,7 +112,7 @@ export const initialOrigins: Record<string, Origin> = {
     sentBytes: 1770,
     totalBytes: 3541,
     eventEmitter,
-    finish,
+    finishPromise,
   },
   full: {
     status: "uploading",
@@ -120,7 +120,7 @@ export const initialOrigins: Record<string, Origin> = {
     sentBytes: 3541,
     totalBytes: 3541,
     eventEmitter,
-    finish,
+    finishPromise,
   },
   uploaded: {
     status: "uploaded",

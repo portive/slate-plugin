@@ -12,7 +12,7 @@ export type OriginUploading = {
   sentBytes: number
   totalBytes: number
   eventEmitter: EventEmitter<OriginEventTypes>
-  finish: Promise<Origin>
+  finishPromise: Promise<Origin>
 }
 
 export type OriginUploaded = {
