@@ -3,7 +3,7 @@ import { AttachmentBlockElement } from "./types"
 
 export { AttachmentBlock } from "./render-attachment-block"
 export type { AttachmentBlockElement } from "./types"
-export { createGenericFile } from "./create-generic-file"
+export { createAttachmentBlock } from "./create-attachment-block"
 
 export const ATTACHMENT_BLOCK_TYPE = "attachment-block"
 

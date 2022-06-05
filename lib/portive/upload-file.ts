@@ -147,7 +147,8 @@ async function uploadHostedImage(
     portive.initialMaxSize[1]
   )
 
-  const element = portive.createImageFile({
+  const element = portive.createElement({
+    type: "image",
     originKey: originKey,
     originSize: clientFile.size,
     file,
@@ -173,7 +174,8 @@ async function uploadHostedFile(
     throw new Error(`Expected clientFile.type to be generic`)
   }
 
-  const element = portive.createGenericFile({
+  const element = portive.createElement({
+    type: "generic",
     originKey: originKey,
     file,
   })

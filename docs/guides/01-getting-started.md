@@ -20,11 +20,11 @@ This Getting Started guide leads you through setting up `slate-portive` with two
 
 ### Setting Up Types
 
-> 🌞 If you aren't using TypeScript, you can skip this step.
+> 🌞 If you aren't using TypeScript skip this step.
 >
-> If you are using `slate-portive` with TypeScript, read the [Slate Documentation for TypeScript](https://docs.slatejs.org/concepts/12-typescript) first.
+> If you are using TypeScript, read the [Slate Documentation for TypeScript](https://docs.slatejs.org/concepts/12-typescript) first.
 
-Add the `ImageBlockElement` and `AttachmentBlockElement` to your Custom Element.
+Add the `ImageBlockElement` and `AttachmentBlockElement` to your `CustomTypes`.
 
 ```ts
 import { BaseEditor, BaseText } from "slate"
@@ -33,38 +33,34 @@ import { PortiveEditor } from "~/lib/portive"
 import { HistoryEditor } from "slate-history"
 import { ImageBlockElement, AttachmentBlockElement } from "slate-portive"
 
-type CustomText = BaseText
-
 type ParagraphElement = {
   type: "paragraph"
-  children: CustomText[]
+  children: BaseText[]
 }
-
-export type CustomElement =
-  | ParagraphElement
-  | ImageBlockElement
-  | AttachmentBlockElement
 
 declare module "slate" {
   interface CustomTypes {
     Editor: BaseEditor & ReactEditor & HistoryEditor & PortiveEditor
-    Element: CustomElement
-    Text: CustomText
+    Element:
+      | ParagraphElement
+      | ImageBlockElement // ✅ Add this
+      | AttachmentBlockElement // ✅ and this to your CustomElement
+    Text: BaseText
   }
 }
 ```
 
 ### Extend the Editor
 
-Extend the `editor` with [`withPortive`](../reference/with-portive.md) to add upload features to the Slate Editor.
+Extend the `editor` with [`withPortive`](../reference/with-portive.md).
 
 ```ts
 import { useState } from "react"
 import { createEditor } from "slate"
 import { Editable, withReact } from "slate-react"
 import {
-  createImageBlockElement,
-  createAttachmentBlockElement,
+  createImageBlock,
+  createAttachmentBlock,
   withPortive,
 } from "slate-portive"
 
@@ -73,26 +69,165 @@ const App = () => {
   const [editor] = useState(() => {
     const reactEditor = withReact(createEditor())
 
+    // ✅ Add `withPortive` to the editor
     const editor = withPortive(reactEditor, {
-      createElement(e) {
-        if (e.type === "image") {
-          // When the type is an "image" return an ImageBlock Element
-          return createImageBlockElement(e)
-        } else {
-          // When the type is not an "image" return an AttachmentBlock Element
-          return createAttachmentBlockElement(e)
-        }
-      },
+      createElement: (e) =>
+        e.type === "image" ? createImageBlock(e) : createAttachmentBlock(e),
     })
 
-    // If it's an `image-block` or `attachment-block` it is a void block
+    // ✅ Set `isVoid` for `image-block` and `attachment-block` types
     editor.isVoid = (element) =>
       ["image-block", "attachment-block"].includes(element.type)
 
     return editor
   })
-  return null // NOTE: we'll add this next
+  return null // ... we'll add this next
 }
 ```
 
-### Render Components
+### Add Editable
+
+Create a `renderElement` function that triages rendering to `AttachmentBlock` and `ImageBlock` and add it to the `Editable` component.
+
+```tsx
+import { useState } from "react"
+import { createEditor } from "slate"
+import { Editable, withReact } from "slate-react"
+import {
+  AttachmentBlock,
+  ImageBlock,
+  createImageBlock,
+  createAttachmentBlock,
+  withPortive,
+} from "slate-portive"
+
+// ✅ Add render code for `ImageBlock` and `AttachmentBlock`
+function renderElement(props: RenderElementProps) {
+  const element = props.element
+  switch (element.type) {
+    case "paragraph":
+      return <p {...props.attributes}>{props.children}</p>
+    case "attachment-block":
+      return <AttachmentBlock {...props} element={element} />
+    case "image-block":
+      return <ImageBlock {...props} element={element} />
+    default:
+      throw new Error("Unexpected type")
+  }
+}
+
+const App = () => {
+  // Create a Slate editor object that won't change across renders.
+  const [editor] = useState(() => {
+    const reactEditor = withReact(createEditor())
+    const editor = withPortive(reactEditor, {
+      createElement: (e) =>
+        e.type === "image" ? createImageBlock(e) : createAttachmentBlock(e),
+    })
+
+    // Set `isVoid` for `image-block` and `attachment-block` types
+    editor.isVoid = (element) =>
+      ["image-block", "attachment-block"].includes(element.type)
+
+    return editor
+  })
+
+  return (
+    <Slate editor={editor} value={initialValue}>
+      {/* ✅ provide `renderElement` here */}
+      <Editable renderElement={renderElement} />
+    </Slate>
+  )
+}
+```
+
+### Add `onPaste` and `onDrop` handlers
+
+Add `editor.portive.handlePaste` to `onPaste` and `editor.portive.handleDrop` to `onDrop`.
+
+```tsx
+// ... function renderElement ...
+
+const App = () => {
+  // ... [editor] = useState(...)
+
+  return (
+    <Slate editor={editor} value={initialValue}>
+      <Editable
+        renderElement={renderElement}
+        { /* ✅ Add `handlePaste` and `handleDrop` */}
+        onPaste={editor.portive.handlePaste}
+        onDrop={editor.portive.handleDrop}
+      />
+    </Slate>
+  )
+}
+```
+
+> 🌞 If you have other paste and drop handlers, note that `portive.handlePaste` and `portive.handleDrop` return a `boolean` indicating that the paste or drop was handled. This can be useful if you want to execute different handlers if the `handlePaste` or `handleDrop` was not executed.
+
+### Full Source Code
+
+The final editor source.
+
+```tsx
+import { BaseEditor, BaseText } from "slate"
+import { ReactEditor } from "slate-react"
+import { PortiveEditor } from "~/lib/portive"
+import { HistoryEditor } from "slate-history"
+import { ImageBlockElement, AttachmentBlockElement } from "slate-portive"
+
+type ParagraphElement = {
+  type: "paragraph"
+  children: BaseText[]
+}
+
+declare module "slate" {
+  interface CustomTypes {
+    Editor: BaseEditor & ReactEditor & HistoryEditor & PortiveEditor
+    Element: ParagraphElement | ImageBlockElement | AttachmentBlockElement
+    Text: BaseText
+  }
+}
+
+function renderElement(props: RenderElementProps) {
+  const element = props.element
+  switch (element.type) {
+    case "paragraph":
+      return <p {...props.attributes}>{props.children}</p>
+    case "attachment-block":
+      return <AttachmentBlock {...props} element={element} />
+    case "image-block":
+      return <ImageBlock {...props} element={element} />
+    default:
+      throw new Error("Unexpected type")
+  }
+}
+
+const App = () => {
+  // Create a Slate editor object that won't change across renders.
+  const [editor] = useState(() => {
+    const reactEditor = withReact(createEditor())
+    const editor = withPortive(reactEditor, {
+      createElement: (e) =>
+        e.type === "image" ? createImageBlock(e) : createAttachmentBlock(e),
+    })
+
+    // Set `isVoid` for `image-block` and `attachment-block` types
+    editor.isVoid = (element) =>
+      ["image-block", "attachment-block"].includes(element.type)
+
+    return editor
+  })
+
+  return (
+    <Slate editor={editor} value={initialValue}>
+      <Editable
+        renderElement={renderElement}
+        onPaste={editor.portive.handlePaste}
+        onDrop={editor.portive.handleDrop}
+      />
+    </Slate>
+  )
+}
+```

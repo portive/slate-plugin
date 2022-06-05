@@ -24,8 +24,7 @@ export function withPortive<T extends FullPortiveEditor>(
     maxResizeWidth = 1280,
     initialMaxSize,
     initialOrigins,
-    createImageFile,
-    createGenericFile,
+    createElement,
   }: HostedImageOptions
 ): T {
   const useStore = createOriginStore({ origins: initialOrigins })
@@ -39,8 +38,7 @@ export function withPortive<T extends FullPortiveEditor>(
     uploadFile(file: File): string {
       return upload(editor, file)
     },
-    createImageFile,
-    createGenericFile,
+    createElement,
     handleDrop(e) {
       return handleDropFile(editor, e)
     },

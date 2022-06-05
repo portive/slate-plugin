@@ -5,7 +5,8 @@ import React, { useCallback, useState } from "react"
 import { withPortive } from "~/lib/portive"
 import { withHistory } from "slate-history"
 import { renderElement } from "./render-element"
-import { createGenericFile } from "~/lib/portive/element-presets/attachment-block"
+import { createAttachmentBlock } from "~/lib/portive/element-presets/attachment-block"
+import { createImageBlock } from "~/lib/portive/element-presets/image-block"
 import delay from "delay"
 import { css } from "emotion"
 import "./types"
@@ -75,16 +76,8 @@ export function MyEditor({
       minResizeWidth: 100,
       maxResizeWidth: 640,
       initialOrigins: initialOrigins,
-      createImageFile(e) {
-        return {
-          type: "image-block",
-          originKey: e.originKey,
-          originSize: e.originSize,
-          size: e.initialSize,
-          children: [{ text: "" }],
-        }
-      },
-      createGenericFile,
+      createElement: (e) =>
+        e.type === "image" ? createImageBlock(e) : createAttachmentBlock(e),
     })
     editor.isVoid = (element) => {
       return ["attachment-block", "image-block", "image-inline"].includes(

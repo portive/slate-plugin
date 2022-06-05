@@ -1,7 +1,7 @@
 import { RenderElementPropsFor } from "~/lib/portive/types/type-utils"
 import { HostedImage } from "~/lib/portive"
 import { AssertType } from "@thesunny/assert-type"
-import { ImageFileInterface } from "../../types"
+import { CreateImageFileElementProps, ImageFileInterface } from "../../types"
 
 export const ELEMENT_TYPE = "image-block"
 
@@ -36,4 +36,16 @@ export function ImageBlock({
       {children}
     </div>
   )
+}
+
+export function createImageBlock(
+  e: CreateImageFileElementProps
+): ImageBlockElement {
+  return {
+    type: "image-block",
+    originKey: e.originKey,
+    originSize: e.originSize,
+    size: e.initialSize,
+    children: [{ text: "" }],
+  }
 }
