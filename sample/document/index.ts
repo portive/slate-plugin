@@ -57,11 +57,11 @@ const finishPromise = new Promise<Origin>(() => {
 
 export const initialOrigins: Record<string, Origin> = {
   pdf: {
-    status: "uploaded",
+    status: "complete",
     url: PDF_FILE,
   },
   text: {
-    status: "uploaded",
+    status: "complete",
     url: TEXT_FILE,
   },
   zeroText: {
@@ -95,7 +95,7 @@ export const initialOrigins: Record<string, Origin> = {
     url: TEXT_FILE,
   },
   icon: {
-    status: "uploaded",
+    status: "complete",
     url: images.icon.url,
   },
   zero: {
@@ -122,8 +122,8 @@ export const initialOrigins: Record<string, Origin> = {
     eventEmitter,
     finishPromise,
   },
-  uploaded: {
-    status: "uploaded",
+  complete: {
+    status: "complete",
     url: images.landscape.url,
   },
   error: {
@@ -227,7 +227,7 @@ export const initialValue: Descendant[] = [
   },
   {
     type: "image-block",
-    originKey: "uploaded",
+    originKey: "complete",
     originSize: images.landscape.originSize,
     size: [256, 192],
     children: [{ text: "" }],

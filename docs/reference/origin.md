@@ -14,7 +14,7 @@ export type OriginUploading = {
 
 export type OriginUploaded = {
   url: string
-  status: "uploaded"
+  status: "complete"
 }
 
 export type OriginError = {
@@ -37,12 +37,12 @@ The value of `url` is one of:
 
 In any state, the `url` value can be used as the src for an `img` tags such as `<img src={origin.src} />` and is useful for showing a preview of an image while the image is still uploading.
 
-### `status: "uploading" | "uploaded" | "error"`
+### `status: "uploading" | "complete" | "error"`
 
 Indicates the current upload status:
 
 - `uploading`: File is currently an in progress upload
-- `uploaded`: File has completed upload
+- `complete`: File has completed upload
 - `error`: There was an error during uploading. See `message` for why.
 
 ## `"uploading"` Properties

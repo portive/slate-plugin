@@ -39,7 +39,7 @@ function _getUploadingOrigins(
            * we do a lookup.
            *
            * If it returns a value for the `origin` and the `status` is
-           * `uploaded`, then we swap out the `originKey` with the `url`.
+           * `complete`, then we swap out the `originKey` with the `url`.
            *
            * If it's not found, we skip over it because we don't want it in our
            * normalized value.

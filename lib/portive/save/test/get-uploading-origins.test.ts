@@ -7,7 +7,7 @@ describe("getUploadingOrigins", () => {
   it("should get uploading origins", async () => {
     const origins = {
       error: mockOrigin.error("landscape"),
-      uploaded: mockOrigin.uploaded("landscape"),
+      complete: mockOrigin.complete("landscape"),
       uploading1: mockOrigin.uploading("landscape", 0.25),
       uploading2: mockOrigin.uploading("landscape", 0.5),
       uploading3: mockOrigin.uploading("landscape", 0.75),
@@ -19,7 +19,7 @@ describe("getUploadingOrigins", () => {
           { type: "min-origin", originKey: "error", children: [{ text: "" }] },
           {
             type: "min-origin",
-            originKey: "uploaded",
+            originKey: "complete",
             children: [{ text: "" }],
           },
           {

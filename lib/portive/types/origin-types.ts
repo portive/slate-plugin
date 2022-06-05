@@ -15,9 +15,9 @@ export type OriginUploading = {
   finishPromise: Promise<Origin>
 }
 
-export type OriginUploaded = {
+export type OriginComplete = {
   url: string
-  status: "uploaded"
+  status: "complete"
 }
 
 export type OriginError = {
@@ -26,7 +26,7 @@ export type OriginError = {
   message: string
 }
 
-export type Origin = OriginUploading | OriginUploaded | OriginError
+export type Origin = OriginUploading | OriginComplete | OriginError
 
 export type GetOrigin = (originKey: string) => Origin
 export type SetOrigin = (originKey: string, origin: Origin) => void

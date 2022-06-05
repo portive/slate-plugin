@@ -92,7 +92,7 @@ export function AttachmentBlock({
         </div>
         <div className="--body">
           <div>{element.filename}</div>
-          {origin.status === "uploaded" ? (
+          {origin.status === "complete" ? (
             <div className="--description">{bytes(element.bytes)}</div>
           ) : null}
           {origin.status === "uploading" ? (
@@ -104,7 +104,7 @@ export function AttachmentBlock({
             <div className="--error">Error uploading file</div>
           ) : null}
         </div>
-        {origin.status === "uploaded" ? (
+        {origin.status === "complete" ? (
           <div className="--icon">
             <a
               href={origin.url}

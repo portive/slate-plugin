@@ -20,7 +20,7 @@ import Defer from "p-defer"
  * - Start the upload progress with AWS S3
  * - Update the `uploading` progress on the `origin` with `sentBytes`
  * - Set the `error` state if there is an upload failure
- * - Set the final upload status as `uploaded` and set the final `url` on the `origin`
+ * - Set the final upload status as `complete` and set the final `url` on the `origin`
  */
 async function uploadSteps({
   editor,
@@ -115,11 +115,11 @@ async function uploadSteps({
   }
 
   /**
-   * Set file as `uploaded` with the final hosted URL
+   * Set file as `complete` with the final hosted URL
    */
   const origin: Origin = {
     url: uploadResult.data.url,
-    status: "uploaded",
+    status: "complete",
   }
   setOrigin(originKey, origin)
   eventEmitter.emit("complete", origin)

@@ -70,7 +70,7 @@ describe("editor.portive.save", () => {
     it("should timeout if uploads are not complete before timeout", async () => {
       const origins = {
         error: mockOrigin.error("landscape"),
-        uploaded: mockOrigin.uploaded("landscape"),
+        complete: mockOrigin.complete("landscape"),
         uploading1: mockOrigin.uploading("landscape", 0.25),
         uploading2: mockOrigin.uploading("landscape", 0.5),
       }
@@ -83,7 +83,7 @@ describe("editor.portive.save", () => {
           },
           {
             type: "min-origin",
-            originKey: "uploaded",
+            originKey: "complete",
             children: [{ text: "" }],
           },
           {
@@ -116,10 +116,10 @@ describe("editor.portive.save", () => {
       resolve(origins.uploading2.finishPromise)
     })
 
-    it.only("should wait until upload is complete then save", async () => {
+    it("should wait until upload is complete then save", async () => {
       const origins = {
         error: mockOrigin.error("landscape"),
-        uploaded: mockOrigin.uploaded("landscape"),
+        complete: mockOrigin.complete("landscape"),
         uploading1: mockOrigin.uploading("landscape", 0.25),
         uploading2: mockOrigin.uploading("landscape", 0.5),
       }
@@ -132,7 +132,7 @@ describe("editor.portive.save", () => {
           },
           {
             type: "min-origin",
-            originKey: "uploaded",
+            originKey: "complete",
             children: [{ text: "" }],
           },
           {
@@ -150,9 +150,9 @@ describe("editor.portive.save", () => {
       )
       const { setOrigin } = editor.portive.useStore.getState()
       const promise = editor.portive.save()
-      setOrigin("uploading1", mockOrigin.uploaded("landscape"))
+      setOrigin("uploading1", mockOrigin.complete("landscape"))
       resolve(origins.uploading1.finishPromise)
-      setOrigin("uploading2", mockOrigin.uploaded("landscape"))
+      setOrigin("uploading2", mockOrigin.complete("landscape"))
       resolve(origins.uploading2.finishPromise)
 
       const result = await promise

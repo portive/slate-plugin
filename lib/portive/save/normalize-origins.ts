@@ -41,13 +41,13 @@ function _normalizeOrigins(
            * we do a lookup.
            *
            * If it returns a value for the `origin` and the `status` is
-           * `uploaded`, then we swap out the `originKey` with the `url`.
+           * `complete`, then we swap out the `originKey` with the `url`.
            *
            * If it's not found, we skip over it because we don't want it in our
            * normalized value.
            */
           const origin: Origin | undefined = origins[node.originKey]
-          if (origin && origin.status === "uploaded") {
+          if (origin && origin.status === "complete") {
             nextNodes.push({ ...node, originKey: origin.url })
           }
         }

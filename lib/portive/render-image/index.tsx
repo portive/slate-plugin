@@ -40,7 +40,7 @@ export function useOrigin(originKey: string): Origin {
   )
   if (originKey.includes("/")) {
     return {
-      status: "uploaded",
+      status: "complete",
       url: originKey,
     }
   } else {

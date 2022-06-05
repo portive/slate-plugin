@@ -1,7 +1,7 @@
 import { Origin, OriginEventTypes } from "~/lib/portive"
 import { FakePromise } from "fake-promise"
 import EventEmitter from "eventemitter3"
-import { OriginError, OriginUploaded, OriginUploading } from "../../types"
+import { OriginError, OriginComplete, OriginUploading } from "../../types"
 
 const PORTRAIT_IMAGE =
   "https://files.dev.portive.com/f/demo/ktjairhr4jy5i3qr6ow43--1920x2880.jpg"
@@ -48,15 +48,15 @@ export const images: Record<string, HostedFileInfo> = {
 
 const _mockOrigins = {
   pdf: {
-    status: "uploaded",
+    status: "complete",
     url: PDF_FILE,
   },
   text: {
-    status: "uploaded",
+    status: "complete",
     url: TEXT_FILE,
   },
   icon: {
-    status: "uploaded",
+    status: "complete",
     url: images.icon.url,
   },
   landscape: {
@@ -76,9 +76,9 @@ export const mockOrigin = {
     if (origin == null) throw new Error(`Expected to find origin`)
     return origin
   },
-  uploaded(key: OriginKey): OriginUploaded {
+  complete(key: OriginKey): OriginComplete {
     const origin = mockOrigin.get(key)
-    return { ...origin, status: "uploaded" }
+    return { ...origin, status: "complete" }
   },
   error(key: OriginKey): OriginError {
     const origin = mockOrigin.get(key)

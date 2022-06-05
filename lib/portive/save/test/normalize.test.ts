@@ -8,7 +8,7 @@ import { resolve } from "./test-utils"
 describe("normalize", () => {
   it("should normalize an originKey", async () => {
     const origins: Record<string, Origin> = {
-      a: { status: "uploaded", url: "/fake.txt" },
+      a: { status: "complete", url: "/fake.txt" },
     }
     const nodes = [{ originKey: "a" }] as Descendant[]
     const normalizedNodes = normalizeOrigins(nodes, origins)
@@ -49,7 +49,7 @@ describe("normalize", () => {
 
   it("should normalize children", async () => {
     const origins: Record<string, Origin> = {
-      a: { status: "uploaded", url: "/fake.txt" },
+      a: { status: "complete", url: "/fake.txt" },
     }
     const nodes = [
       { children: [{ originKey: "a" }] },
@@ -62,7 +62,7 @@ describe("normalize", () => {
 
   it("should not normalize children of an element that has an originKey", async () => {
     const origins: Record<string, Origin> = {
-      a: { status: "uploaded", url: "/fake.txt" },
+      a: { status: "complete", url: "/fake.txt" },
     }
     const nodes = [
       { originKey: "a", children: [{ originKey: "a" }] },
