@@ -9,7 +9,7 @@ export type OriginUploading = {
   sentBytes: number
   totalBytes: number
   eventEmitter: EventEmitter<OriginEventTypes>
-  finish: Promise<Origin>
+  finishPromise: Promise<Origin>
 }
 
 export type OriginUploaded = {
@@ -69,11 +69,11 @@ It emits three event types where the event object is an `Origin` object.
 
 > 🌞 Typically `eventEmitter` isn't be used directly and is an internal implementation detail; however, you can attach event listeners to `eventEmitter` to get the progress of an upload.
 
-### `finish: Promise<Origin>`
+### `finishPromise: Promise<Origin>`
 
 A `Promise` that resolves with an `Origin` when uploading is completed.
 
-> 🌞 Typically `finish` isn't be used directly and is an internal implementation detail; however, you can `await` this `Promise` to wait for a file to finish uploading.
+> 🌞 Typically `finishPromise` isn't be used directly and is an internal implementation detail; however, you can `await` this `Promise` to wait for a file to finish uploading.
 
 ## `"error"` Properties
 
