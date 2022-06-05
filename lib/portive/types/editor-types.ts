@@ -23,6 +23,14 @@ export type CreateFileElementEvent =
   | CreateImageFileElementEvent
   | CreateGenericFileElementEvent
 
+export type CreateFileElement = (
+  e: CreateFileElementEvent
+) => Element & { originKey: string }
+
+export type CreateImageFileElement = (
+  e: CreateImageFileElementEvent
+) => Element & { originKey: string }
+
 export type WithPortiveOptions = {
   authToken: string | (() => Promisable<string>)
   path: string
@@ -30,7 +38,8 @@ export type WithPortiveOptions = {
   minResizeWidth?: number
   maxResizeWidth?: number
   initialOrigins: Record<string, Origin>
-  createElement: (e: CreateFileElementEvent) => Element & { originKey: string }
+  createImageFileElement?: CreateImageFileElement
+  createFileElement: CreateFileElement
 }
 
 /**
@@ -54,7 +63,8 @@ export type PortiveObject = {
   maxResizeWidth: number
   useStore: ReturnType<typeof createOriginStore>
   uploadFile: (file: File, options?: UploadFileOptions) => string
-  createElement: (e: CreateFileElementEvent) => Element & { originKey: string }
+  createImageFileElement?: CreateImageFileElement
+  createFileElement: CreateFileElement
   handlePaste: (e: React.ClipboardEvent) => boolean
   handleDrop: (e: React.DragEvent) => boolean
   handleInputFileChange: (e: React.ChangeEvent<HTMLInputElement>) => boolean

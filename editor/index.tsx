@@ -76,8 +76,8 @@ export function MyEditor({
       minResizeWidth: 100,
       maxResizeWidth: 640,
       initialOrigins: initialOrigins,
-      createElement: (e) =>
-        e.type === "image" ? createImageBlock(e) : createAttachmentBlock(e),
+      createImageFileElement: createImageBlock,
+      createFileElement: createAttachmentBlock,
     })
     editor.isVoid = (element) => {
       return ["attachment-block", "image-block", "image-inline"].includes(

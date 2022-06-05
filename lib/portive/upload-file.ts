@@ -1,5 +1,6 @@
 import { Element, Location, Transforms } from "slate"
 import {
+  CreateImageFileElementEvent,
   FullPortiveEditor,
   Origin,
   OriginEventTypes,
@@ -155,13 +156,17 @@ async function uploadHostedImage(
     portive.initialMaxSize[1]
   )
 
-  const element = portive.createElement({
+  const event: CreateImageFileElementEvent = {
     type: "image",
     originKey: originKey,
     originSize: clientFile.size,
     file,
     initialSize,
-  })
+  }
+
+  const element = portive.createImageFileElement
+    ? portive.createImageFileElement(event)
+    : portive.createFileElement(event)
 
   await uploadSteps({
     editor,
@@ -190,7 +195,7 @@ async function uploadHostedFile(
     throw new Error(`Expected clientFile.type to be generic`)
   }
 
-  const element = portive.createElement({
+  const element = portive.createFileElement({
     type: "generic",
     originKey: originKey,
     file,

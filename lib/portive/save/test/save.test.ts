@@ -20,7 +20,7 @@ function mockEditor(
     minResizeWidth: 100,
     maxResizeWidth: 640,
     initialOrigins: origins,
-    createElement: {} as any, // we won't be testing this
+    createFileElement: {} as any, // we won't be testing this
   })
   editor.children = value
   editor.portive.useStore = createOriginStore({ origins })
