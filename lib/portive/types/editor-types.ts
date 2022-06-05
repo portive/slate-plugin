@@ -5,10 +5,6 @@ import { Promisable } from "type-fest"
 import { createOriginStore } from "../origin-store"
 import { Origin } from "./origin-types"
 
-export type SaveResult =
-  | { status: "timeout"; value: Descendant[]; finishes: Promise<Origin>[] }
-  | { status: "complete"; value: Descendant[] }
-
 export type CreateImageFileElementEvent = {
   type: "image"
   originKey: string
@@ -27,7 +23,7 @@ export type CreateFileElementEvent =
   | CreateImageFileElementEvent
   | CreateGenericFileElementEvent
 
-export type HostedImageOptions = {
+export type WithPortiveOptions = {
   authToken: string | (() => Promisable<string>)
   path: string
   initialMaxSize: [number, number]
@@ -37,8 +33,18 @@ export type HostedImageOptions = {
   createElement: (e: CreateFileElementEvent) => Element & { originKey: string }
 }
 
+/**
+ * Upload File Options
+ */
 export type UploadFileOptions = { at?: Location }
+
+/**
+ * Save
+ */
 export type SaveOptions = { maxTimeoutInMs?: number }
+export type SaveResult =
+  | { status: "timeout"; value: Descendant[]; finishes: Promise<Origin>[] }
+  | { status: "complete"; value: Descendant[] }
 
 export type PortiveObject = {
   authToken: string | (() => Promisable<string>)

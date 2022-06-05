@@ -1,7 +1,7 @@
 import { createOriginStore } from "./origin-store"
 import {
   FullPortiveEditor,
-  HostedImageOptions,
+  WithPortiveOptions,
   SaveOptions,
   UploadFileOptions,
 } from "./types"
@@ -30,7 +30,7 @@ export function withPortive<T extends FullPortiveEditor>(
     initialMaxSize,
     initialOrigins,
     createElement,
-  }: HostedImageOptions
+  }: WithPortiveOptions
 ): T {
   const useStore = createOriginStore({ origins: initialOrigins })
   editor.portive = {
