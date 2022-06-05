@@ -35,3 +35,46 @@ const App = () => {
   )
 }
 ```
+
+## Upload using `File` object
+
+To upload specific files, use the `editor.portive.uploadFile` method.
+
+In this example, we only allow upload of `pdf` files.
+
+```tsx
+const App = () => {
+  /**
+   * editor = ...
+   */
+
+  // ✅ This callback goes through each file and uploads `application/pdf` files
+  const uploadPdfs = useCallback(
+    (e) => {
+      const files = e.target.files
+      if (files == null || files.length === 0) return
+      for (const file of files) {
+        if (file.type === "application/pdf" && file.name.endsWith(".pdf")) {
+          editor.portive.uploadFile(file)
+        }
+      }
+      return true
+    },
+    [editor]
+  )
+
+  return (
+    <>
+      {/* ✅ Upload on change. `multiple` enables multi-file uploads */}
+      <input type="file" onChange={uploadPdfs} multiple />
+      <Slate editor={editor} value={initialValue}>
+        <Editable
+          renderElement={renderElement}
+          onPaste={editor.portive.handlePaste}
+          onDrop={editor.portive.handleDrop}
+        />
+      </Slate>
+    </>
+  )
+}
+```
