@@ -1,5 +1,10 @@
-import { Element, Transforms } from "slate"
-import { FullPortiveEditor, Origin, OriginEventTypes } from "./types"
+import { Element, Range, Transforms } from "slate"
+import {
+  FullPortiveEditor,
+  Origin,
+  OriginEventTypes,
+  UploadFileOptions,
+} from "./types"
 import { resizeInside } from "./resize-inside"
 import { nanoid } from "nanoid"
 import { createClientFile, isHostedImage, uploadFile } from "~/lib/api"
@@ -23,12 +28,14 @@ async function uploadSteps({
   file,
   clientFile,
   element,
+  at,
 }: {
   editor: FullPortiveEditor
   originKey: string
   file: File
   clientFile: ClientFile
   element: Element & { originKey: string }
+  at?: Range
 }) {
   const { setOrigin } = editor.portive.useStore.getState()
   const url = clientFile.objectUrl
@@ -67,7 +74,7 @@ async function uploadSteps({
   /**
    * Insert the `element` (which includes an `originKey`).
    */
-  Transforms.insertNodes(editor, element)
+  Transforms.insertNodes(editor, element, { at })
 
   /**
    * Start the actual upload progress and update the `origin` as to the
@@ -126,7 +133,8 @@ async function uploadSteps({
 async function uploadHostedImage(
   editor: FullPortiveEditor,
   originKey: string,
-  file: File
+  file: File,
+  options: UploadFileOptions
 ) {
   const portive = editor.portive
 
@@ -155,7 +163,14 @@ async function uploadHostedImage(
     initialSize,
   })
 
-  await uploadSteps({ editor, originKey, file, clientFile, element })
+  await uploadSteps({
+    editor,
+    originKey,
+    file,
+    clientFile,
+    element,
+    at: options.at,
+  })
 }
 
 /**
@@ -165,7 +180,8 @@ async function uploadHostedImage(
 async function uploadHostedFile(
   editor: FullPortiveEditor,
   originKey: string,
-  file: File
+  file: File,
+  options: UploadFileOptions
 ) {
   const portive = editor.portive
 
@@ -180,7 +196,14 @@ async function uploadHostedFile(
     file,
   })
 
-  await uploadSteps({ editor, originKey, file, clientFile, element })
+  await uploadSteps({
+    editor,
+    originKey,
+    file,
+    clientFile,
+    element,
+    at: options.at,
+  })
 }
 
 /**
@@ -190,12 +213,16 @@ async function uploadHostedFile(
  * of the upload in the editor. For example, how much upload progress there is
  * and when it's complete, sets the URL of the upload.
  */
-export function upload(editor: FullPortiveEditor, file: File): string {
+export function upload(
+  editor: FullPortiveEditor,
+  file: File,
+  options: UploadFileOptions = {}
+): string {
   const id = nanoid()
   if (isHostedImage(file)) {
-    uploadHostedImage(editor, id, file)
+    uploadHostedImage(editor, id, file, options)
   } else {
-    uploadHostedFile(editor, id, file)
+    uploadHostedFile(editor, id, file, options)
   }
   return id
 }

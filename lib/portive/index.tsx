@@ -1,5 +1,9 @@
 import { createOriginStore } from "./origin-store"
-import { FullPortiveEditor, HostedImageOptions } from "./types"
+import {
+  FullPortiveEditor,
+  HostedImageOptions,
+  UploadFileOptions,
+} from "./types"
 import { upload } from "./upload-file"
 import {
   handleChangeInputFile,
@@ -35,8 +39,8 @@ export function withPortive<T extends FullPortiveEditor>(
     maxResizeWidth,
     initialMaxSize,
     useStore,
-    uploadFile(file: File): string {
-      return upload(editor, file)
+    uploadFile(file: File, options?: UploadFileOptions): string {
+      return upload(editor, file, options)
     },
     createElement,
     handleDrop(e) {

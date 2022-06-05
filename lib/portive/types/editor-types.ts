@@ -1,4 +1,4 @@
-import { BaseEditor, Descendant, Element } from "slate"
+import { BaseEditor, Descendant, Element, Range } from "slate"
 import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { Promisable } from "type-fest"
@@ -37,6 +37,8 @@ export type HostedImageOptions = {
   createElement: (e: CreateElementProps) => Element & { originKey: string }
 }
 
+export type UploadFileOptions = { at?: Range }
+
 export type PortiveObject = {
   authToken: string | (() => Promisable<string>)
   path: string
@@ -44,7 +46,7 @@ export type PortiveObject = {
   minResizeWidth: number
   maxResizeWidth: number
   useStore: ReturnType<typeof createOriginStore>
-  uploadFile: (file: File) => string
+  uploadFile: (file: File, options?: UploadFileOptions) => string
   createElement: (e: CreateElementProps) => Element & { originKey: string }
   handlePaste: (e: React.ClipboardEvent) => boolean
   handleDrop: (e: React.DragEvent) => boolean
