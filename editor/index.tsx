@@ -118,7 +118,7 @@ export function MyEditor({
         <p>
           <input
             type="file"
-            onChange={editor.portive.handleChangeInputFile}
+            onChange={editor.portive.handleInputFileChange}
             multiple
           />
         </p>

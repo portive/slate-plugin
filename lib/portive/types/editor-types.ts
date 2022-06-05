@@ -1,4 +1,4 @@
-import { BaseEditor, Descendant, Element, Range } from "slate"
+import { BaseEditor, Descendant, Element, Location } from "slate"
 import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { Promisable } from "type-fest"
@@ -37,7 +37,7 @@ export type HostedImageOptions = {
   createElement: (e: CreateElementProps) => Element & { originKey: string }
 }
 
-export type UploadFileOptions = { at?: Range }
+export type UploadFileOptions = { at?: Location }
 
 export type PortiveObject = {
   authToken: string | (() => Promisable<string>)
@@ -50,7 +50,7 @@ export type PortiveObject = {
   createElement: (e: CreateElementProps) => Element & { originKey: string }
   handlePaste: (e: React.ClipboardEvent) => boolean
   handleDrop: (e: React.DragEvent) => boolean
-  handleChangeInputFile: (e: React.ChangeEvent<HTMLInputElement>) => boolean
+  handleInputFileChange: (e: React.ChangeEvent<HTMLInputElement>) => boolean
   save: (timeoutInMs: number) => Promise<SaveResult>
   normalize: () => Descendant[]
 }

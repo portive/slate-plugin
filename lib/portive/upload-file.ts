@@ -1,4 +1,4 @@
-import { Element, Range, Transforms } from "slate"
+import { Element, Location, Transforms } from "slate"
 import {
   FullPortiveEditor,
   Origin,
@@ -35,7 +35,7 @@ async function uploadSteps({
   file: File
   clientFile: ClientFile
   element: Element & { originKey: string }
-  at?: Range
+  at?: Location
 }) {
   const { setOrigin } = editor.portive.useStore.getState()
   const url = clientFile.objectUrl

@@ -6,7 +6,7 @@ import {
 } from "./types"
 import { upload } from "./upload-file"
 import {
-  handleChangeInputFile,
+  handleInputFileChange,
   handlePasteFile,
   handleDropFile,
 } from "./handlers"
@@ -49,8 +49,8 @@ export function withPortive<T extends FullPortiveEditor>(
     handlePaste(e) {
       return handlePasteFile(editor, e)
     },
-    handleChangeInputFile(e) {
-      return handleChangeInputFile(editor, e)
+    handleInputFileChange(e) {
+      return handleInputFileChange(editor, e)
     },
     async save(timeoutInMs: number) {
       if (typeof timeoutInMs !== "number") {

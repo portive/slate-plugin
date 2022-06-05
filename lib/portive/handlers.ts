@@ -41,7 +41,7 @@ export const handleDropFile = (editor: Editor, e: React.DragEvent): boolean => {
   return true
 }
 
-export const handleChangeInputFile = (
+export const handleInputFileChange = (
   editor: Editor,
   e: React.ChangeEvent<HTMLInputElement>
 ): boolean => {
