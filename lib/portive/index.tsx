@@ -2,6 +2,7 @@ import { createOriginStore } from "./origin-store"
 import {
   FullPortiveEditor,
   HostedImageOptions,
+  SaveOptions,
   UploadFileOptions,
 } from "./types"
 import { upload } from "./upload-file"
@@ -52,11 +53,8 @@ export function withPortive<T extends FullPortiveEditor>(
     handleInputFileChange(e) {
       return handleInputFileChange(editor, e)
     },
-    async save(timeoutInMs: number) {
-      if (typeof timeoutInMs !== "number") {
-        throw new Error(`Please provide a timeout argument that is a number`)
-      }
-      return await save(editor, timeoutInMs)
+    async save(options: SaveOptions = {}) {
+      return await save(editor, options)
     },
     normalize() {
       const origins = getOrigins(editor)

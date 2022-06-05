@@ -1,17 +1,19 @@
-import { FullPortiveEditor, SaveResult } from "../types"
+import { FullPortiveEditor, SaveOptions, SaveResult } from "../types"
 import { getOrigins } from "./get-origins"
 import { getUploadingOrigins } from "./get-uploading-origins"
 import delay from "delay"
 import { normalizeOrigins } from "./normalize-origins"
 
+const TEN_MINUTES = 1000 * 60 * 60
+
 export async function save(
   editor: FullPortiveEditor,
-  ms: number
+  { maxTimeoutInMs = TEN_MINUTES }: SaveOptions
 ): Promise<SaveResult> {
   const origins = getOrigins(editor)
   const uploadingOrigins = getUploadingOrigins(editor.children, origins)
   const finishPromises = uploadingOrigins.map((origin) => origin.finish)
-  const timeoutPromise = delay(ms, { value: "timeout" })
+  const timeoutPromise = delay(maxTimeoutInMs, { value: "timeout" })
   const result = await Promise.race([
     Promise.all(finishPromises),
     timeoutPromise,

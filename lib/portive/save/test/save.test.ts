@@ -43,7 +43,7 @@ describe("editor.portive.save", () => {
         [{ type: "paragraph", children: [{ text: "" }] }],
         {}
       )
-      const result = await editor.portive.save(100)
+      const result = await editor.portive.save()
       expect(result).toEqual({
         status: "complete",
         value: [{ type: "paragraph", children: [{ text: "" }] }],
@@ -61,7 +61,7 @@ describe("editor.portive.save", () => {
         ],
         {}
       )
-      const result = await editor.portive.save(100)
+      const result = await editor.portive.save()
       expect(result).toEqual({ status: "complete", value: [] })
     })
   })
@@ -99,7 +99,7 @@ describe("editor.portive.save", () => {
         ],
         origins
       )
-      const result = await editor.portive.save(10)
+      const result = await editor.portive.save({ maxTimeoutInMs: 10 })
       expect(result).toEqual({
         status: "timeout",
         value: [
@@ -149,7 +149,7 @@ describe("editor.portive.save", () => {
         origins
       )
       const { setOrigin } = editor.portive.useStore.getState()
-      const promise = editor.portive.save(1000)
+      const promise = editor.portive.save()
       setOrigin("uploading1", mockOrigin.uploaded("landscape"))
       resolve(origins.uploading1.finish)
       setOrigin("uploading2", mockOrigin.uploaded("landscape"))

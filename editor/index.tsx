@@ -96,7 +96,7 @@ export function MyEditor({
 
   const save = useCallback(async () => {
     setSaveState("saving")
-    const result = await editor.portive.save(10000)
+    const result = await editor.portive.save()
     console.log(result.value)
     setSaveState("saved")
     await delay(1000)

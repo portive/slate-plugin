@@ -38,6 +38,7 @@ export type HostedImageOptions = {
 }
 
 export type UploadFileOptions = { at?: Location }
+export type SaveOptions = { maxTimeoutInMs?: number }
 
 export type PortiveObject = {
   authToken: string | (() => Promisable<string>)
@@ -51,7 +52,7 @@ export type PortiveObject = {
   handlePaste: (e: React.ClipboardEvent) => boolean
   handleDrop: (e: React.DragEvent) => boolean
   handleInputFileChange: (e: React.ChangeEvent<HTMLInputElement>) => boolean
-  save: (timeoutInMs: number) => Promise<SaveResult>
+  save: (options?: SaveOptions) => Promise<SaveResult>
   normalize: () => Descendant[]
 }
 
