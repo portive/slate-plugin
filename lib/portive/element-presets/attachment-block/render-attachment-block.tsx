@@ -7,7 +7,7 @@ import { ReactEditor } from "slate-react"
 import React, { useCallback } from "react"
 import { useOrigin } from "~/lib/portive"
 import { RenderElementPropsFor } from "~/lib/portive/types/type-utils"
-import { ProgressBar, StatusBar } from "~/lib/portive/render-image/status-bar"
+import { StatusBar } from "~/lib/portive/render-image/status-bar"
 import { DownloadIcon, FileIcon, TrashIcon } from "~/lib/portive/icons"
 import { AttachmentBlockElement } from "./types"
 
