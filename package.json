@@ -1,6 +1,6 @@
 {
-  "name": "slate-plugin",
-  "description": "Upload resizable images and file attachments into Slate editors. Fully customizable.",
+  "name": "slate-portive",
+  "description": "Hosted images and file attachments for Slate with image resizing.",
   "keywords": [
     "slate",
     "upload",
