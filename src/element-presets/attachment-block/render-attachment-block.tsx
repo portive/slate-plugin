@@ -2,13 +2,15 @@ import { Transforms } from "slate"
 import { useSlateStatic } from "slate-react"
 import { css } from "emotion"
 import bytes from "bytes"
-import { useHighlightedStyle } from "~/src"
+import {
+  useHighlightedStyle,
+  useOrigin,
+  RenderElementPropsFor,
+  StatusBar,
+} from "../../../src"
 import { ReactEditor } from "slate-react"
 import React, { useCallback } from "react"
-import { useOrigin } from "~/src"
-import { RenderElementPropsFor } from "~/src/types/type-utils"
-import { StatusBar } from "~/src/render-image/status-bar"
-import { DownloadIcon, FileIcon, TrashIcon } from "~/src/icons"
+import { DownloadIcon, FileIcon, TrashIcon } from "../../icons"
 import { AttachmentBlockElement } from "./types"
 
 const $attachmentBlock = css`

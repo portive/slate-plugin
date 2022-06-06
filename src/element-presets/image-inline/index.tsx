@@ -1,7 +1,9 @@
-import { DiscriminatedRenderElementProps } from "~/src/types/type-utils"
 import { AssertType } from "@thesunny/assert-type"
-import { HostedImage } from "~/src"
-import { ImageFileInterface } from "../../types"
+import {
+  DiscriminatedRenderElementProps,
+  HostedImage,
+  ImageFileInterface,
+} from "../../../src"
 
 export const IMAGE_INLINE_TYPE = "image-inline"
 

@@ -4,6 +4,7 @@ import { ImageControls } from "./image-controls"
 import { CSSProperties, useEffect, useState } from "react"
 import { HostedImageContext } from "./hosted-image-context"
 import { RenderElementPropsFor } from "../types/type-utils"
+export * from "./status-bar"
 
 export function RenderHostedImage({
   attributes,

@@ -1,5 +1,8 @@
-import { HostedImage, RenderElementPropsFor } from "~/src"
-import { CreateImageFileElementEvent } from "../../types"
+import {
+  CreateImageFileElementEvent,
+  HostedImage,
+  RenderElementPropsFor,
+} from "../../../src"
 
 export const TITLED_IMAGE_BLOCK_TYPE = "titled-image-block"
 

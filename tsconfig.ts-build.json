@@ -25,5 +25,17 @@
   /**
    * Exclude `*.test.ts` files because they are not part of the output.
    */
-  "exclude": ["**/*.test.ts", "**/test/**/*", "examples"]
+  "exclude": [
+    "**/*.test.ts",
+    "**/test/**/*",
+    "sample",
+    "lib",
+    "pages"
+    /**
+     * We don't actually want the `editor` folder in the build but we need it
+     * for now so that we get the `CustomTypes`. Otherwise, TypeScript fails
+     * build at the moment.
+     */
+    // "editor"
+  ]
 }

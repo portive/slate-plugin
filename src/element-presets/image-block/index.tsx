@@ -1,6 +1,10 @@
-import { HostedImage, RenderElementPropsFor } from "~/src"
+import {
+  CreateImageFileElementEvent,
+  ImageFileInterface,
+  HostedImage,
+  RenderElementPropsFor,
+} from "../../../src"
 import { AssertType } from "@thesunny/assert-type"
-import { CreateImageFileElementEvent, ImageFileInterface } from "../../types"
 
 export const IMAGE_BLOCK_TYPE = "image-block"
 
