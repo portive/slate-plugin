@@ -2,7 +2,7 @@ import { HostedImage, RenderElementPropsFor } from "~/src"
 import { AssertType } from "@thesunny/assert-type"
 import { CreateImageFileElementEvent, ImageFileInterface } from "../../types"
 
-export const ELEMENT_TYPE = "image-block"
+export const IMAGE_BLOCK_TYPE = "image-block"
 
 export type ImageBlockElement = {
   type: "image-block"
@@ -18,7 +18,7 @@ export type ImageBlockElement = {
   children: [{ text: "" }]
 }
 
-AssertType.Equal<typeof ELEMENT_TYPE, ImageBlockElement["type"]>(true)
+AssertType.Equal<typeof IMAGE_BLOCK_TYPE, ImageBlockElement["type"]>(true)
 AssertType.Extends<ImageBlockElement, ImageFileInterface>(true)
 
 export function ImageBlock({

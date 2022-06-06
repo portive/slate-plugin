@@ -1,6 +1,8 @@
 import { HostedImage, RenderElementPropsFor } from "~/src"
 import { CreateImageFileElementEvent } from "../../types"
 
+export const TITLED_IMAGE_BLOCK_TYPE = "titled-image-block"
+
 export type TitledImageBlockElement = {
   type: "titled-image-block"
   title: string // ✅ Add a `title` property for our titled image

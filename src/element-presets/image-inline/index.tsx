@@ -3,7 +3,7 @@ import { AssertType } from "@thesunny/assert-type"
 import { HostedImage } from "~/src"
 import { ImageFileInterface } from "../../types"
 
-export const ELEMENT_TYPE = "image-inline"
+export const IMAGE_INLINE_TYPE = "image-inline"
 
 export type ImageInlineElement = {
   type: "image-inline"
@@ -19,7 +19,7 @@ export type ImageInlineElement = {
   children: [{ text: "" }]
 }
 
-AssertType.Equal<typeof ELEMENT_TYPE, ImageInlineElement["type"]>(true)
+AssertType.Equal<typeof IMAGE_INLINE_TYPE, ImageInlineElement["type"]>(true)
 AssertType.Extends<ImageInlineElement, ImageFileInterface>(true)
 
 export function ImageInline({

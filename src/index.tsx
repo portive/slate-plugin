@@ -17,6 +17,10 @@ export * from "./types"
 export * from "./origin-store"
 export * from "./render-image"
 export * from "./handlers"
+export * from "./element-presets/attachment-block"
+export * from "./element-presets/image-block"
+export * from "./element-presets/image-inline"
+export * from "./element-presets/titled-image-block"
 
 export function withPortive<T extends FullPortiveEditor>(
   editor: T,
