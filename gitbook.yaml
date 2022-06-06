@@ -1,0 +1,4 @@
+root: ./docs
+structure:
+  readme: 01-getting-started.md
+  summary: table-of-contents.md
