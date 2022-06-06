@@ -87,6 +87,7 @@ async function uploadSteps({
    */
   const uploadResult = await uploadFile({
     authToken: editor.portive.authToken,
+    apiUrl: editor.portive.uploadApiUrl,
     path: editor.portive.path,
     file,
     onProgress(e) {

@@ -13,7 +13,8 @@ import { UploadProgressEvent } from "./types"
 export * from "./create-client-file"
 export * from "./resize"
 
-const DEFAULT_UPLOAD_POLICY_URL = "http://localhost:3001/api/v1/upload"
+// const DEFAULT_UPLOAD_POLICY_URL = "http://localhost:3001/api/v1/upload"
+const DEFAULT_UPLOAD_POLICY_URL = "http://api.portive.com/api/v1/upload"
 
 async function normalizeAuthToken(
   authToken: string | (() => Promisable<string>)

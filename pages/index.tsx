@@ -5,11 +5,18 @@ import { initialValue, initialOrigins } from "~/sample/document"
 import { MyEditor } from "~/editor"
 
 export async function getServerSideProps() {
-  return { props: { authToken: env.PORTIVE_AUTH_TOKEN } }
+  const props: { authToken: string; uploadApiUrl?: string } = {
+    authToken: env.PORTIVE_AUTH_TOKEN,
+  }
+  if (process.env.API_UPLOAD_URL) {
+    props.uploadApiUrl = process.env.API_UPLOAD_URL
+  }
+  return { props }
 }
 
 export default function Index({
   authToken,
+  uploadApiUrl,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [isReadOnly, setIsReadOnly] = useState(false)
 
@@ -28,6 +35,7 @@ export default function Index({
       </p>
       <MyEditor
         authToken={authToken}
+        uploadApiUrl={uploadApiUrl}
         initialValue={initialValue}
         initialOrigins={initialOrigins}
         isReadOnly={isReadOnly}

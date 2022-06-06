@@ -58,11 +58,13 @@ const $saveButton = css`
 
 export function MyEditor({
   authToken,
+  uploadApiUrl,
   initialValue,
   initialOrigins = {},
   isReadOnly,
 }: {
   authToken: string
+  uploadApiUrl?: string
   initialValue: Descendant[]
   initialOrigins: Record<string, Origin>
   isReadOnly: boolean
@@ -78,6 +80,7 @@ export function MyEditor({
       initialOrigins: initialOrigins,
       createImageFileElement: createImageBlock,
       createFileElement: createAttachmentBlock,
+      uploadApiUrl,
     })
     editor.isVoid = (element) => {
       return ["attachment-block", "image-block", "image-inline"].includes(
