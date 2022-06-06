@@ -729,10 +729,10 @@
     "@thesunny/assert-type" "^0.1.7"
     superstruct "^0.15.4"
 
-"@portive/client@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@portive/client/-/client-1.0.2.tgz#a41f7a1e2e81ea802a73ce4500b5f670a4f0da27"
-  integrity sha512-x1wiy/+PruCUSDbVTfm63E7ZVYUIWLtn+C31vAVzXWakrSwRWG/gDDion6CIDtlEHaAwNT0Lu3GFS3lWW8hO0g==
+"@portive/client@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@portive/client/-/client-1.0.3.tgz#eba73abff7ace4cb1a46c934754c42bf0e0b0699"
+  integrity sha512-OimDdQIz/8TbDunjWXuRIDDOX3xGpjw1tIQN/5FMFg994WGV0Xwx6CXzhVkNISxjKF3i3kAYWd2N0Q2rPiCKWA==
   dependencies:
     "@portive/api-types" "^6.0.0"
     axios "^0.27.2"
