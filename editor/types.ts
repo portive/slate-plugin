@@ -5,6 +5,7 @@ import { HistoryEditor } from "slate-history"
 import { AttachmentBlockElement } from "~/lib/portive/element-presets/attachment-block"
 import { ImageBlockElement } from "~/lib/portive/element-presets/image-block"
 import { ImageInlineElement } from "~/lib/portive/element-presets/image-inline"
+import { TitledImageBlockElement } from "~/lib/portive/element-presets/titled-image-block"
 
 type CustomText = BaseText
 
@@ -15,14 +16,7 @@ type ParagraphElement = {
 
 type BlockQuoteElement = {
   type: "block-quote"
-  children: Array<
-    | ParagraphElement
-    | BlockQuoteElement
-    | MinOriginElement
-    | ImageBlockElement
-    | ImageInlineElement
-    | AttachmentBlockElement
-  >
+  children: Array<CustomElement>
 }
 
 type MinOriginElement = {
@@ -37,6 +31,7 @@ export type CustomElement =
   | MinOriginElement
   | AttachmentBlockElement
   | ImageBlockElement
+  | TitledImageBlockElement
   | ImageInlineElement
 
 declare module "slate" {

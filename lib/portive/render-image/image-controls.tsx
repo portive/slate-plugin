@@ -1,8 +1,7 @@
 import { useFocused, useSelected } from "slate-react"
 import { ImageFileInterface } from "../types"
-import { ImageProgressBar } from "./progress-bar"
+import { StatusBar } from "./progress-bar"
 import { RemoveIcon } from "./remove-icon"
-import { ErrorMessage } from "./error-message"
 import { ResizeControls } from "./resize-controls"
 import { useHostedImageContext } from "./hosted-image-context"
 
@@ -26,11 +25,12 @@ export function ImageControls({
   element: ImageFileInterface
   children: React.ReactNode
 }) {
-  const { origin } = useHostedImageContext()
+  const { origin, size } = useHostedImageContext()
   const focused = useFocused()
   const selected = useSelected()
   const showResizeControls = focused && selected
-
+  const STATUS_BAR_MARGIN = 16
+  const statusBarWidth = size[0] - STATUS_BAR_MARGIN * 2
   return (
     <span
       draggable={true}
@@ -60,8 +60,20 @@ export function ImageControls({
       }}
     >
       {image}
-      <ImageProgressBar />
-      <ErrorMessage />
+      <StatusBar
+        origin={origin}
+        width={statusBarWidth}
+        height={16}
+        style={{
+          position: "absolute",
+          top: "50%",
+          marginTop: -6,
+          left: 16,
+          right: 16,
+          boxShadow: "0 0 3px 0px rgba(0,0,0,1)",
+        }}
+      />
+      {/* <ErrorMessage /> */}
       {origin.status === "error" ? <RemoveIcon element={element} /> : null}
       {showResizeControls ? <ResizeControls element={element} /> : null}
     </span>

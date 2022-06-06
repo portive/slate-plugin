@@ -1,10 +1,6 @@
 import { Origin } from "../types"
-import { useHostedImageContext } from "./hosted-image-context"
 
-const BAR_HEIGHT = 16
-const MARGIN = 16
-
-export function ProgressBar({
+export function _ProgressBar({
   className,
   sentBytes,
   totalBytes,
@@ -39,8 +35,9 @@ export function ProgressBar({
       style={{
         ...style,
         width,
+        height,
         background: "white",
-        borderRadius: 12,
+        borderRadius: height / 2,
       }}
     >
       <div
@@ -48,58 +45,136 @@ export function ProgressBar({
           background: "DodgerBlue",
           width: progressWidth,
           transition: "width 0.1s",
-          height: height,
-          borderRadius: 12,
+          height,
+          borderRadius: height / 2,
         }}
       ></div>
     </div>
   )
 }
 
-export function FileProgressBar({
-  className,
+export function ProgressBar({
   origin,
+  className,
+  style,
+  width,
+  height = 16,
 }: {
-  className?: string
   origin: Origin
+  className?: string
+  style?: React.CSSProperties
+  width: number
+  height?: number
 }) {
   if (origin.status !== "uploading") {
     return null
   }
   return (
-    <ProgressBar
+    <_ProgressBar
       className={className}
       sentBytes={origin.sentBytes}
       totalBytes={origin.totalBytes}
-      width={256}
-      height={16}
+      width={width}
+      height={height}
       style={{
         boxShadow: "0 0 1px 0px rgba(0,0,0,1)",
+        ...style,
       }}
     />
   )
 }
 
-export function ImageProgressBar() {
-  const { origin, size } = useHostedImageContext()
-  if (origin.status !== "uploading") {
+export function ErrorBar({
+  origin,
+  className,
+  style,
+  width,
+  height = 16,
+}: {
+  origin: Origin
+  className?: string
+  style?: React.CSSProperties
+  width: number
+  height?: number
+}) {
+  if (origin.status !== "error") {
     return null
   }
-  const barLength = size[0] - MARGIN * 2
   return (
-    <ProgressBar
-      sentBytes={origin.sentBytes}
-      totalBytes={origin.totalBytes}
-      width={barLength}
-      height={BAR_HEIGHT}
+    <div
+      className={className}
       style={{
-        position: "absolute",
-        top: "50%",
-        marginTop: -6,
-        left: MARGIN,
-        right: MARGIN,
-        boxShadow: "0 0 3px 0px rgba(0,0,0,1)",
+        width,
+        height,
+        fontSize: "75%",
+        fontWeight: "bold",
+        lineHeight: `${height}px`,
+        color: "rgba(255, 255, 255, 0.9)",
+        background: "FireBrick",
+        textAlign: "center",
+        textTransform: "uppercase",
+        borderRadius: height / 2,
+        ...style,
       }}
-    />
+    >
+      Upload Failed
+    </div>
   )
+}
+
+export function StatusBar({
+  origin,
+  className,
+  style,
+  width,
+  height = 16,
+}: {
+  origin: Origin
+  className?: string
+  style?: React.CSSProperties
+  width: number
+  height?: number
+}) {
+  switch (origin.status) {
+    case "uploading":
+      return (
+        <_ProgressBar
+          className={className}
+          sentBytes={origin.sentBytes}
+          totalBytes={origin.totalBytes}
+          width={width}
+          height={height}
+          style={{
+            boxShadow: "0 0 1px 0px rgba(0,0,0,1)",
+            ...style,
+          }}
+        />
+      )
+    case "error":
+      return (
+        <div
+          className={className}
+          style={{
+            width,
+            height,
+            fontSize: "75%",
+            fontWeight: "bold",
+            lineHeight: `${height}px`,
+            color: "rgba(255, 255, 255, 0.9)",
+            background: "FireBrick",
+            textAlign: "center",
+            textTransform: "uppercase",
+            borderRadius: height / 2,
+            ...style,
+          }}
+        >
+          Upload Failed
+        </div>
+      )
+      break
+    case "complete":
+      return null
+    default:
+      throw new Error(`Should be unreachable`)
+  }
 }

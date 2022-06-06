@@ -2,6 +2,7 @@ import { RenderElementProps } from "slate-react"
 import React from "react"
 import { AttachmentBlock } from "~/lib/portive/element-presets/attachment-block"
 import { ImageBlock } from "~/lib/portive/element-presets/image-block"
+import { TitledImageBlock } from "~/lib/portive/element-presets/titled-image-block"
 import { ImageInline } from "~/lib/portive/element-presets/image-inline"
 
 export function renderElement(props: RenderElementProps) {
@@ -11,6 +12,8 @@ export function renderElement(props: RenderElementProps) {
       return <AttachmentBlock {...props} element={element} />
     case "image-block":
       return <ImageBlock {...props} element={element} />
+    case "titled-image-block":
+      return <TitledImageBlock {...props} element={element} />
     case "image-inline":
       return <ImageInline {...props} element={element} />
     case "paragraph":

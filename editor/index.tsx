@@ -7,6 +7,7 @@ import { withHistory } from "slate-history"
 import { renderElement } from "./render-element"
 import { createAttachmentBlock } from "~/lib/portive/element-presets/attachment-block"
 import { createImageBlock } from "~/lib/portive/element-presets/image-block"
+import { createTitledImageBlock } from "~/lib/portive/element-presets/titled-image-block"
 import delay from "delay"
 import { css } from "emotion"
 import "./types"
@@ -76,7 +77,8 @@ export function MyEditor({
       minResizeWidth: 100,
       maxResizeWidth: 640,
       initialOrigins: initialOrigins,
-      createImageFileElement: createImageBlock,
+      // createImageFileElement: createImageBlock,
+      createImageFileElement: createTitledImageBlock,
       createFileElement: createAttachmentBlock,
     })
     editor.isVoid = (element) => {

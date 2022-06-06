@@ -7,7 +7,7 @@ import { ReactEditor } from "slate-react"
 import React, { useCallback } from "react"
 import { useOrigin } from "~/lib/portive"
 import { RenderElementPropsFor } from "~/lib/portive/types/type-utils"
-import { FileProgressBar } from "~/lib/portive/render-image/progress-bar"
+import { ProgressBar, StatusBar } from "~/lib/portive/render-image/progress-bar"
 import { DownloadIcon, FileIcon, TrashIcon } from "~/lib/portive/icons"
 import { AttachmentBlockElement } from "./types"
 
@@ -63,12 +63,8 @@ const $attachmentBlock = css`
     font-size: 0.9em;
     color: #808080;
   }
-  .--progress-bar {
+  .--status-bar {
     margin-top: 0.25em;
-  }
-  .--error {
-    margin-top: 0.25em;
-    color: #d00000;
   }
 `
 
@@ -95,14 +91,14 @@ export function AttachmentBlock({
           {origin.status === "complete" ? (
             <div className="--description">{bytes(element.bytes)}</div>
           ) : null}
-          {origin.status === "uploading" ? (
-            <div>
-              <FileProgressBar className="--progress-bar" origin={origin} />
-            </div>
-          ) : null}
-          {origin.status === "error" ? (
-            <div className="--error">Error uploading file</div>
-          ) : null}
+          <div>
+            <StatusBar
+              width={192}
+              height={16}
+              className="--status-bar"
+              origin={origin}
+            />
+          </div>
         </div>
         {origin.status === "complete" ? (
           <div className="--icon">
