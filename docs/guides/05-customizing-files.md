@@ -41,7 +41,7 @@ export type CustomAttachmentBlockElement = {
 
 ## Custom File Component
 
-Here is a simplified version of the `AttachmentBlock` Component. It doesn't include the css, the icons, the delete button, or the blue border when it's selected but it does show you how it works.
+Here is a simplified version of the `AttachmentBlock` Component.
 
 ```tsx
 export function AttachmentBlock({
@@ -52,19 +52,16 @@ export function AttachmentBlock({
   const origin = useOrigin(element.originKey)
   return (
     <div {...attributes}>
-      <div className="--container" contentEditable={false}>
-        <div className="--body">
+      <div contentEditable={false}>
+        <div>
           <div>{element.filename}</div>
           {origin.status === "complete" ? (
-            <div className="--description">{bytes(element.bytes)}</div>
+            <div>{bytes(element.bytes)}</div>
           ) : null}
           {origin.status === "uploading" ? (
             <div>
-              <FileProgressBar className="--progress-bar" origin={origin} />
+              <StatusBar origin={origin} />
             </div>
-          ) : null}
-          {origin.status === "error" ? (
-            <div className="--error">Error uploading file</div>
           ) : null}
         </div>
         {origin.status === "complete" ? (
@@ -79,14 +76,14 @@ export function AttachmentBlock({
               <DownloadIcon />
             </a>
           </div>
-        ) : null}
-        {origin.status === "error" ? (
-          <div className="--icon">
-            <div className="--icon-button --trash-icon" onClick={removeElement}>
-              <TrashIcon />
-            </div>
-          </div>
-        ) : null}
+        ) : (
+          <StatusBar
+            width={192}
+            height={16}
+            className="--status-bar"
+            origin={origin}
+          />
+        )}
       </div>
       {children}
     </div>

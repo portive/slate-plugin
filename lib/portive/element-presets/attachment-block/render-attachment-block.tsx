@@ -58,13 +58,10 @@ const $attachmentBlock = css`
   .--body {
     flex: 1 1 auto;
   }
-  .--description {
+  .--status-bar {
     margin-top: 0.25em;
     font-size: 0.9em;
     color: #808080;
-  }
-  .--status-bar {
-    margin-top: 0.25em;
   }
 `
 
@@ -76,30 +73,34 @@ export function AttachmentBlock({
   const editor = useSlateStatic()
   const origin = useOrigin(element.originKey)
   const highlightedStyle = useHighlightedStyle()
+
   const removeElement = useCallback(() => {
     const at = ReactEditor.findPath(editor, element)
     Transforms.removeNodes(editor, { at })
   }, [editor, element])
+
   return (
     <div {...attributes} className={$attachmentBlock} style={highlightedStyle}>
       <div className="--container" contentEditable={false}>
+        {/* Icon */}
         <div className="--icon">
           <FileIcon />
         </div>
+
+        {/* File info */}
         <div className="--body">
           <div>{element.filename}</div>
-          {origin.status === "complete" ? (
-            <div className="--description">{bytes(element.bytes)}</div>
-          ) : null}
-          <div>
-            <StatusBar
-              width={192}
-              height={16}
-              className="--status-bar"
-              origin={origin}
-            />
-          </div>
+          <StatusBar
+            origin={origin}
+            className="--status-bar"
+            width={192}
+            height={16}
+          >
+            {bytes(element.bytes)}
+          </StatusBar>
         </div>
+
+        {/* Download Icon */}
         {origin.status === "complete" ? (
           <div className="--icon">
             <a
@@ -113,6 +114,8 @@ export function AttachmentBlock({
             </a>
           </div>
         ) : null}
+
+        {/* Delete Icon */}
         {origin.status === "error" ? (
           <div className="--icon">
             <div className="--icon-button --trash-icon" onClick={removeElement}>

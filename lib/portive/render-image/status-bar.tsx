@@ -100,6 +100,7 @@ export function StatusBar(props: {
   style?: React.CSSProperties
   width: number
   height?: number
+  children?: React.ReactNode
 }) {
   switch (props.origin.status) {
     case "uploading":
@@ -107,7 +108,18 @@ export function StatusBar(props: {
     case "error":
       return <ErrorBar {...props} />
     case "complete":
-      return null
+      return props.children ? (
+        <div
+          className={props.className}
+          style={{
+            width: props.width,
+            height: props.height,
+            ...props.style,
+          }}
+        >
+          {props.children}
+        </div>
+      ) : null
     default:
       throw new Error(`Should be unreachable`)
   }
