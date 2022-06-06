@@ -93,8 +93,8 @@ async function uploadSteps({
       const origin: Origin = {
         url,
         status: "uploading",
-        sentBytes: e.loaded,
-        totalBytes: e.total,
+        sentBytes: e.sentBytes,
+        totalBytes: e.totalBytes,
         eventEmitter,
         finishPromise: finishPromise,
       }

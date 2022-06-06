@@ -9,6 +9,7 @@ import {
 } from "@portive/api-types"
 import { Promisable } from "type-fest"
 import { createClientFile } from "./create-client-file"
+import { UploadProgressEvent } from "./types"
 export * from "./create-client-file"
 export * from "./resize"
 
@@ -63,13 +64,6 @@ export async function getUploadPolicy({
   }
 }
 
-type ProgressEvent = {
-  loaded: number
-  total: number
-  file: File
-  clientFile: ClientFile
-}
-
 export async function uploadFile({
   authToken,
   path,
@@ -80,7 +74,7 @@ export async function uploadFile({
   authToken: string | (() => Promisable<string>)
   path: string
   file: File | ClientFile
-  onProgress?: (e: ProgressEvent) => void
+  onProgress?: (e: UploadProgressEvent) => void
   apiUrl?: string
 }): Promise<JSendError | JSendSuccess<HostedFileInfo>> {
   const clientFile = await createClientFile(file)
@@ -115,8 +109,8 @@ export async function uploadFile({
       onProgress({
         clientFile,
         file: clientFile.file,
-        loaded: e.loaded,
-        total: e.total,
+        sentBytes: e.loaded,
+        totalBytes: e.total,
       })
     },
   })
