@@ -1,21 +1,11 @@
-# Slate Portive: Image and Attachments Plugin
+# Slate Portive: Image and Attachments for Slate
 
-<p align="center>
-  Add beautiful and intuitive images and attachments to Slate<br/>
-  with support for paste, drag and drop and <input type="file"> uploads.
-</p>
-
-<p align="center>
-  []
-  
-</p>
+Add beautiful and intuitive images and attachments to Slate with support for paste, drag and drop and <input type="file"> uploads.
 
 This Slate Portive plugin works with the Portive back-end for rich text editors. Portive is the official hosted back-end for:
 
 - Plate: Rich text editor plugin system for Slate &amp; React
 - Wysimark: The Rich Editor for Markdown
-
-> The Portive back-end is by MeZine Inc., an Internet company that's been successful since 2010 and whose founder is [Sunny Hirai "thesunny" a core contributor to Slate](https://github.com/ianstormtaylor/slate/graphs/contributors).
 
 ## Images Features
 
