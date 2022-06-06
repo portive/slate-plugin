@@ -1,12 +1,14 @@
 import { createEditor, Descendant, Editor } from "slate"
-import { Origin } from "~/src"
 import { Slate, Editable, withReact } from "slate-react"
 import React, { useCallback, useState } from "react"
-import { withPortive } from "~/src"
+import {
+  Origin,
+  withPortive,
+  createAttachmentBlock,
+  createImageBlock,
+} from "~/src"
 import { withHistory } from "slate-history"
 import { renderElement } from "./render-element"
-import { createAttachmentBlock } from "~/src/element-presets/attachment-block"
-import { createImageBlock } from "~/src/element-presets/image-block"
 import delay from "delay"
 import { css } from "emotion"
 import "./types"
