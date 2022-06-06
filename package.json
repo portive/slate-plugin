@@ -10,7 +10,7 @@
     "resize",
     "plugin"
   ],
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "Copyright Portive and MeZine Inc. 2022",
   "engines": {
     "node": "14.x",
