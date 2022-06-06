@@ -10,6 +10,7 @@ import {
 import { Promisable } from "type-fest"
 import { createClientFile } from "./create-client-file"
 export * from "./create-client-file"
+export * from "./resize"
 
 const DEFAULT_UPLOAD_POLICY_URL = "http://localhost:3001/api/v1/upload"
 

@@ -3,6 +3,7 @@ import { ReactEditor, useSlateStatic } from "slate-react"
 import { ImageFileInterface } from "../types"
 import { Element, Transforms } from "slate"
 import { useHostedImageContext } from "./hosted-image-context"
+import { resizeInWidth } from "~/lib/api"
 
 export function ResizeControls({ element }: { element: ImageFileInterface }) {
   const { size, setSize } = useHostedImageContext()
@@ -40,21 +41,8 @@ export function ResizeControls({ element }: { element: ImageFileInterface }) {
          */
         const nextWidth = Math.min(maxWidth, Math.max(minWidth, proposedWidth))
 
-        /**
-         * Calculate the inverseAspect (used to calculate height)
-         */
-        const inverseAspect = element.originSize[1] / element.originSize[0]
+        currentSize = resizeInWidth(element.originSize, nextWidth)
 
-        /**
-         * Calculate height
-         */
-        const nextHeight = Math.round(nextWidth * inverseAspect)
-
-        /**
-         * Set size on the state (to show resize) and the ref (for use in this
-         * method)
-         */
-        currentSize = [nextWidth, nextHeight]
         setSize(currentSize)
       }
 
@@ -73,13 +61,6 @@ export function ResizeControls({ element }: { element: ImageFileInterface }) {
         const at = ReactEditor.findPath(editor, element as Element)
 
         Transforms.setNodes(editor, { size: currentSize }, { at })
-
-        // /**
-        //  * Set the image url for the new size of image
-        //  */
-        // if (activeImage.type === "static") return
-        // const url = activeImage.resize(currentSize.width, currentSize.height)
-        // Transforms.setNodes(editor, { url })
       }
 
       /**

@@ -6,9 +6,13 @@ import {
   OriginEventTypes,
   UploadFileOptions,
 } from "./types"
-import { resizeInside } from "./resize-inside"
 import { nanoid } from "nanoid"
-import { createClientFile, isHostedImage, uploadFile } from "~/lib/api"
+import {
+  createClientFile,
+  isHostedImage,
+  resizeIn,
+  uploadFile,
+} from "~/lib/api"
 import { ClientFile } from "@portive/api-types"
 import EventEmitter from "eventemitter3"
 import Defer from "p-defer"
@@ -149,12 +153,7 @@ async function uploadHostedImage(
   /**
    * Get initial image size
    */
-  const initialSize = resizeInside(
-    clientFile.size[0],
-    clientFile.size[1],
-    portive.initialMaxSize[0],
-    portive.initialMaxSize[1]
-  )
+  const initialSize = resizeIn(clientFile.size, portive.initialMaxSize)
 
   const event: CreateImageFileElementEvent = {
     type: "image",
