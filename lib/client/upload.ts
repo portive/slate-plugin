@@ -13,8 +13,11 @@ import { UploadProgressEvent } from "./types"
 export * from "./create-client-file"
 export * from "./resize"
 
-// const DEFAULT_UPLOAD_POLICY_URL = "http://localhost:3001/api/v1/upload"
-const DEFAULT_UPLOAD_POLICY_URL = "http://api.portive.com/api/v1/upload"
+const DEFAULT_ORIGIN_URL = "http://api.portive.com"
+const UPLOAD_PATH = "/api/v1/upload"
+
+if (!UPLOAD_PATH.startsWith("/"))
+  throw new Error("UPLOAD_PATH should start with a '/'")
 
 async function normalizeAuthToken(
   authToken: string | (() => Promisable<string>)
@@ -23,19 +26,24 @@ async function normalizeAuthToken(
   return await authToken()
 }
 
-export async function getUploadPolicy({
+async function getUploadPolicy({
   authToken,
+  apiOriginUrl = DEFAULT_ORIGIN_URL,
   path,
   file,
-  apiUrl = DEFAULT_UPLOAD_POLICY_URL,
 }: {
   authToken: string | (() => Promisable<string>)
+  apiOriginUrl?: string
   path: string
   file: File | ClientFile
-  apiUrl?: string
 }): Promise<UploadFileResponse> {
   try {
+    if (apiOriginUrl.endsWith("/"))
+      throw new Error("apiOriginUrl should not end with a '/'")
+
     const clientFile = await createClientFile(file)
+
+    const apiGetPolicyUrl = `${apiOriginUrl}${UPLOAD_PATH}`
 
     const {
       // disable to allow eating a property
@@ -53,7 +61,7 @@ export async function getUploadPolicy({
       clientFileInfo,
     }
     const axiosResponse: AxiosResponse<UploadFileResponse> = await axios.post(
-      apiUrl,
+      apiGetPolicyUrl,
       uploadProps
     )
     return axiosResponse.data
@@ -67,24 +75,24 @@ export async function getUploadPolicy({
 
 export async function uploadFile({
   authToken,
+  apiOriginUrl = DEFAULT_ORIGIN_URL,
   path,
   file,
   onProgress,
-  apiUrl = DEFAULT_UPLOAD_POLICY_URL,
 }: {
   authToken: string | (() => Promisable<string>)
+  apiOriginUrl?: string
   path: string
   file: File | ClientFile
   onProgress?: (e: UploadProgressEvent) => void
-  apiUrl?: string
 }): Promise<JSendError | JSendSuccess<HostedFileInfo>> {
   const clientFile = await createClientFile(file)
 
   const uploadPolicyResponse = await getUploadPolicy({
     authToken,
+    apiOriginUrl,
     path,
     file,
-    apiUrl,
   })
 
   if (uploadPolicyResponse.status === "error") {

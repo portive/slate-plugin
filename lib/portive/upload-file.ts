@@ -81,13 +81,15 @@ async function uploadSteps({
    */
   Transforms.insertNodes(editor, element, { at })
 
+  console.log({ apiOriginUrl: editor.portive.apiOriginUrl })
+
   /**
    * Start the actual upload progress and update the `origin` as to the
    * upload progress.
    */
   const uploadResult = await uploadFile({
     authToken: editor.portive.authToken,
-    apiUrl: editor.portive.uploadApiUrl,
+    apiOriginUrl: editor.portive.apiOriginUrl,
     path: editor.portive.path,
     file,
     onProgress(e) {

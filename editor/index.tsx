@@ -58,13 +58,13 @@ const $saveButton = css`
 
 export function MyEditor({
   authToken,
-  uploadApiUrl,
+  apiOriginUrl,
   initialValue,
   initialOrigins = {},
   isReadOnly,
 }: {
   authToken: string
-  uploadApiUrl?: string
+  apiOriginUrl?: string
   initialValue: Descendant[]
   initialOrigins: Record<string, Origin>
   isReadOnly: boolean
@@ -73,14 +73,14 @@ export function MyEditor({
     const reactEditor = withReact(withHistory(createEditor()))
     const editor = withPortive(reactEditor, {
       authToken,
+      apiOriginUrl,
       path: "demo",
       initialMaxSize: [320, 320],
       minResizeWidth: 100,
       maxResizeWidth: 640,
-      initialOrigins: initialOrigins,
+      initialOrigins,
       createImageFileElement: createImageBlock,
       createFileElement: createAttachmentBlock,
-      uploadApiUrl,
     })
     editor.isVoid = (element) => {
       return ["attachment-block", "image-block", "image-inline"].includes(
