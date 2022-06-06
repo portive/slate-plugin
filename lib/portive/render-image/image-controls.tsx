@@ -1,6 +1,6 @@
 import { useFocused, useSelected } from "slate-react"
 import { ImageFileInterface } from "../types"
-import { StatusBar } from "./progress-bar"
+import { StatusBar } from "./status-bar"
 import { RemoveIcon } from "./remove-icon"
 import { ResizeControls } from "./resize-controls"
 import { useHostedImageContext } from "./hosted-image-context"

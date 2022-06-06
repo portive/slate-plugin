@@ -94,45 +94,18 @@ export function ErrorBar({
   )
 }
 
-export function StatusBar({
-  origin,
-  className,
-  style,
-  width,
-  height = 16,
-}: {
+export function StatusBar(props: {
   origin: Origin
   className?: string
   style?: React.CSSProperties
   width: number
   height?: number
 }) {
-  switch (origin.status) {
+  switch (props.origin.status) {
     case "uploading":
-      return (
-        <ProgressBar
-          origin={origin}
-          className={className}
-          width={width}
-          height={height}
-          style={{
-            boxShadow: "0 0 1px 0px rgba(0,0,0,1)",
-            ...style,
-          }}
-        />
-      )
+      return <ProgressBar {...props} />
     case "error":
-      return (
-        <ErrorBar
-          origin={origin}
-          className={className}
-          width={width}
-          height={height}
-          style={{
-            ...style,
-          }}
-        />
-      )
+      return <ErrorBar {...props} />
     case "complete":
       return null
     default:
