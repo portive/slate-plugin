@@ -25,23 +25,23 @@ export * from "./element-presets/titled-image-block"
 export function withPortive<T extends FullPortiveEditor>(
   editor: T,
   {
-    authToken,
     apiOriginUrl,
+    authToken,
     path,
     // images can only be resized as low as this value.
     // If the source image is less than this number, it cannot be resized
     minResizeWidth = 100,
     maxResizeWidth = 1280,
-    initialMaxSize,
-    initialOrigins,
+    initialMaxSize = [640, 640],
+    initialOrigins = {},
     createImageFileElement,
     createFileElement,
   }: WithPortiveOptions
 ): T {
   const useStore = createOriginStore({ origins: initialOrigins })
   editor.portive = {
-    authToken,
     apiOriginUrl,
+    authToken,
     path,
     minResizeWidth,
     maxResizeWidth,

@@ -32,13 +32,13 @@ export type CreateImageFileElement = (
 ) => Element & { originKey: string }
 
 export type WithPortiveOptions = {
-  authToken: string | (() => Promisable<string>)
   apiOriginUrl?: string
+  authToken: string | (() => Promisable<string>)
   path: string
-  initialMaxSize: [number, number]
+  initialMaxSize?: [number, number]
   minResizeWidth?: number
   maxResizeWidth?: number
-  initialOrigins: Record<string, Origin>
+  initialOrigins?: Record<string, Origin>
   createImageFileElement?: CreateImageFileElement
   createFileElement: CreateFileElement
 }

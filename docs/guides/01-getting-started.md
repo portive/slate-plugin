@@ -11,7 +11,7 @@ npm install --save slate-portive
 
 ### Presets
 
-Presets are a great way to start with `slate-portive`. They are easy to setup and includes the features most people want like image resizing and the upload progress bar. Later, we'll show you how to create your own custom images and attachments or modify a Preset.
+Presets are a great way to start with `slate-portive`. They are easy to setup and includes the features most people want like image resizing and the upload progress bar.
 
 This Getting Started guide leads you through setting up `slate-portive` with two presets:
 
