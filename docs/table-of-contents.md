@@ -11,8 +11,7 @@
 ## Reference
 
 - [withPortive](reference/with-portive.md)
-- [useOrigin](rewference/use-origin.md)
-- [Origin](rewference/origin.md)
+- [Origin](reference/origin.md)
 
 ## Auth
 
