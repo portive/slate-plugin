@@ -1,4 +1,4 @@
-import { CreateFileElementEvent } from "~/lib/portive"
+import { CreateFileElementEvent } from "~/src"
 import { AttachmentBlockElement } from "./types"
 
 export function createAttachmentBlock(

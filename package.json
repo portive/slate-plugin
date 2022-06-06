@@ -10,8 +10,7 @@
     "resize",
     "plugin"
   ],
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
   "license": "Copyright Portive and MeZine Inc. 2022",
   "engines": {
     "node": "14.x",
@@ -35,6 +34,7 @@
     "prettier": "^2",
     "ts-jest": "^27",
     "ts-node": "^10.7.0",
+    "tsc": "^2.0.4",
     "tsconfig-paths": "^3.14.1",
     "type-fest": "^2.12.2",
     "typescript": "^4.6.3"
@@ -80,6 +80,16 @@
     "lint:prettier": "prettier --check \"**/*.{css,md,js,jsx,json,ts,tsx}\"",
     "lint:eslint": "eslint .",
     "lint:tsc": "tsc --build ./ --force",
+    "--- npm": "# npm package scripts",
+    "build:npm:once": "rm -rf ./.dist/ && yarn test:once && tsc -p tsconfig.ts-build.json && echo 'Finished Building'",
+    "build:npm:watch": "rm -rf ./.dist/ && tsc -p tsconfig.ts-build.json --watch",
+    "publish:npm": "yarn build:npm:once && yarn publish || echo '\"npm publish --access=public\" to publish to npm'",
+    "publish:npm:patch": "yarn build:npm:once && yarn version --patch && yarn publish --non-interactive || echo '\"npm publish --access=public\" to publish to npm'",
     "-- end": "# end"
-  }
+  },
+  "main": ".dist/src/index.js",
+  "types": ".dist/src/index.d.ts",
+  "files": [
+    ".dist/**/*"
+  ]
 }

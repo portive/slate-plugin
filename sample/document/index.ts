@@ -1,4 +1,4 @@
-import { Origin, OriginEventTypes } from "~/lib/portive"
+import { Origin, OriginEventTypes } from "~/src"
 import { Descendant } from "slate"
 import EventEmitter from "eventemitter3"
 

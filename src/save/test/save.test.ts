@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Descendant, createEditor } from "slate"
 import { withReact } from "slate-react"
-import { withPortive } from "~/lib/portive"
+import { withPortive } from "~/src"
 import { withHistory } from "slate-history"
 import { FullPortiveEditor, Origin } from "../../types"
 import "~/editor/types" // use the types from our demo editor for testing

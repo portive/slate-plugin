@@ -29,7 +29,7 @@ Add the `ImageBlockElement` and `AttachmentBlockElement` to your `CustomTypes`. 
 ```ts
 import { BaseEditor, BaseText } from "slate"
 import { ReactEditor } from "slate-react"
-import { PortiveEditor } from "~/lib/portive"
+import { PortiveEditor } from "~/src"
 import { HistoryEditor } from "slate-history"
 import { ImageBlockElement, AttachmentBlockElement } from "slate-portive"
 
@@ -179,7 +179,7 @@ The final editor source.
 ```tsx
 import { BaseEditor, BaseText } from "slate"
 import { ReactEditor } from "slate-react"
-import { PortiveEditor } from "~/lib/portive"
+import { PortiveEditor } from "~/src"
 import { HistoryEditor } from "slate-history"
 import { ImageBlockElement, AttachmentBlockElement } from "slate-portive"
 

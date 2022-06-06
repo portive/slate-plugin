@@ -1,4 +1,4 @@
-import { Origin, OriginEventTypes } from "~/lib/portive"
+import { Origin, OriginEventTypes } from "~/src"
 import { FakePromise } from "fake-promise"
 import EventEmitter from "eventemitter3"
 import { OriginError, OriginComplete, OriginUploading } from "../../types"

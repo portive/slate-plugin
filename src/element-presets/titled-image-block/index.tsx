@@ -1,4 +1,4 @@
-import { HostedImage, RenderElementPropsFor } from "~/lib/portive"
+import { HostedImage, RenderElementPropsFor } from "~/src"
 import { CreateImageFileElementEvent } from "../../types"
 
 export type TitledImageBlockElement = {

@@ -1,6 +1,6 @@
-import { DiscriminatedRenderElementProps } from "~/lib/portive/types/type-utils"
+import { DiscriminatedRenderElementProps } from "~/src/types/type-utils"
 import { AssertType } from "@thesunny/assert-type"
-import { HostedImage } from "~/lib/portive"
+import { HostedImage } from "~/src"
 import { ImageFileInterface } from "../../types"
 
 export const ELEMENT_TYPE = "image-inline"

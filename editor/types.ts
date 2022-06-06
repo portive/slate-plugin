@@ -1,11 +1,11 @@
 import { BaseEditor, BaseText } from "slate"
 import { ReactEditor } from "slate-react"
-import { PortiveEditor } from "~/lib/portive"
+import { PortiveEditor } from "~/src"
 import { HistoryEditor } from "slate-history"
-import { AttachmentBlockElement } from "~/lib/portive/element-presets/attachment-block"
-import { ImageBlockElement } from "~/lib/portive/element-presets/image-block"
-import { ImageInlineElement } from "~/lib/portive/element-presets/image-inline"
-import { TitledImageBlockElement } from "~/lib/portive/element-presets/titled-image-block"
+import { AttachmentBlockElement } from "~/src/element-presets/attachment-block"
+import { ImageBlockElement } from "~/src/element-presets/image-block"
+import { ImageInlineElement } from "~/src/element-presets/image-inline"
+import { TitledImageBlockElement } from "~/src/element-presets/titled-image-block"
 
 type CustomText = BaseText
 

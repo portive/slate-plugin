@@ -10,7 +10,7 @@
      * We need to switch this to `react` or else it breaks tests that include
      * `tsx` files.
      */
-    "jsx": "react",
+    "jsx": "react-jsx",
     /**
      * We enable `allowJs` as part of supporting `esm` in `ts-jest`. The reason
      *

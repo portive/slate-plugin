@@ -1,4 +1,4 @@
-import { HostedImage, RenderElementPropsFor } from "~/lib/portive"
+import { HostedImage, RenderElementPropsFor } from "~/src"
 import { AssertType } from "@thesunny/assert-type"
 import { CreateImageFileElementEvent, ImageFileInterface } from "../../types"
 
