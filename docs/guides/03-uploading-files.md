@@ -4,7 +4,7 @@ In [Getting Started](./01-getting-started.md), we added support for uploading by
 
 Sometimes, we want the user to be able to use a system file picker to select the files they want to upload. This might be by clicking an upload file icon to open the file picker.
 
-Developers may also wish to have lower level access to upload specific [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) objects. They might use this to pick specific files to upload or upload files from a Component that generates them (maybe a Component that generates a graph for example).
+Developers may also wish to upload specific [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) objects. They might use this to filter specific files to upload or upload files from a Component that generates them (maybe a Component that generates a graph `png` for example).
 
 ## Upload from `<input type=file />`
 
@@ -36,9 +36,13 @@ const App = () => {
 }
 ```
 
+When the user clicks the button, it opens a file picker, and once the files are picked the upload process begins.
+
 ## Upload using `File` object
 
-To upload specific files, use the `editor.portive.uploadFile` method.
+To upload specific files, use the `editor.portive.uploadFile` method and pass a `File` object as the first argument.
+
+Internally, the `handlePaste`, `handleDrop` and `handleInputFileChange` methods all use this method.
 
 In this example, we check if a file is a `pdf` and only allow upload of those `pdf` files.
 
@@ -48,7 +52,8 @@ const App = () => {
    * editor = ...
    */
 
-  // ✅ This callback goes through each file and uploads `application/pdf` files
+  // ✅ This callback goes through each file and uploads only the
+  //    `application/pdf` files
   const uploadPdfs = useCallback(
     (e) => {
       const files = e.target.files
@@ -58,7 +63,6 @@ const App = () => {
           editor.portive.uploadFile(file)
         }
       }
-      return true
     },
     [editor]
   )

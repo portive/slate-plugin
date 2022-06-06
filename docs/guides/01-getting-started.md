@@ -11,9 +11,9 @@ npm install --save slate-portive
 
 ### Presets
 
-Presets are a great way to start with `slate-portive`. They are easy to setup and includes the features most people want like image resizing and an upload progress bar. Later, we'll show you how to create your own custom Elements or modify a Preset.
+Presets are a great way to start with `slate-portive`. They are easy to setup and includes the features most people want like image resizing and the upload progress bar. Later, we'll show you how to create your own custom images and attachments or modify a Preset.
 
-This Getting Started guide leads you through setting up `slate-portive` with two of the presets:
+This Getting Started guide leads you through setting up `slate-portive` with two presets:
 
 - `ImageBlock`: An image preset that is a `void` `block` that shows the image with drag resize controls and an upload progress bar
 - `AttachmentBlock`: An attachment preset that is a `void` `block` that shows the original filename, file size and an upload progress bar
@@ -24,7 +24,7 @@ This Getting Started guide leads you through setting up `slate-portive` with two
 >
 > If you are using TypeScript, read the [Slate Documentation for TypeScript](https://docs.slatejs.org/concepts/12-typescript) if you aren't familiar with CustomTypes already.
 
-Add the `ImageBlockElement` and `AttachmentBlockElement` to your `CustomTypes`. In this example, we include a `ParagraphElement`
+Add the `ImageBlockElement` and `AttachmentBlockElement` to your `CustomTypes`. In this example, we also have a `ParagraphElement`
 
 ```ts
 import { BaseEditor, BaseText } from "slate"
@@ -52,7 +52,7 @@ declare module "slate" {
 
 ### Extend the Editor
 
-Extend the `editor` with [`withPortive`](../reference/with-portive.md).
+The first step after setting up types is to extend the `editor` with [`withPortive`](../reference/with-portive.md). This add a `portive` object to the editor at `editor.portive` which contains functions used to handle uploads.
 
 ```ts
 import { useState } from "react"
@@ -69,10 +69,11 @@ const App = () => {
   const [editor] = useState(() => {
     const reactEditor = withReact(createEditor())
 
-    // ✅ Add `withPortive` to the editor
+    // ✅ Call `withPortive` on the editor with `createImageBlock`
+    //    and `createAttachmentBlock`
     const editor = withPortive(reactEditor, {
-      createElement: (e) =>
-        e.type === "image" ? createImageBlock(e) : createAttachmentBlock(e),
+      createImageFileElement: createImageBlock,
+      createFileElement: createAttachmentBlock,
     })
 
     // ✅ Set `isVoid` for `image-block` and `attachment-block` types

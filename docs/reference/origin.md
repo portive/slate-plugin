@@ -26,11 +26,66 @@ export type OriginError = {
 export type Origin = OriginUploading | OriginUploaded | OriginError
 ```
 
-## Properties
+- [Hook Methods](#hook-methods)
+- [originKey](#origin-key)
+- [Shared Origin Properties](#properties)
+- [Uploading Origin Properties](#properties)
+- [Error Origin Properties](#properties)
+
+## Hook Methods
+
+### `useOrigin(originKey: string) => Origin`
+
+The `useOrigin` hook takes an `originKey` and returns an `Origin` object.
+
+For example:
+
+```tsx
+function SimpleAttachment({
+  attributes,
+  element,
+  children,
+}: RenderElementProps) {
+  const origin = useOrigin(element.originKey)
+  return (
+    <div {...attributes}>
+      <div>
+        <a href={origin.url}>Link to File</a>
+      </div>
+      <div>Upload Status: {origin.status}</div>
+      {children}
+    </div>
+  )
+}
+```
+
+## The `originKey`
+
+The `originKey` is a `string` which represents an `Origin` in one of two ways:
+
+1. It can be a URL
+2. It can be a lookup key in a Origin lookup object
+
+If it is a URL, then it is converted to an `OriginUploaded` object.
+
+For example, if the `originKey` is `https://www.portive.com/` then the `Origin` would be:
+
+```ts
+const origin = {
+  url: "https://www.portive.com/",
+  status: "complete",
+}
+```
+
+When a document is saved by calling the `editor.portive.save` method or normalized by calling the `editor.portive.normalize` method, all the `originKey` values are returned as URL strings.
+
+When a file is uploaded, the `originKey` is set to a random alphanumeric string. We add that random `originKey` string with the value for an `OriginUploading` object. During the upload, the `OriginUploading` object is updated to reflect the amount the file has been uploaded. If there is an error, it is set to an `OriginError` object. When the file successfully uploaded, it is set to an `OriginComplete` object.
+
+## Shared Origin Properties
 
 ### `url: string`
 
-The value of `url` is one of:
+The value of `url` is either:
 
 - A URL to the hosted file when the file has finished uploading
 - A URL generated from [`createObjectURL`](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL)
@@ -45,7 +100,7 @@ Indicates the current upload status:
 - `complete`: File has completed upload
 - `error`: There was an error during uploading. See `message` for why.
 
-## `"uploading"` Properties
+## Uploading Origin Properties
 
 Properties only found when `status` is `uploading`.
 
@@ -75,7 +130,7 @@ A `Promise` that resolves with an `Origin` when uploading is completed.
 
 > 🌞 Typically `finishPromise` isn't be used directly and is an internal implementation detail; however, you can `await` this `Promise` to wait for a file to finish uploading.
 
-## `"error"` Properties
+## Error Origin Properties
 
 ### `message: string`
 
