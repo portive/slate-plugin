@@ -1,15 +1,13 @@
-# Slate Portive: Image and Attachments for Slate
+# Slate Portive
 
-Add beautiful and intuitive images and attachments to Slate with support for paste, drag and drop and <input type="file"> uploads.
+## Upload Images and Attachments Plugin for Slate
 
-This Slate Portive plugin works with the Portive back-end for rich text editors. Portive is the official hosted back-end for:
+Add beautiful and intuitive images and attachments to Slate with support for paste, drag and drop and `<input type="file">` uploads.
 
-- Plate: Rich text editor plugin system for Slate &amp; React
-- Wysimark: The Rich Editor for Markdown
+## Image Features
 
-## Images Features
-
-- Images can be resized by dragging a resize bar
+- Images uploaded directly to hosted server
+- Images are proportionately resized by dragging a resize bar
 - Images are resized on the server for faster downloads and reduced bandwidth
 - Uses HTML `srcSet` to deliver higher resolution images to displays with higher DPI (e.g. high resolution images will be delivered at 2x the resolution if possible)
 - Shows the width/height while dragging for precise resizing
@@ -28,7 +26,7 @@ This Slate Portive plugin works with the Portive back-end for rich text editors.
   - Image imports. When a user pastes the URL of an image, it automatically uploads the image to the editor.
   - Sharpening. Enable additional image processing like sharpening for low DPI displays. Sharpening is probably not required for high DPI displays.
 
-## Attachments Features
+## Attachment Features
 
 - Default implementation shows attachment block with filename, file size (friendly format like 12KB) and the progress bar
 - Supports progress bar while uploading on custom attachments with a `<ProgressBar>` Component
