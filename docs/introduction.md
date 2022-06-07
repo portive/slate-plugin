@@ -2,11 +2,16 @@
 
 `slate-portive` adds beautiful images and attachments to Slate.
 
-Upload them using paste, drag &amp; drop or `<input type="file">` controls.
+Upload files using paste, drag &amp; drop or `<input type="file">` controls.
 
 - Shows upload progress bar
 - Drag to resize images
 - Images resized on server for faster delivery
+
+It works with [Portive](https://www.portive.com) (_NOTE: Link does not work yet_) a service which hosts files and and provides services for Rich Text Editors and is the official hosted back-end for:
+
+- [Plate](https://plate.udecode.io/): Rich text editor plugin system for Slate & React
+- [Wysimark](https://www.wysimark.com): Rich text editor for Markdown
 
 Start with our [Getting Started Guide](./guides/01-getting-started.md).
 
