@@ -1,10 +1,10 @@
 # Customizing Files
 
-In [Getting Started](./01-getting-started.md) we used an `AttachmentBlock` Preset to display uploaded files.
+In [Getting Started](./01-getting-started.md) we used an `AttachmentBlock` Preset for uploaded files.
 
 This guide explains how the `AttachmentBlock` Preset works and how to create or customize one.
 
-In this example, we'll add a ContentType property and show it in the attachment block.
+In this example, we'll add a `contentType` property and show it in the attachment block.
 
 ## Custom File Type
 
@@ -15,18 +15,18 @@ Here is the type for the `AttachmentBlockElement`.
 ```tsx
 export type AttachmentBlockElement = {
   type: "attachment-block"
-  originKey: string // ✅ `originKey` is a required property
+  originKey: string // ✅ `originKey` is the only required property
   filename: string
   bytes: number
   children: [{ text: "" }]
 }
 ```
 
-Because it is an `Element` it has a `type` which is set to `attachment-block`. This is a `void` Element, so it has `children` which is `[{ text: "" }]` (a requirement for `void` Elements).
+This `Element` has a `type` of `attachment-block`. Since it is a `void` Element, it has `children` of `[{ text: "" }]` (a requirement for `void` Elements).
 
-It also has an `originKey` which is a `string`. That's the only required property for a File Element.
+It also has an `originKey` which is a `string`. This is the only required property for a File Element.
 
-The rest of the properties are custom properties on the `AttachmentBlockElement`. Let's modify it to add a `content-type` property and we'll change the `type` of the Element to `custom-attachment-block`.
+The other properties `filename` and `bytes` are custom properties on the `AttachmentBlockElement`. Let's modify it to add a `contentType` property and also change the `type` of the Element to `custom-attachment-block`.
 
 ```tsx
 export type CustomAttachmentBlockElement = {
@@ -41,7 +41,7 @@ export type CustomAttachmentBlockElement = {
 
 ## Custom File Component
 
-This is a simplified version of the `AttachmentBlock` Component that contains everything we are interested in but visually, it's not styled.
+This is a version of the `AttachmentBlock` Component used for rendering but with the styling removed.
 
 ```tsx
 export function AttachmentBlock({
@@ -49,8 +49,8 @@ export function AttachmentBlock({
   element,
   children,
 }: RenderElementPropsFor<AttachmentBlockElement>) {
-  // ✅ This `userOrigin` hook returns an `Origin` object
-  //    We'll talk about this more below.
+  // ✅ NOTE: This `userOrigin` hook returns an `Origin` object
+  //    which we'll talk about more below.
   const origin = useOrigin(element.originKey)
 
   return (
@@ -62,6 +62,7 @@ export function AttachmentBlock({
             {element.filename}
           </a>
         </div>
+        {/* ✅ This displays a progress bar or an error bar */}
         <StatusBar origin={origin} width={192} height={16}>
           {element.bytes} bytes
         </StatusBar>
@@ -76,21 +77,31 @@ Like any `Element` Component it has `{...attributes}` and `{children}`. We also 
 
 ### The `useOrigin` Hook
 
-Something new that we haven't seen before in [Customizing Images](./04-customizing-images.md) is the `useOrigin` hook.
+Something new that we haven't seen before is the `useOrigin` hook.
 
-The `useOrigin` hook takes the `originKey` (a `string`) from the element and returns an `Origin` object. Every `Origin` object has:
+```tsx
+const origin = useOrigin(element.originKey)
+```
+
+The `useOrigin` hook takes the `originKey` (a `string`) from the element and returns an `Origin` object. This `Origin` object has:
 
 - a `url` which is a `string`
 - a `status` which can be `"uploading"`, `"error` or `"complete"`
-- Other properties depending on the `status` like upload progress stats or an error message
+- And other properties depending on the `status` like the upload progress or an error message
 
-> To learn more about the other peropties of `Origin`, read the [API Reference to Origin](../reference/origin.md).
+> To learn more about these properties of `Origin`, read the [API Reference to Origin](../reference/origin.md).
 
-In the `AttachmentBlock` code above we use render it using the `origin.url` the `element.filename` and the `element.bytes`.
+In the `AttachmentBlock` code above we use the `origin.url` as the `href` for the link.
+
+```tsx
+<a href={origin.url} target="_blank" download>
+  {element.filename}
+</a>
+```
 
 ### The `StatusBar` Component
 
-Found in the `AttachmentBlock` Component is a `StatusBar` Component:
+In the `AttachmentBlock` Component is a `StatusBar` Component:
 
 ```tsx
 <StatusBar origin={origin} width={192} height={16}>
@@ -98,19 +109,17 @@ Found in the `AttachmentBlock` Component is a `StatusBar` Component:
 </StatusBar>
 ```
 
-The `origin`, `width` and `height` are required.
-
-The `StatusBar` displays something different depending on the `status` of the origin:
+What the `StatusBar` displays depends on the `status` of the origin:
 
 - If the origin status is `uploading` it shows an upload progress bar
 - If the origin status is `error` it shows a red bar that says `Upload Failed`
-- If the origin status is `complete` it shows the `children` of the `StatusBar` component.
+- If the origin status is `complete` it shows the `children` of the `StatusBar` component. In the code above, it shows the size of the file in bytes.
 
-In our example, when the upload is `complete`, it displays the number of bytes in the file.
+In the code above, when the upload is `complete`, it displays the number of bytes in the file.
 
 ### Customizing the Component
 
-Now let's add our custom `contentType` property to our `CustomAttachmentBlock`
+Let's add our custom `contentType` property to a `CustomAttachmentBlock`:
 
 ```tsx
 export function CustomAttachmentBlock({
@@ -129,9 +138,8 @@ export function CustomAttachmentBlock({
           </a>
         </div>
         <StatusBar origin={origin} width={192} height={16}>
-          {element.bytes} bytes,
-          {/* ✅ Show the file's contentType */}
-          {element.contentType}
+          {/* ✅ Show the file's contentType after `bytes` */}
+          {element.bytes} bytes, {element.contentType}
         </StatusBar>
       </div>
       {children}
@@ -140,13 +148,13 @@ export function CustomAttachmentBlock({
 }
 ```
 
-When the file is finished uploading, our new Attachment will now show the content type after the number of bytes in the uploaded file.
+When the file is finished uploading, our new Attachment will show the content type after the number of bytes in the uploaded file.
 
 ## Custom `createFileElement`
 
 When a user uploads a file, if it's an image, it is handled by the `createImageFileElement` function passed to `withPortive` if there is one. If the file is not an image or there is no `createImageFileElement` function defined, then it is handled by the `createFileElement` function.
 
-Here's how it is used in the [Getting Started](./01-getting-started.md):
+Here's how it is used in [Getting Started](./01-getting-started.md):
 
 ```ts
 const editor = withPortive(reactEditor, {
@@ -156,7 +164,7 @@ const editor = withPortive(reactEditor, {
 })
 ```
 
-Now let's take a look at the `createAttachmentBlock` method we passed into the `createFileElement` option:
+Here's the `createAttachmentBlock` method passed into the `createFileElement` option:
 
 ```ts
 export function createAttachmentBlock(
@@ -172,9 +180,9 @@ export function createAttachmentBlock(
 }
 ```
 
-We can see above that it takes the `originKey` and adds it to the `Element`. It also takes from `e.file` which is a `File` object to fill the `fileanem` and `bytes` property of the `AttachmentBlockElement`.
+We can see that it passes the `originKey` to the `Element`. It also takes properties from `e.file` which is a `File` object to fill the `bytes` and `filename` property of the `AttachmentBlockElement`.
 
-Let's modify it to add set the `contentType`:
+Let's modify it to set the `contentType` as well:
 
 ```ts
 export function createCustomAttachmentBlock(
@@ -192,7 +200,7 @@ export function createCustomAttachmentBlock(
 }
 ```
 
-Now it's just a matter of importing and using our new `CustomAttachmentBlock`. Here's the full source code...
+Here's the full source code...
 
 ```tsx
 import {

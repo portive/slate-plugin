@@ -2,9 +2,9 @@
 
 You've seen how to use the `ImageBlock` preset to add images to the Slate Editor.
 
-Now let's see how to create a Custom Image Component with custom properties. For this example, we'll create an Image Component with a `title` attribute on the Image.
+Now let's see how to create a Custom Image Component. For this example, we'll create the Image Component but we'll add a `title` attribute to the Image.
 
-To start, we'll take a look at the existing `ImageBlock` preset and then modify it.
+Let's start by looking at and modifing the type of the `ImageBlockElement`.
 
 ## Custom Image Type
 
@@ -22,11 +22,11 @@ export type ImageBlockElement = {
 }
 ```
 
-Because it is an `Element` it has a `type` which is set to `image-block`. This is a `void` Element, so it has `children` which is `[{ text: "" }]` (a requirement for `void` Elements).
+This `Element` has its `type` set to `"image-block"`. Also, this is a `void` Element, so it has `children` which is `[{ text: "" }]` (a requirement for `void` Elements).
 
-It also has three other properties that are meaningful: An `originKey`, `originSize` and `size`. These properties are part of the `ImageFileInterface` and are required to use the `HostedImage` subcomponent which takes care of resizing, showing upload progress and showing the error state.
+It also has three other properties that are meaningful: An `originKey`, `originSize` and `size`. These properties are part of the `ImageFileInterface` and are required in order to use the `HostedImage` subcomponent which takes care of resizing, and showing the upload progress and error state.
 
-Here is the `ImageFileInterface` from the source code:
+Here is the `ImageFileInterface`:
 
 ```ts
 export interface ImageFileInterface {
@@ -36,9 +36,11 @@ export interface ImageFileInterface {
 }
 ```
 
-Although the `ImageFileInterface` is the minimum requirement for a `HostedImage` we can add any properties to the `Element`.
+Although the `ImageFileInterface` is the minimum requirement for a `HostedImage` we can add other properties we desire to the `Element`.
 
-Let's create a new Element `titled-image-block` which renders an `<img>` with a title attribute. Here's the `Element` type definition that includes a `title` property:
+Let's create a new Element `"titled-image-block"` which renders an `<img>` with a title attribute.
+
+Here's an `Element` type definition that includes a `title` property:
 
 ```tsx
 export type TitledImageBlockElement = {
@@ -51,11 +53,9 @@ export type TitledImageBlockElement = {
 }
 ```
 
-The `titled-image-block` Element is identical to the `image-block` element but has an additional `title` property that is of type `string`.
-
 ## Custom Image Component
 
-Let's look at the Preset `ImageBlock` Component.
+Here's the Preset `ImageBlock` Component.
 
 ```tsx
 import { RendeElementPropsFor, HostedImage } from "slate-portive"
@@ -77,9 +77,7 @@ export function ImageBlock({
 }
 ```
 
-That's the whole component.
-
-It is small because the `HostedImage` sub-component takes care of:
+It may seem small. This is because the `HostedImage` sub-component takes care of most of the hard work:
 
 - Resizing with drag handles
 - Showing the width/height during resize
@@ -87,9 +85,9 @@ It is small because the `HostedImage` sub-component takes care of:
 - Showing an Error when an upload fails
 - Showing retina images for high DPI devices and normal resolution images for low DPI devices
 
-You can treat it like an `img` tag and just like an `img` it can take `img` attributes.
+From the perspective of the `ImageBlock` Component, we can treat it just like an `img` tag and it can take any `img` attributes like a `"title"` attribute for example.
 
-Let's modify this to create our Custom `TitledImageBlock` Component but adding a `title` attribute.
+Let's modify this to create our Custom `TitledImageBlock` Component:
 
 ```tsx
 import { RendeElementPropsFor, HostedImage } from "slate-portive"
@@ -114,8 +112,6 @@ RenderElementPropsFor<TitledImageBlockElement>) {
 }
 ```
 
-Notice that we added the `title` attribute directly onto the `HostedImage` sub-component? It is not limited to `title`. You can add any `<img>` attributes onto `HostedImage`.
-
 Now our Custom Image can render the image with the `title` attribute.
 
 ## Customize `createImageFileElement` callback
@@ -129,7 +125,7 @@ const editor = withPortive(reactEditor, {
 })
 ```
 
-Now let's take a look at the `createImageBlock` method we passed into the `createImageFileElement` option:
+Here's the `createImageBlock` method passed to the `createImageFileElement` option:
 
 ```ts
 export function createImageBlock(
@@ -145,9 +141,7 @@ export function createImageBlock(
 }
 ```
 
-We can see above that it takes the `originKey`, `originSize` and adds it directly to the `Element`. It also takes the `initialSize` and adds it to the `size` property of the `Element`.
-
-This makes a more sense when we see the type definition for the `Event`:
+Here's what `e` which is of type `CreateImageFileElementEvent` looks like:
 
 ```ts
 export type CreateImageFileElementEvent = {
@@ -163,9 +157,9 @@ export type CreateImageFileElement = (
 ) => Element & { originKey: string }
 ```
 
-The event properties used exist on the `CreateImageFileElementEvent` but there's also a `file` property which is a [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) object.
+You can learn more about `file` by reading the [`File` MDN web docs](https://developer.mozilla.org/en-US/docs/Web/API/File).
 
-`file` is not used above but we will use it for our `TitledImageBlock` which we can define as:
+Let's use the `file` object for our `TitledImageBlock`:
 
 ```ts
 export function createTitledImageBlock(
@@ -234,5 +228,3 @@ RenderElementPropsFor<TitledImageBlockElement>) {
   )
 }
 ```
-
-> 🌞 This was built for this example. Since the `titled-image-block` code existed, we added it as a Preset as well.

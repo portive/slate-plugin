@@ -2,9 +2,9 @@
 
 In [Getting Started](./01-getting-started.md), we added support for uploading by pasting files into or dropping files on the editor.
 
-Sometimes, we want the user to be able to use a system file picker to select the files they want to upload. This might be by clicking an upload file icon to open the file picker.
+Sometimes, we want the user to be able to use a system file picker to select the files they want to upload. This might be by clicking an upload file icon which then opens the file picker.
 
-Developers may also wish to upload specific [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) objects. They might use this to filter specific files to upload or upload files from a Component that generates them (maybe a Component that generates a graph `png` for example).
+Developers may also wish to programmatically upload [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) objects. This might be used to filter specific files before uploading or to upload a File generated from a Component (maybe a Component that generates a graph `png` for example).
 
 ## Upload from `<input type=file />`
 
@@ -36,13 +36,13 @@ const App = () => {
 }
 ```
 
-When the user clicks the button, it opens a file picker, and once the files are picked the upload process begins.
+When the user clicks the `<input type="file" />` button, it opens a file picker, and when files are picked the upload process begins.
 
 ## Upload using `File` object
 
-To upload specific files, use the `editor.portive.uploadFile` method and pass a `File` object as the first argument.
+To programmatically upload a file, use the `editor.portive.uploadFile` method and pass a `File` object as the first argument.
 
-Internally, the `handlePaste`, `handleDrop` and `handleInputFileChange` methods all use this method.
+Internally, the `handlePaste`, `handleDrop` and `handleInputFileChange` methods all use the `editor.portive.uploadFile` method.
 
 In this example, we check if a file is a `pdf` and only allow upload of those `pdf` files.
 
