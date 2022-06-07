@@ -1,5 +1,7 @@
 # Table of contents
 
+- [Introduction](introduction.md)
+
 ## Guides
 
 - [Getting Started](guides/01-getting-started.md)
