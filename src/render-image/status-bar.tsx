@@ -77,6 +77,7 @@ export function ErrorBar({
       style={{
         width,
         height,
+        fontFamily: "sans-serif",
         fontSize: "75%",
         fontWeight: "bold",
         lineHeight: `${height}px`,
@@ -112,7 +113,6 @@ export function StatusBar(props: {
         <div
           className={props.className}
           style={{
-            fontFamily: "sans-serif",
             width: props.width,
             height: props.height,
             ...props.style,
