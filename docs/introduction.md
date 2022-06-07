@@ -1,6 +1,8 @@
 # Slate Portive
 
-`slate-portive` adds beautiful images and attachments to Slate with uploads from paste, drag and drop and `<input type="file">` controls.
+`slate-portive` adds beautiful images and attachments to Slate.
+
+Upload them using paste, drag &amp; drop or `<input type="file">` controls.
 
 - Shows upload progress bar
 - Drag to resize images
