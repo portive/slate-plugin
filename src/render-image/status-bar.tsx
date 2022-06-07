@@ -112,6 +112,7 @@ export function StatusBar(props: {
         <div
           className={props.className}
           style={{
+            fontFamily: "sans-serif",
             width: props.width,
             height: props.height,
             ...props.style,
