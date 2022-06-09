@@ -15,6 +15,8 @@ It works with [Portive](https://www.portive.com) (_NOTE: Link does not work yet_
 
 Start with our [Getting Started Guide](./guides/01-getting-started.md).
 
+<img src="./assets/screenshots.png" srcSet="./assets/screenshots.png 1x, ./assets/screenshots@2x.png 2x">
+
 ### Image Features
 
 - Images uploaded to a scalable hosted service built on Amazon Web Services

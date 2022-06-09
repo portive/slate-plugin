@@ -15,8 +15,10 @@
 
 ## Reference
 
-- [withPortive](reference/with-portive.md)
+- [Editor](reference/with-portive.md)
+- [Portive](reference/with-portive.md)
 - [Origin](reference/origin.md)
+- [TypeScript Types](reference/types.md)
 
 ## Auth
 
