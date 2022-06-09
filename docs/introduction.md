@@ -15,7 +15,7 @@ This plugin works with [Portive](https://www.portive.com), the hosted back-end f
 
 Start with our [Getting Started Guide](./guides/01-getting-started.md).
 
-<img src="./assets/screenshots.png" srcSet="./assets/screenshots.png 1x, ./assets/screenshots@2x.png 2x" width="784" height="838">
+<img src="./assets/screenshots.png" srcset="./assets/screenshots.png 1x, ./assets/screenshots@2x.png 2x" width="784" height="838">
 
 ### Image Features
 
