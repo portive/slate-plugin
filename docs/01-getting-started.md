@@ -17,6 +17,15 @@ Start with our [Getting Started Guide](./guides/01-getting-started.md).
 
 <img src="./assets/screenshots.jpg" srcset="./assets/screenshots.jpg 1x, ./assets/screenshots@2x.jpg 2x" width="760" height="823">
 
+### Features
+
+- **Asynchronous Uploads:** When users upload an image or file, the editor can still edit. A preview image or attachment block is displayed with a progress bar that shows the uload progress. This creates a friendly user experience for users.
+- **Multi-File Uploads:** Drag or drop multiple files, paste multiple files or select multiples files to start uploading them in parallel, each with their own progress bar
+- **Server Side Image Resizing:** When a user resizes the image in the browser, a resized image is generated on the server. By reducing the size of the image being delivered, images are delivered faster to the browser and reduces bandwidth usage.
+- **Show Errors:** If there is an error during upload, the progress bar turns red, says "Upload Failed" and a detailed description of what went wrong is put into the console.
+- **High DPI/Retina Images:** Users with a high DPI (dot per inch) device like most smart phones and tablets and some computers, we send a higher resolution image that matches the device.
+- \*\*
+
 ### Image Features
 
 - Images uploaded to a scalable hosted service built on Amazon Web Services

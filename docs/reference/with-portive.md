@@ -35,9 +35,11 @@ type Options = {
   initialMaxSize: [number, number]
   minResizeWidth?: number
   maxResizeWidth?: number
-  createImageFile: (e: CreateImageFileProps) => Element & { originKey: string }
-  createGenericFile: (
-    e: CreateGenericFileProps
+  createImageFileElement: (
+    e: CreateImageFileElementEvent
+  ) => Element & { originKey: string }
+  createFileElement: (
+    e: CreateFileElementEvent
   ) => Element & { originKey: string }
   initialOrigins: Record<string, Origin>
 }

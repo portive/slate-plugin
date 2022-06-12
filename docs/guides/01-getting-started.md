@@ -9,14 +9,14 @@ yarn add slate-portive
 npm install --save slate-portive
 ```
 
-### Presets
+### Premade Elements
 
-Presets are a great way to start with `slate-portive`. They are easy to setup and includes the features most people want like image resizing and the upload progress bar.
+Premade Elements are a great way to start with `slate-portive`. They are easy to setup and includes the features most people want like image resizing and the upload progress bar.
 
-This Getting Started guide leads you through setting up `slate-portive` with two presets:
+This Getting Started guide leads you through setting up `slate-portive` with two premade elements:
 
-- `ImageBlock`: An image preset that is a `void` `block` that shows the image with drag resize controls and an upload progress bar
-- `AttachmentBlock`: An attachment preset that is a `void` `block` that shows the original filename, file size and an upload progress bar
+- `ImageBlock`: An Image Element that is a `void` `block` that shows the image with drag resize controls and an upload progress bar
+- `AttachmentBlock`: An Attachment Element that is a `void` `block` that shows the original filename, file size and an upload progress bar
 
 ### Configure Types
 
