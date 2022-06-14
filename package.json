@@ -49,8 +49,8 @@
     "react-dom": "^17"
   },
   "dependencies": {
-    "@portive/api-types": "^6.0.0",
-    "@portive/client": "^1.0.3",
+    "@portive/api-types": "^7.0.0",
+    "@portive/client": "^7.0.1",
     "axios": "^0.26.1",
     "bytes": "^3.1.2",
     "delay": "^5.0.0",
@@ -80,7 +80,7 @@
     "fix:prettier": "yarn lint:prettier --write",
     "fix:eslint": "yarn lint:eslint --fix",
     "-- lint": "# lint syntax",
-    "lint": "concurrently 'yarn lint:prettier' 'yarn lint:eslint' 'yarn lint:tsc'",
+    "lint": "concurrently --raw 'yarn lint:prettier' 'yarn lint:eslint' 'yarn lint:tsc'",
     "lint:prettier": "prettier --check \"**/*.{css,md,js,jsx,json,ts,tsx}\"",
     "lint:eslint": "eslint .",
     "lint:tsc": "tsc --build ./ --force",

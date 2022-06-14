@@ -33,7 +33,7 @@ export type CreateImageFileElement = (
 
 export type WithPortiveOptions = {
   apiOriginUrl?: string
-  authToken: string | (() => Promisable<string>)
+  authToken: string | (() => string) | (() => Promise<string>)
   path: string
   initialMaxSize?: [number, number]
   minResizeWidth?: number
@@ -57,7 +57,7 @@ export type SaveResult =
   | { status: "complete"; value: Descendant[] }
 
 export type PortiveObject = {
-  authToken: string | (() => Promisable<string>)
+  authToken: string | (() => string) | (() => Promise<string>)
   apiOriginUrl: string | undefined
   path: string
   initialMaxSize: [number, number]
