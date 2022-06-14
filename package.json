@@ -17,6 +17,7 @@
     "yarn": "1.22.x"
   },
   "devDependencies": {
+    "@portive/auth": "^1.0.2",
     "@thesunny/assert-type": "^0.1.7",
     "@types/bytes": "^3.1.1",
     "@types/jest": "^27",
@@ -25,6 +26,7 @@
     "@types/react-dom": "17.x",
     "@typescript-eslint/eslint-plugin": "^5.15.0",
     "@typescript-eslint/parser": "^5.15.0",
+    "concurrently": "^7.2",
     "eslint": "^8.4.1",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-no-secrets": "^0.8.9",
@@ -78,20 +80,28 @@
     "fix:prettier": "yarn lint:prettier --write",
     "fix:eslint": "yarn lint:eslint --fix",
     "-- lint": "# lint syntax",
-    "lint": "yarn lint:prettier && yarn lint:eslint && yarn lint:tsc",
+    "lint": "concurrently 'yarn lint:prettier' 'yarn lint:eslint' 'yarn lint:tsc'",
     "lint:prettier": "prettier --check \"**/*.{css,md,js,jsx,json,ts,tsx}\"",
     "lint:eslint": "eslint .",
     "lint:tsc": "tsc --build ./ --force",
     "--- npm": "# npm package scripts",
     "build:npm:once": "rm -rf ./.dist/ && yarn test:once && tsc -p tsconfig.ts-build.json && echo 'Finished Building'",
     "build:npm:watch": "rm -rf ./.dist/ && tsc -p tsconfig.ts-build.json --watch",
-    "publish:npm": "yarn build:npm:once && yarn publish || echo '\"npm publish --access=public\" to publish to npm'",
+    "publish:npm": "yarn build:once ",
     "publish:npm:patch": "yarn build:npm:once && yarn version --patch && yarn publish --non-interactive || echo '\"npm publish --access=public\" to publish to npm'",
+    "--- build npm": "# build npm",
+    "build:once": "yarn build:clear && yarn test:once && concurrently 'yarn build:cjs' 'yarn build:mjs' && echo 'Finished Building'",
+    "build:watch": "build:clear && tsc -p tsconfig.ts-build.json --watch",
+    "build:clear": "rm -rf ./.dist/",
+    "build:cjs": "tsc -p tsconfig.build-cjs.json",
+    "build:mjs": "tsc -p tsconfig.build-mjs.json",
+    "-- publish npm": "# publish npm package",
     "-- end": "# end"
   },
-  "main": ".dist/src/index.js",
-  "types": ".dist/src/index.d.ts",
+  "main": ".dist/cjs/src/index.js",
+  "types": ".dist/cjs/src/index.d.ts",
   "files": [
     ".dist/**/*"
-  ]
+  ],
+  "module": ".dist/mjs/src/index.js"
 }

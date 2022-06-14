@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.build-cjs.json",
+  "compilerOptions": {
+    /**
+     * This version targets `esnext` which uses module syntax.
+     */
+    "module": "esnext",
+    /**
+     * We don't need the declarations twice so turn it off for mjs
+     */
+    "declaration": false,
+    /**
+     * - emit to `outDir` of `.dist/mjs`
+     */
+    "outDir": ".dist/mjs"
+  }
+}

@@ -22,3 +22,8 @@ eslint.log
 
 # ignore the increment typescript build info
 tsconfig.tsbuildinfo
+# ignore dotenv environment variables
+# ignore build/dist directories
+# ignore Next.js directory
+# ignore .temp directory used during testing
+.temp/

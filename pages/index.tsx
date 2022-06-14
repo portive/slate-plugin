@@ -3,10 +3,15 @@ import { env } from "~/lib/server-env"
 import { InferGetServerSidePropsType } from "next"
 import { initialValue, initialOrigins } from "~/sample/document"
 import { MyEditor } from "~/editor"
+import { createAuthToken } from "@portive/auth"
 
 export async function getServerSideProps() {
+  const authToken = createAuthToken(env.PORTIVE_API_KEY, {
+    expiresIn: "1d",
+    path: "demo",
+  })
   const props: { authToken: string; apiOriginUrl?: string } = {
-    authToken: env.PORTIVE_AUTH_TOKEN,
+    authToken,
   }
   if (process.env.API_ORIGIN_URL) {
     props.apiOriginUrl = process.env.API_ORIGIN_URL

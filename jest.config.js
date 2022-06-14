@@ -53,6 +53,12 @@ module.exports = {
   },
   transformIgnorePatterns: [`node_modules/(?!${esmModules})`],
   /**
+   * Sometimes, our tests use temp files that we keep in a `.temp` directory.
+   * These files are manipulated during the test and we don't want that to
+   * cause the test to be run again.
+   */
+  watchPathIgnorePatterns: ["[.]temp"],
+  /**
    * This needs to match the `paths` entry in `tsconfig.base.json` or
    * `tsconfig.custom.json`.
    *
