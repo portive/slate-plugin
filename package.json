@@ -13,7 +13,7 @@
   "version": "1.0.9",
   "license": "Copyright Portive and MeZine Inc. 2022",
   "engines": {
-    "node": "14.x",
+    "node": ">=14.x",
     "yarn": "1.22.x"
   },
   "devDependencies": {
@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "@portive/api-types": "^7.0.0",
-    "@portive/client": "^7.0.1",
+    "@portive/client": "^7.0.3",
     "axios": "^0.26.1",
     "bytes": "^3.1.2",
     "delay": "^5.0.0",

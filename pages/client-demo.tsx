@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react"
 import { env } from "~/lib/server-env"
-import { uploadFile } from "@portive/client"
+import { Client, uploadFile } from "@portive/client"
 import { InferGetServerSidePropsType } from "next"
 
 export async function getServerSideProps() {
@@ -24,10 +24,12 @@ export default function ClientDemo({
       if (e.target.files && e.target.files.length > 0) {
         const file = e.target.files[0]
         setStatus("started")
-        await uploadFile({
+        const client = new Client({
           authToken,
-          apiOriginUrl,
-          path: "client-demo",
+          apiOrigin: apiOriginUrl,
+        })
+        await uploadFile({
+          client,
           file,
           onProgress(e) {
             setStatus("uploading")

@@ -1,4 +1,4 @@
 root: ./docs
 structure:
-  readme: 01-getting-started.md
+  readme: introduction.md
   summary: table-of-contents.md

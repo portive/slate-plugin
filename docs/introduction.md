@@ -8,7 +8,7 @@ Upload files using paste, drag &amp; drop or `<input type="file">` controls.
 - Drag to resize images
 - Images resized on server for faster delivery
 
-This plugin works with [Portive](https://www.portive.com), the hosted back-end for rich text editors. It is a service which hosts files and and provides other services for Rich Text Editors. It is the official hosted back-end for these editors:
+This plugin works with [Portive](https://www.portive.com), the hosted back-end for rich text editors. It is a service which hosts files and provides other services for Rich Text Editors. It is the official hosted back-end for these editors:
 
 - [Plate](https://plate.udecode.io/): Rich text editor plugin system for Slate & React
 - [Wysimark](https://www.wysimark.com): Rich text editor for Markdown
@@ -19,7 +19,7 @@ Start with our [Getting Started Guide](./guides/01-getting-started.md).
 
 ### Features
 
-- **Asynchronous Uploads:** When users upload an image or file, the editor can still edit. A preview image or attachment block is displayed with a progress bar that shows the uload progress. This creates a friendly user experience for users.
+- **Asynchronous Uploads:** While users are uploading an image or file, the user can still make edits in the Editor. A preview image or attachment block is displayed with a progress bar that shows the uload progress. This creates a friendly user experience for users.
 - **Multi-File Uploads:** Drag or drop multiple files, paste multiple files or select multiples files to start uploading them in parallel, each with their own progress bar
 - **Server Side Image Resizing:** When a user resizes the image in the browser, a resized image is generated on the server. By reducing the size of the image being delivered, images are delivered faster to the browser and reduces bandwidth usage.
 - **Show Errors:** If there is an error during upload, the progress bar turns red, says "Upload Failed" and a detailed description of what went wrong is put into the console.

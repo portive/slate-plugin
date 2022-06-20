@@ -8,7 +8,6 @@ import {
 } from "./types"
 import { nanoid } from "nanoid"
 import {
-  Client,
   createClientFile,
   isHostedImage,
   resizeIn,
@@ -82,19 +81,12 @@ async function uploadSteps({
    */
   Transforms.insertNodes(editor, element, { at })
 
-  console.log({ apiOriginUrl: editor.portive.apiOriginUrl })
-
-  const client = new Client({
-    authToken: editor.portive.authToken,
-    apiOrigin: editor.portive.apiOriginUrl,
-  })
-
   /**
    * Start the actual upload progress and update the `origin` as to the
    * upload progress.
    */
   const uploadResult = await uploadFile({
-    client,
+    client: editor.portive.client,
     file,
     onProgress(e) {
       const origin: Origin = {

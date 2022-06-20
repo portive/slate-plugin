@@ -76,7 +76,6 @@ export function MyEditor({
     const editor = withPortive(reactEditor, {
       authToken,
       apiOriginUrl,
-      path: "demo",
       initialMaxSize: [320, 320],
       minResizeWidth: 100,
       maxResizeWidth: 640,

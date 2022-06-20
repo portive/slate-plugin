@@ -735,10 +735,10 @@
     "@types/jsonwebtoken" "^8.5.8"
     jsonwebtoken "^8.5.1"
 
-"@portive/client@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@portive/client/-/client-7.0.1.tgz#20e6ef1d9eabe5318449128e0085ffb86db73d49"
-  integrity sha512-0E0Gl22EI/tommpHLG71BXBtfgfirlLICbnfKFKAdQo/HhOkjO9jXjw5VfLMC3N1TJoGdmfOWLFU9qCwrr2JjQ==
+"@portive/client@^7.0.3":
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/@portive/client/-/client-7.0.3.tgz#b3a0762b1c4c822a65a7f2d8bb87eca3cd2cbcf1"
+  integrity sha512-Cwi9/8j8b8ZM/hqcIVkN2xawGNkoUvnuvv0pxT6DVU5QcUpdHATzDH4WitQHMn5dyuJGGvUcVFnhmEvo9oSHjQ==
   dependencies:
     "@portive/api-types" "^7.0.0"
     axios "^0.27.2"
