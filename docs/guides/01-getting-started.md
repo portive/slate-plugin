@@ -9,7 +9,13 @@ yarn add slate-portive
 npm install --save slate-portive
 ```
 
-### Premade Elements
+You'll also need these peer dependencies:
+
+```bash
+yarn add slate slate-react
+```
+
+### Presets
 
 Premade Elements are a great way to start with `slate-portive`. They are easy to setup and includes the features most people want like image resizing and the upload progress bar.
 
