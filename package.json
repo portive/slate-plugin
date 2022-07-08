@@ -10,7 +10,7 @@
     "resize",
     "plugin"
   ],
-  "version": "1.0.9",
+  "version": "1.0.10",
   "license": "Copyright Portive and MeZine Inc. 2022",
   "engines": {
     "node": ">=14.x",
@@ -35,11 +35,11 @@
     "jest": "^27",
     "next": "10.x",
     "prettier": "^2",
+    "react": "^17",
+    "react-dom": "^17",
     "slate": "^0.80.0",
     "slate-history": "^0.66.0",
     "slate-react": "^0.80.0",
-    "react": "^17",
-    "react-dom": "^17",
     "ts-jest": "^27",
     "ts-node": "^10.7.0",
     "tsc": "^2.0.4",
