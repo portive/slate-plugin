@@ -13,6 +13,7 @@ import {
 } from "./handlers"
 import { normalizeOrigins, save } from "./save"
 import { getOrigins } from "./save/get-origins"
+import { Client } from "@portive/client"
 export * from "./types"
 export * from "./origin-store"
 export * from "./render-image"
@@ -27,7 +28,6 @@ export function withPortive<T extends FullPortiveEditor>(
   {
     apiOriginUrl,
     authToken,
-    path,
     // images can only be resized as low as this value.
     // If the source image is less than this number, it cannot be resized
     minResizeWidth = 100,
@@ -39,10 +39,12 @@ export function withPortive<T extends FullPortiveEditor>(
   }: WithPortiveOptions
 ): T {
   const useStore = createOriginStore({ origins: initialOrigins })
+  /**
+   * Create an instance of the Portive Client
+   */
+  const client = new Client({ authToken, apiOrigin: apiOriginUrl })
   editor.portive = {
-    apiOriginUrl,
-    authToken,
-    path,
+    client,
     minResizeWidth,
     maxResizeWidth,
     initialMaxSize,

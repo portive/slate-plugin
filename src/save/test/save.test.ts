@@ -15,7 +15,6 @@ function mockEditor(
 ): FullPortiveEditor {
   const editor = withPortive(withReact(withHistory(createEditor())), {
     authToken: "", // we won't be uploading
-    path: "test",
     initialMaxSize: [320, 320],
     minResizeWidth: 100,
     maxResizeWidth: 640,

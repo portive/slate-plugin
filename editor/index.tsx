@@ -76,7 +76,6 @@ export function MyEditor({
     const editor = withPortive(reactEditor, {
       authToken,
       apiOriginUrl,
-      path: "demo",
       initialMaxSize: [320, 320],
       minResizeWidth: 100,
       maxResizeWidth: 640,
@@ -139,7 +138,7 @@ export function MyEditor({
             border: "1px solid #c0c0c0",
             borderRadius: 8,
             padding: "0 16px",
-            width: 800,
+            width: 480,
           }}
         />
       </Slate>

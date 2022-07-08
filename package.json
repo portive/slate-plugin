@@ -13,8 +13,8 @@
   "version": "1.0.9",
   "license": "Copyright Portive and MeZine Inc. 2022",
   "engines": {
-    "node": "^14.x || >=16.0.0",
-    "yarn": ">=1.22.0"
+    "node": ">=14.x",
+    "yarn": "1.22.x"
   },
   "devDependencies": {
     "@portive/auth": "^1.0.2",
@@ -54,8 +54,8 @@
     "slate-react": ">=0.74.2"
   },
   "dependencies": {
-    "@portive/api-types": "^6.0.0",
-    "@portive/client": "^1.0.3",
+    "@portive/api-types": "^7.0.0",
+    "@portive/client": "^7.0.3",
     "axios": "^0.26.1",
     "bytes": "^3.1.2",
     "delay": "^5.0.0",
@@ -82,7 +82,7 @@
     "fix:prettier": "yarn lint:prettier --write",
     "fix:eslint": "yarn lint:eslint --fix",
     "-- lint": "# lint syntax",
-    "lint": "concurrently 'yarn lint:prettier' 'yarn lint:eslint' 'yarn lint:tsc'",
+    "lint": "concurrently --raw 'yarn lint:prettier' 'yarn lint:eslint' 'yarn lint:tsc'",
     "lint:prettier": "prettier --check \"**/*.{css,md,js,jsx,json,ts,tsx}\"",
     "lint:eslint": "eslint .",
     "lint:tsc": "tsc --build ./ --force",

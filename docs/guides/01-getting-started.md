@@ -17,7 +17,7 @@ yarn add slate slate-react
 
 ### Presets
 
-Premade Elements are a great way to start with `slate-portive`. They are easy to setup and includes the features most people want like image resizing and the upload progress bar.
+Premade Elements are the fastest way to start with `slate-portive`. They are easy to setup and includes the features most people want like image resizing and the upload progress bar.
 
 This Getting Started guide leads you through setting up `slate-portive` with two premade elements:
 
@@ -55,7 +55,9 @@ declare module "slate" {
 
 ### Extend the Editor
 
-The first step after setting up types is to extend the `editor` with [`withPortive`](../reference/with-portive.md). This add a `portive` object to the editor at `editor.portive` which contains functions used to handle uploads.
+The first step after setting up types is to extend the `editor` with [`withPortive`](../reference/with-portive.md). This sets up the Slate editor so that it can accept uploads.
+
+To upload files, you'll need an `authToken`. Get one with 1 GB of upload space free at [https://admin.portive.com/](https://admin.portive.com/). Sign in with a GitHub or Google account then create a Project and you will be shown a quick start `authToken`.
 
 ```ts
 import { BaseEditor, BaseText, createEditor } from "slate"
@@ -75,13 +77,12 @@ import { useState } from "react"
 export default function MyEditor() {
   // Create a Slate editor object that won't change across renders.
   const [editor] = useState(() => {
-    const reactEditor = withReact(createEditor())
+    const reactEditor = withReact(withHistory(createEditor()))
 
     // ✅ Call `withPortive` on the editor with `createImageBlock`
     //    and `createAttachmentBlock`
     const editor = withPortive(reactEditor, {
       authToken: "...",
-      path: "slate-portive-demo",
       createImageFileElement: createImageBlock,
       createFileElement: createAttachmentBlock,
     })
@@ -246,7 +247,6 @@ export default function MyEditor() {
     const reactEditor = withReact(createEditor())
     const editor = withPortive(reactEditor, {
       authToken: "...",
-      path: "slate-portive-demo",
       createImageFileElement: createImageBlock,
       createFileElement: createAttachmentBlock,
     })

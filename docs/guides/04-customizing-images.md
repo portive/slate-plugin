@@ -1,10 +1,8 @@
 # Customizing Image Elements
 
-You've seen how to use the `ImageBlock` preset to add images to the Slate Editor.
+Learn how to create a Custom Image Component. For this example, we'll modify the `ImageBlock` Component by adding a `title` attribute to the Image.
 
-Now let's see how to create a Custom Image Component. For this example, we'll create the Image Component but we'll add a `title` attribute to the Image.
-
-Let's start by looking at and modifing the type of the `ImageBlockElement`.
+Let's start by looking at then modifing the type of the `ImageBlockElement`.
 
 ## Custom Image Type
 

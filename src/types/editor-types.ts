@@ -1,9 +1,9 @@
 import { BaseEditor, Descendant, Element, Location } from "slate"
 import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
-import { Promisable } from "type-fest"
 import { createOriginStore } from "../origin-store"
 import { Origin } from "./origin-types"
+import { AuthTokenable, Client } from "@portive/client"
 
 export type CreateImageFileElementEvent = {
   type: "image"
@@ -33,8 +33,7 @@ export type CreateImageFileElement = (
 
 export type WithPortiveOptions = {
   apiOriginUrl?: string
-  authToken: string | (() => Promisable<string>)
-  path: string
+  authToken: AuthTokenable
   initialMaxSize?: [number, number]
   minResizeWidth?: number
   maxResizeWidth?: number
@@ -57,9 +56,7 @@ export type SaveResult =
   | { status: "complete"; value: Descendant[] }
 
 export type PortiveObject = {
-  authToken: string | (() => Promisable<string>)
-  apiOriginUrl: string | undefined
-  path: string
+  client: Client
   initialMaxSize: [number, number]
   minResizeWidth: number
   maxResizeWidth: number
