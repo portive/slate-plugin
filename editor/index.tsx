@@ -138,7 +138,7 @@ export function MyEditor({
             border: "1px solid #c0c0c0",
             borderRadius: 8,
             padding: "0 16px",
-            width: 800,
+            width: 480,
           }}
         />
       </Slate>
