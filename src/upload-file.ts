@@ -1,4 +1,4 @@
-import { Element, Location, Transforms } from "slate"
+import { Editor, Element, Location, Transforms } from "slate"
 import {
   CreateImageFileElementEvent,
   FullPortiveEditor,
@@ -40,7 +40,7 @@ async function uploadSteps({
   file: File
   clientFile: ClientFile
   element: Element & { originKey: string }
-  at?: Location
+  at?: Location | null
 }) {
   const { setOrigin } = editor.portive.useStore.getState()
   const url = clientFile.objectUrl
@@ -77,9 +77,35 @@ async function uploadSteps({
   })
 
   /**
+   * If `at` is passed in, we are going to move the editor's selection to that
+   * location. This would happen with a drag and drop.
+   */
+  if (at != null) {
+    Transforms.select(editor, at)
+  }
+  /**
+   * If the selection is in an empty block, Slate's behavior is to insert a
+   * new block beneat the empty block. To get the block to insert above the
+   * empty block (the expected behavior) we move the selection back one.
+   */
+  const { selection } = editor
+  if (selection) {
+    const aboveEntry = Editor.above(editor, {
+      at: selection,
+      match: (node) => Element.isElement(node) && Editor.isBlock(editor, node),
+    })
+    if (aboveEntry) {
+      const string = Editor.string(editor, aboveEntry[1])
+      if (string.length === 0) {
+        Transforms.move(editor, { unit: "offset", reverse: true })
+      }
+    }
+  }
+
+  /**
    * Insert the `element` (which includes an `originKey`).
    */
-  Transforms.insertNodes(editor, element, { at })
+  Transforms.insertNodes(editor, element)
 
   /**
    * Start the actual upload progress and update the `origin` as to the
