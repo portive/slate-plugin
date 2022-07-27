@@ -45,7 +45,7 @@ export default function Index({
             type="radio"
             value="apiKey"
             checked={authType === "apiKey"}
-            onClick={() => setAuthType("apiKey")}
+            onChange={() => setAuthType("apiKey")}
           />
           <label htmlFor="authTypeApiKey">Use API Key directly</label>
         </div>
@@ -56,7 +56,7 @@ export default function Index({
             type="radio"
             value="authToken"
             checked={authType === "authToken"}
-            onClick={() => setAuthType("authToken")}
+            onChange={() => setAuthType("authToken")}
           />
           <label htmlFor="authTypeAuthToken">
             Use AuthToken generated from API Key
