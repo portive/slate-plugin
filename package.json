@@ -75,7 +75,7 @@
     "test:watch:types": "yarn test:clearcache && jest --watch --config=jest.config.js",
     "test:clearcache": "jest --clearCache",
     "-- next": "# NextJs",
-    "start:dev": "DOTENV=.env/dev.env next dev -p 3050",
+    "start:local": "DOTENV=.env/local.env next dev -p 3050",
     "start:staging": "DOTENV=.env/staging.env next dev -p 3050",
     "start:production": "DOTENV=.env/production.env next dev -p 3050",
     "-- fix": "# fix syntax",
