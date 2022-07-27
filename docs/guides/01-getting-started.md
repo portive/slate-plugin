@@ -17,7 +17,7 @@ yarn add slate slate-react
 
 ### Presets
 
-Premade Elements are the fastest way to start with `slate-portive`. They are easy to setup and includes the features most people want like image resizing and the upload progress bar.
+Premade Elements are the fastest way to start with `slate-portive`. They are faster to setup and includes the features most people want like image resizing and the upload progress bar.
 
 This Getting Started guide leads you through setting up `slate-portive` with two premade elements:
 

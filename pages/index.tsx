@@ -8,7 +8,7 @@ import { createAuthToken } from "@portive/auth"
 export async function getServerSideProps() {
   const authToken = createAuthToken(env.PORTIVE_API_KEY, {
     expiresIn: "1d",
-    path: "demo",
+    path: "should-ignore-path-now",
   })
   const props: { authToken: string; apiOriginUrl?: string } = {
     authToken,
