@@ -725,6 +725,14 @@
     "@thesunny/assert-type" "^0.1.7"
     superstruct "^0.15.4"
 
+"@portive/api-types@^7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@portive/api-types/-/api-types-7.2.0.tgz#4f5e0237757d6721bd17ceb6615c2648ec913c67"
+  integrity sha512-DfVbJ9+g3KyaLTefaK7zpClpNyjF6Ay3b/KdJHCNvaWGLms3hNFJDo0PzqJK3Tbh8/KveCXlLi10Jt0k9UltBw==
+  dependencies:
+    "@thesunny/assert-type" "^0.1.7"
+    superstruct "^0.15.4"
+
 "@portive/auth@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@portive/auth/-/auth-1.0.2.tgz#e9f56c58c98bdbc12cfceb07eba2d6c76d93ef21"
@@ -735,13 +743,14 @@
     "@types/jsonwebtoken" "^8.5.8"
     jsonwebtoken "^8.5.1"
 
-"@portive/client@^7.0.3":
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/@portive/client/-/client-7.0.3.tgz#b3a0762b1c4c822a65a7f2d8bb87eca3cd2cbcf1"
-  integrity sha512-Cwi9/8j8b8ZM/hqcIVkN2xawGNkoUvnuvv0pxT6DVU5QcUpdHATzDH4WitQHMn5dyuJGGvUcVFnhmEvo9oSHjQ==
+"@portive/client@^7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@portive/client/-/client-7.2.0.tgz#5c2041f2ac6c7182e0d4fbe3dded0c06d2882215"
+  integrity sha512-5w47prPQwGhqqEOyadKq8/QbPXgicmiqkKzcC0VehtATTdA3a8kB09eaBcNYYyhXxl5FB4xctiYS3Ye7tyDrzw==
   dependencies:
-    "@portive/api-types" "^7.0.0"
+    "@portive/api-types" "^7.2.0"
     axios "^0.27.2"
+    resolvable-value "^1.0.1"
 
 "@portive/jwt-utils@^1.0.2":
   version "1.0.2"
@@ -4524,6 +4533,11 @@ require-directory@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/require-directory/-/require-directory-2.1.1.tgz#8c64ad5fd30dab1c976e2344ffe7f792a6a6df42"
   integrity sha1-jGStX9MNqxyXbiNE/+f3kqam30I=
+
+resolvable-value@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/resolvable-value/-/resolvable-value-1.0.1.tgz#d5c04d7e957b4dc1b2ab2c93fbc4a286556f9723"
+  integrity sha512-UjIRUFss77FSbp5AI5Q5fj0ngE7SwS5GqzOs+mn/UdQcg6lHYMsPBsj7biZuvybn4rs8+V6LbB02F8YtxT2HkQ==
 
 resolve-cwd@^3.0.0:
   version "3.0.0"

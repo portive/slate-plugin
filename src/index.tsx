@@ -27,6 +27,7 @@ export function withPortive<T extends FullPortiveEditor>(
   editor: T,
   {
     apiOriginUrl,
+    apiKey,
     authToken,
     // images can only be resized as low as this value.
     // If the source image is less than this number, it cannot be resized
@@ -42,7 +43,7 @@ export function withPortive<T extends FullPortiveEditor>(
   /**
    * Create an instance of the Portive Client
    */
-  const client = new Client({ authToken, apiOrigin: apiOriginUrl })
+  const client = new Client({ apiKey, authToken, apiOrigin: apiOriginUrl })
   editor.portive = {
     client,
     minResizeWidth,

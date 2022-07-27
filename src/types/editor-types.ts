@@ -3,7 +3,7 @@ import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { createOriginStore } from "../origin-store"
 import { Origin } from "./origin-types"
-import { AuthTokenable, Client } from "@portive/client"
+import { Client } from "@portive/client"
 
 export type CreateImageFileElementEvent = {
   type: "image"
@@ -31,9 +31,15 @@ export type CreateImageFileElement = (
   e: CreateImageFileElementEvent
 ) => Element & { originKey: string }
 
+/**
+ * The Options object passed into `@portive/client`
+ */
+type PortiveClientOptions = ConstructorParameters<typeof Client>[0]
+
 export type WithPortiveOptions = {
   apiOriginUrl?: string
-  authToken: AuthTokenable
+  apiKey?: PortiveClientOptions["apiKey"]
+  authToken?: PortiveClientOptions["authToken"]
   initialMaxSize?: [number, number]
   minResizeWidth?: number
   maxResizeWidth?: number
