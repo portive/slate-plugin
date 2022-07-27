@@ -59,13 +59,15 @@ const $saveButton = css`
 `
 
 export function MyEditor({
+  apiKey,
   authToken,
   apiOriginUrl,
   initialValue,
   initialOrigins = {},
   isReadOnly,
 }: {
-  authToken: string
+  apiKey?: string
+  authToken?: string
   apiOriginUrl?: string
   initialValue: Descendant[]
   initialOrigins: Record<string, Origin>
@@ -74,6 +76,7 @@ export function MyEditor({
   const [editor] = useState<Editor>(() => {
     const reactEditor = withReact(withHistory(createEditor()))
     const editor = withPortive(reactEditor, {
+      apiKey,
       authToken,
       apiOriginUrl,
       initialMaxSize: [320, 320],
