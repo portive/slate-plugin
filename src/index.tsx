@@ -13,7 +13,7 @@ import {
 } from "./handlers"
 import { normalizeOrigins, save } from "./save"
 import { getOrigins } from "./save/get-origins"
-import { Client } from "@portive/client"
+import { Client } from "@forcloud/client"
 export * from "./types"
 export * from "./origin-store"
 export * from "./render-image"

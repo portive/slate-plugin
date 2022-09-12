@@ -407,6 +407,42 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@forcloud/api-types@^7.2.1":
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/@forcloud/api-types/-/api-types-7.2.1.tgz#e30677bf2b3a06f80f0616c23d456a0a2678e436"
+  integrity sha512-EJuqx331tb2KxxFgyEKMH41suWiVJvPLxwN/hloELuUjYPhB66VDmDKJemkRrnwF9nboHdvv8Ny3mPNX5976/A==
+  dependencies:
+    "@thesunny/assert-type" "^0.1.7"
+    superstruct "^0.15.4"
+
+"@forcloud/auth@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@forcloud/auth/-/auth-1.0.4.tgz#3847df6bc440c77d41957747d8c295482533757b"
+  integrity sha512-RurrDPNO1TEDF+rVE7ECpOa85w4pPJKps7hcD2fV3FagnCXdu+X4lLuugLG8HDVP1+Q6kTqw7EAlQhEyK8JxTQ==
+  dependencies:
+    "@forcloud/api-types" "^7.2.1"
+    "@forcloud/jwt-utils" "^1.0.5"
+    "@types/jsonwebtoken" "^8.5.8"
+    jsonwebtoken "^8.5.1"
+
+"@forcloud/client@^7.2.1":
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/@forcloud/client/-/client-7.2.1.tgz#62e5f35f79129b6a86c850940ebb33cd3f526e58"
+  integrity sha512-XTtJl/ya0TLxWPBF5V4nKiIxbvwEWv9VU4jd5upYhRneGCzyFfVvj2rDpk/5OvPWS+xpCDRKRHZmlRRME49y0A==
+  dependencies:
+    "@forcloud/api-types" "^7.2.1"
+    axios "^0.27.2"
+    resolvable-value "^1.0.1"
+
+"@forcloud/jwt-utils@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@forcloud/jwt-utils/-/jwt-utils-1.0.5.tgz#dcb67d45e5a7c378aacb801014eca38e41afb5ac"
+  integrity sha512-ivtVkqLcH2sl4YsRt+9E0E14tKJVsPHHZ2NLCIJ8XSepJYfk0mf8ytWvDZciB/t/RQipdBZWr4vI+q1budLJsg==
+  dependencies:
+    crypto-js "^4.1.1"
+    jsonwebtoken "^8.5.1"
+    superstruct "^0.15.4"
+
 "@hapi/accept@5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@hapi/accept/-/accept-5.0.2.tgz#ab7043b037e68b722f93f376afb05e85c0699523"
@@ -709,58 +745,6 @@
   resolved "https://registry.yarnpkg.com/@opentelemetry/context-base/-/context-base-0.14.0.tgz#c67fc20a4d891447ca1a855d7d70fa79a3533001"
   integrity sha512-sDOAZcYwynHFTbLo6n8kIbLiVF3a3BLkrmehJUyEbT9F+Smbi47kLGS2gG2g0fjBLR/Lr1InPD7kXL7FaTqEkw==
 
-"@portive/api-types@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@portive/api-types/-/api-types-6.0.0.tgz#02a4d189ed848417a4e11e8ba540882c999beecd"
-  integrity sha512-kuM4UNiZgam5m37OUZt2lSdmsp2a5Ms5s8TVNTcyYmSv5IX6v+jpXgMLrOkAVFy+GlAUCaCqCJW28id/xOGYdg==
-  dependencies:
-    "@thesunny/assert-type" "^0.1.7"
-    superstruct "^0.15.4"
-
-"@portive/api-types@^7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@portive/api-types/-/api-types-7.0.0.tgz#a953450a9ca09e3e6c09333e047924bbae84a0f2"
-  integrity sha512-63Y6z0PbFjyO4sVxwrIRYeijWZ/lGWEo5fOtlR3obSYyhhV3BPVnqZnHY5RTqaXG5ykPuWc03+um8J06nkyvCw==
-  dependencies:
-    "@thesunny/assert-type" "^0.1.7"
-    superstruct "^0.15.4"
-
-"@portive/api-types@^7.2.0":
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/@portive/api-types/-/api-types-7.2.0.tgz#4f5e0237757d6721bd17ceb6615c2648ec913c67"
-  integrity sha512-DfVbJ9+g3KyaLTefaK7zpClpNyjF6Ay3b/KdJHCNvaWGLms3hNFJDo0PzqJK3Tbh8/KveCXlLi10Jt0k9UltBw==
-  dependencies:
-    "@thesunny/assert-type" "^0.1.7"
-    superstruct "^0.15.4"
-
-"@portive/auth@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@portive/auth/-/auth-1.0.2.tgz#e9f56c58c98bdbc12cfceb07eba2d6c76d93ef21"
-  integrity sha512-tKaL6u/asRsunfiF4vtUMT+YIqX7PKGAqAT45ru7dNnvYs3ceAnpfrWHhQRp3GlV5wE4lSB5dejO7gUnshK6bA==
-  dependencies:
-    "@portive/api-types" "^6.0.0"
-    "@portive/jwt-utils" "^1.0.2"
-    "@types/jsonwebtoken" "^8.5.8"
-    jsonwebtoken "^8.5.1"
-
-"@portive/client@^7.2.0":
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/@portive/client/-/client-7.2.0.tgz#5c2041f2ac6c7182e0d4fbe3dded0c06d2882215"
-  integrity sha512-5w47prPQwGhqqEOyadKq8/QbPXgicmiqkKzcC0VehtATTdA3a8kB09eaBcNYYyhXxl5FB4xctiYS3Ye7tyDrzw==
-  dependencies:
-    "@portive/api-types" "^7.2.0"
-    axios "^0.27.2"
-    resolvable-value "^1.0.1"
-
-"@portive/jwt-utils@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@portive/jwt-utils/-/jwt-utils-1.0.2.tgz#f439730ba7ae510c464a103c9f03652156ba7ca1"
-  integrity sha512-WBR5hqkzzFCn4GaNRuZ3O2cT2R3HbPqp8V6WmGPmFc940lP8XytuEiGU3o83mH3IawmMNAa13mxS01MrZTqMDA==
-  dependencies:
-    crypto-js "^4.1.1"
-    jsonwebtoken "^8.5.1"
-    superstruct "^0.15.4"
-
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.3.tgz#3802ddd21a50a949b6721ddd72da36e67e7f1b2d"
@@ -895,9 +879,9 @@
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
 "@types/jsonwebtoken@^8.5.8":
-  version "8.5.8"
-  resolved "https://registry.yarnpkg.com/@types/jsonwebtoken/-/jsonwebtoken-8.5.8.tgz#01b39711eb844777b7af1d1f2b4cf22fda1c0c44"
-  integrity sha512-zm6xBQpFDIDM6o9r6HSgDeIcLy82TKWctCXEPbJJcXb5AKmi5BNNdLXneixK4lplX3PqIVcwLBCGE/kAGnlD4A==
+  version "8.5.9"
+  resolved "https://registry.yarnpkg.com/@types/jsonwebtoken/-/jsonwebtoken-8.5.9.tgz#2c064ecb0b3128d837d2764aa0b117b0ff6e4586"
+  integrity sha512-272FMnFGzAVMGtu9tkr29hRL6bZj4Zs1KZNeHLnKqAvp06tAIcarTMwOh8/8bz4FmKRcMxZhZNeUAQsNLoiPhg==
   dependencies:
     "@types/node" "*"
 

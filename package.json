@@ -1,5 +1,5 @@
 {
-  "name": "slate-portive",
+  "name": "slate-for-cloud",
   "description": "Hosted images and file attachments for Slate with image resizing.",
   "keywords": [
     "slate",
@@ -11,13 +11,13 @@
     "plugin"
   ],
   "version": "2.1.0",
-  "license": "Copyright Portive and MeZine Inc. 2022",
+  "license": "Copyright for.cloud and MeZine Inc. 2022",
   "engines": {
     "node": ">=14.x",
     "yarn": "1.22.x"
   },
   "devDependencies": {
-    "@portive/auth": "^1.0.2",
+    "@forcloud/auth": "^1.0.4",
     "@thesunny/assert-type": "^0.1.7",
     "@types/bytes": "^3.1.1",
     "@types/jest": "^27",
@@ -55,8 +55,8 @@
     "slate-react": ">=0.74.2"
   },
   "dependencies": {
-    "@portive/api-types": "^7.0.0",
-    "@portive/client": "^7.2.0",
+    "@forcloud/api-types": "^7.2.1",
+    "@forcloud/client": "^7.2.1",
     "axios": "^0.26.1",
     "bytes": "^3.1.2",
     "delay": "^5.0.0",

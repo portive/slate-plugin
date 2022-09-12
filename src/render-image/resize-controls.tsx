@@ -3,7 +3,7 @@ import { ReactEditor, useSlateStatic } from "slate-react"
 import { ImageFileInterface } from "../types"
 import { Element, Transforms } from "slate"
 import { useHostedImageContext } from "./hosted-image-context"
-import { resizeInWidth } from "@portive/client"
+import { resizeInWidth } from "@forcloud/client"
 
 export function ResizeControls({ element }: { element: ImageFileInterface }) {
   const { size, setSize } = useHostedImageContext()

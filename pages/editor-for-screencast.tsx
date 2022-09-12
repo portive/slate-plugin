@@ -1,6 +1,6 @@
 import { createEditor, Descendant, Editor } from "slate"
 import { Slate, Editable, withReact } from "slate-react"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { withPortive, createAttachmentBlock, createImageBlock } from "~/src"
 import { withHistory } from "slate-history"
 import { renderElement } from "~/editor/render-element"
@@ -9,7 +9,7 @@ import "~/editor/types"
 
 import { env } from "~/lib/server-env"
 import { InferGetServerSidePropsType } from "next"
-import { createAuthToken } from "@portive/auth"
+import { createAuthToken } from "@forcloud/auth"
 
 export async function getServerSideProps() {
   const authToken = createAuthToken(env.PORTIVE_API_KEY, {
