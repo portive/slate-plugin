@@ -37,6 +37,7 @@ export default function Index({
       <h1>Slate Portive</h1>
       <h2>Image and Attachments Plugin</h2>
       <div>
+        <p>Origin: {apiOriginUrl}</p>
         <div>Authentication Type</div>
         <div>
           <input
