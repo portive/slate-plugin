@@ -10,53 +10,7 @@ import {
 import { withHistory } from "slate-history"
 import { renderElement } from "./render-element"
 import delay from "delay"
-import { css } from "emotion"
 import "./types"
-
-const $myEditor = css`
-  font-family: 14px sans-serif;
-`
-
-const $saveButton = css`
-  background-color: #0095ff;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  box-shadow: rgba(255, 255, 255, 0.4) 0 1px 0 0 inset;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font-family: -apple-system, system-ui, "Segoe UI", "Liberation Sans",
-    sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.15385;
-  margin: 0;
-  outline: none;
-  padding: 8px 0.8em;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  vertical-align: baseline;
-  white-space: nowrap;
-
-  &:hover,
-  &:focus {
-    background-color: #07c;
-  }
-
-  &:focus {
-    box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
-  }
-
-  &:active {
-    background-color: #0064bd;
-    box-shadow: none;
-  }
-`
 
 export function MyEditor({
   apiKey,
@@ -112,11 +66,9 @@ export function MyEditor({
 
   return (
     <div>
-      <div className={$myEditor}>
+      <div>
         <p>
-          <button onClick={save} className={$saveButton}>
-            Save Document
-          </button>{" "}
+          <button onClick={save}>Save Document</button>{" "}
           <span style={{ font: "12px sans-serif" }}>
             {saveState === "saving" ? "Saving" : null}
             {saveState === "saved" ? "Saved! Document value in console" : null}

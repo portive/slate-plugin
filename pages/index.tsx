@@ -4,6 +4,7 @@ import { InferGetServerSidePropsType } from "next"
 import { initialValue, initialOrigins } from "~/sample/document"
 import { MyEditor } from "~/editor"
 import { createAuthToken } from "@portive/auth"
+import { DefaultHead } from "~/components/default-head"
 
 export async function getServerSideProps() {
   const authToken = createAuthToken(env.PORTIVE_API_KEY, {
@@ -33,12 +34,16 @@ export default function Index({
   const [authType, setAuthType] = useState<"apiKey" | "authToken">("authToken")
 
   return (
-    <div style={{ marginLeft: 240, font: "16px sans-serif" }}>
-      <h1>Slate Portive</h1>
-      <h2>Image and Attachments Plugin</h2>
+    <div>
+      <DefaultHead title="Slate Cloud" />
+      <h1>
+        <img src="/favicon-32x32.png" /> Slate Cloud for Portive
+      </h1>
       <div>
         <p>Origin: {apiOriginUrl}</p>
-        <div>Authentication Type</div>
+        <div>
+          <strong>Authentication Type</strong>
+        </div>
         <div>
           <input
             id="authTypeApiKey"
