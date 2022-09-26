@@ -3,7 +3,7 @@ import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { createOriginStore } from "../origin-store"
 import { Origin } from "./origin-types"
-import { Client } from "@forcloud/client"
+import { Client } from "@portive/client"
 
 export type CreateImageFileElementEvent = {
   type: "image"
@@ -32,7 +32,7 @@ export type CreateImageFileElement = (
 ) => Element & { originKey: string }
 
 /**
- * The Options object passed into `@forcloud/client`
+ * The Options object passed into `@portive/client`
  */
 type PortiveClientOptions = ConstructorParameters<typeof Client>[0]
 

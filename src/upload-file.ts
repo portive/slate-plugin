@@ -12,8 +12,8 @@ import {
   isHostedImage,
   resizeIn,
   uploadFile,
-} from "@forcloud/client"
-import { ClientFile } from "@forcloud/api-types"
+} from "@portive/client"
+import { ClientFile } from "@portive/api-types"
 import EventEmitter from "eventemitter3"
 import Defer from "p-defer"
 

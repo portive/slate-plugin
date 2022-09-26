@@ -1,4 +1,4 @@
-# slate.for.cloud
+# Slate Cloud for Portive
 
 ## Upload Images and Attachments Plugin for Slate
 

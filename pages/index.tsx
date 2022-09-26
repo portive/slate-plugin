@@ -3,7 +3,7 @@ import { env } from "~/lib/server-env"
 import { InferGetServerSidePropsType } from "next"
 import { initialValue, initialOrigins } from "~/sample/document"
 import { MyEditor } from "~/editor"
-import { createAuthToken } from "@forcloud/auth"
+import { createAuthToken } from "@portive/auth"
 
 export async function getServerSideProps() {
   const authToken = createAuthToken(env.PORTIVE_API_KEY, {

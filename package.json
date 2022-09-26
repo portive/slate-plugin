@@ -1,5 +1,5 @@
 {
-  "name": "slate-for-cloud",
+  "name": "slate-cloud",
   "description": "Hosted images and file attachments for Slate with image resizing.",
   "keywords": [
     "slate",
@@ -17,7 +17,7 @@
     "yarn": "1.22.x"
   },
   "devDependencies": {
-    "@forcloud/auth": "^1.0.4",
+    "@portive/auth": "^1.0.10",
     "@thesunny/assert-type": "^0.1.7",
     "@types/bytes": "^3.1.1",
     "@types/jest": "^27",
@@ -55,8 +55,8 @@
     "slate-react": ">=0.74.2"
   },
   "dependencies": {
-    "@forcloud/api-types": "^7.2.1",
-    "@forcloud/client": "^7.2.1",
+    "@portive/api-types": "^7.2.4",
+    "@portive/client": "^7.2.5",
     "axios": "^0.26.1",
     "bytes": "^3.1.2",
     "delay": "^5.0.0",

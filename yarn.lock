@@ -407,42 +407,6 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@forcloud/api-types@^7.2.1":
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/@forcloud/api-types/-/api-types-7.2.1.tgz#e30677bf2b3a06f80f0616c23d456a0a2678e436"
-  integrity sha512-EJuqx331tb2KxxFgyEKMH41suWiVJvPLxwN/hloELuUjYPhB66VDmDKJemkRrnwF9nboHdvv8Ny3mPNX5976/A==
-  dependencies:
-    "@thesunny/assert-type" "^0.1.7"
-    superstruct "^0.15.4"
-
-"@forcloud/auth@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@forcloud/auth/-/auth-1.0.4.tgz#3847df6bc440c77d41957747d8c295482533757b"
-  integrity sha512-RurrDPNO1TEDF+rVE7ECpOa85w4pPJKps7hcD2fV3FagnCXdu+X4lLuugLG8HDVP1+Q6kTqw7EAlQhEyK8JxTQ==
-  dependencies:
-    "@forcloud/api-types" "^7.2.1"
-    "@forcloud/jwt-utils" "^1.0.5"
-    "@types/jsonwebtoken" "^8.5.8"
-    jsonwebtoken "^8.5.1"
-
-"@forcloud/client@^7.2.1":
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/@forcloud/client/-/client-7.2.1.tgz#62e5f35f79129b6a86c850940ebb33cd3f526e58"
-  integrity sha512-XTtJl/ya0TLxWPBF5V4nKiIxbvwEWv9VU4jd5upYhRneGCzyFfVvj2rDpk/5OvPWS+xpCDRKRHZmlRRME49y0A==
-  dependencies:
-    "@forcloud/api-types" "^7.2.1"
-    axios "^0.27.2"
-    resolvable-value "^1.0.1"
-
-"@forcloud/jwt-utils@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@forcloud/jwt-utils/-/jwt-utils-1.0.5.tgz#dcb67d45e5a7c378aacb801014eca38e41afb5ac"
-  integrity sha512-ivtVkqLcH2sl4YsRt+9E0E14tKJVsPHHZ2NLCIJ8XSepJYfk0mf8ytWvDZciB/t/RQipdBZWr4vI+q1budLJsg==
-  dependencies:
-    crypto-js "^4.1.1"
-    jsonwebtoken "^8.5.1"
-    superstruct "^0.15.4"
-
 "@hapi/accept@5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@hapi/accept/-/accept-5.0.2.tgz#ab7043b037e68b722f93f376afb05e85c0699523"
@@ -744,6 +708,42 @@
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@opentelemetry/context-base/-/context-base-0.14.0.tgz#c67fc20a4d891447ca1a855d7d70fa79a3533001"
   integrity sha512-sDOAZcYwynHFTbLo6n8kIbLiVF3a3BLkrmehJUyEbT9F+Smbi47kLGS2gG2g0fjBLR/Lr1InPD7kXL7FaTqEkw==
+
+"@portive/api-types@^7.2.4":
+  version "7.2.4"
+  resolved "https://registry.yarnpkg.com/@portive/api-types/-/api-types-7.2.4.tgz#9d5c0b076c04a457015b5be797fc1b341e3b4c66"
+  integrity sha512-cle0CrPEtfyRBCfMQ+QvGRAS9aYrD5J1iGEZehNfEv6PiZXYI9E3my0y4mZAhBmkldCwtf17sHYXSJ/sKJXmbA==
+  dependencies:
+    "@thesunny/assert-type" "^0.1.7"
+    superstruct "^0.15.4"
+
+"@portive/auth@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@portive/auth/-/auth-1.0.10.tgz#9c4c55249f36f453fc68e2f763649ffe07c7c689"
+  integrity sha512-0Pcb1Sw8W9lBeIfSM4VVnMxR+NDSMgwUUV+9WKsN4JgCWq4IbZh00qTsKxFPYB8BRcP3wAMX3dtaoaVrUTeYxg==
+  dependencies:
+    "@portive/api-types" "^7.2.4"
+    "@portive/jwt-utils" "^1.0.7"
+    "@types/jsonwebtoken" "^8.5.8"
+    jsonwebtoken "^8.5.1"
+
+"@portive/client@^7.2.5":
+  version "7.2.5"
+  resolved "https://registry.yarnpkg.com/@portive/client/-/client-7.2.5.tgz#72a3dbb9ea9085d183114791c314ede99c732702"
+  integrity sha512-XMwTN+pLEXW9f+x6Y3O24/LbKsSEjYMqW3tOQs2HpEts3+RRbdLRuf63aghZnKnKtbQod8+/uXhsdofXsuz+3g==
+  dependencies:
+    "@portive/api-types" "^7.2.4"
+    axios "^0.27.2"
+    resolvable-value "^1.0.1"
+
+"@portive/jwt-utils@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@portive/jwt-utils/-/jwt-utils-1.0.7.tgz#744c7e28d5ab27ee83667e7060135e22a12ced40"
+  integrity sha512-qtbPKzpv5iojFbqT8dBHUAEvmTsDTwUzzw73OCGIWzxJ4t3ezG0flo+U2TqaKRc7rTA4Rexw8rXT1+kbkXqRzg==
+  dependencies:
+    crypto-js "^4.1.1"
+    jsonwebtoken "^8.5.1"
+    superstruct "^0.15.4"
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"
