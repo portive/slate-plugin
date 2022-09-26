@@ -1,6 +1,6 @@
 {
   "name": "slate-cloud",
-  "description": "Hosted images and file attachments for Slate with image resizing.",
+  "description": "Add hosted images and file attachments for Slate with image resizing for use with Portive",
   "keywords": [
     "slate",
     "upload",
