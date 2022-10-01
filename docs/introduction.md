@@ -1,17 +1,18 @@
 # Slate Cloud for Portive
 
-`slate-cloud` adds beautiful images and attachments to Slate that are hosted in the cloud.
+`slate-cloud` adds images and attachments to Slate that are hosted in the cloud using Portive's cloud services for rich text editors.
 
-Upload files using paste, drag &amp; drop or `<input type="file">` controls.
+Upload files using paste, drag &amp; drop or standard `<input type="file">` controls.
 
 - Shows upload progress bar
-- Drag to resize images
-- Images resized on server for faster delivery
+- Allows rag to resize images
+- Images are resized on server for smaller file size delivery
 
-This plugin works with [Portive](https://portive.com), the hosted back-end for rich text editors. It is a service which hosts files and provides other services for Rich Text Editors. It is the official hosted back-end for these editors:
+This plugin works with [Portive](https://portive.com), the hosted back-end for rich text editors. It is a service which hosts files and provides other services for Rich Text Editors. It is a hosted back-end for these editors:
 
-- [Plate](https://plate.udecode.io/): Rich text editor plugin system for Slate & React
-- [Wysimark](https://www.wysimark.com): Rich text editor for Markdown
+- [Slate](https://docs.slatejs.org/): Slate is a customizable rich text editor for React. Slate cloud enables file and image uploading to the cloud with image resizing.
+- [Plate - Official Cloud Service](https://plate.udecode.io/): Plate is a rich text editor plugin system for Slate & React. Plate Cloud enables image uploading to the cloud with image resizing.
+- [Wysimark - Offical Cloud Service](https://www.wysimark.com): Rich text editor that saves to the most popular rich text format Markdown. Supports GitHub Flavored Markdown extensions.
 
 Start with our [Getting Started Guide](./guides/01-getting-started.md).
 

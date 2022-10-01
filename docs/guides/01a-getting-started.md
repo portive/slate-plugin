@@ -31,37 +31,6 @@ This Getting Started guide leads you through setting up `slate-cloud` with two b
 - `ImageBlock`: An Image Element that is a `void` `block` that shows the image with drag resize controls and an upload progress bar
 - `AttachmentBlock`: An Attachment Element that is a `void` `block` that shows the original filename, file size and an upload progress bar
 
-### Configure Types for TypeScript
-
-> 🌞 If you aren't using TypeScript you can skip this step.
->
-> If you are using TypeScript, you will need to configure your TypeScript types for Slate or you will get typing errors. To learn more about configuring TypeScript types in Slate, read the [Slate Documentation for TypeScript](https://docs.slatejs.org/concepts/12-typescript).
-
-```ts
-import { BaseEditor, BaseText } from "slate"
-import { ReactEditor } from "slate-react"
-import { PortiveEditor } from "slate-portive"
-import { HistoryEditor } from "slate-history"
-import { AttachmentBlockElement, ImageBlockElement } from "slate-cloud"
-
-type ParagraphElement = {
-  type: "paragraph"
-  children: BaseText[]
-}
-
-declare module "slate" {
-  interface CustomTypes {
-    // Add the `SlateCloudEditor` type to the `Editor`
-    Editor: BaseEditor & ReactEditor & HistoryEditor & PortiveEditor
-    // Add the `SlateCloudImageBlockElement` and the
-    // `SlateCloudAttachmentBlockElement` to whatever other elements
-    // you've defined.
-    Element: ParagraphElement | ImageBlockElement | AttachmentBlockElement
-    Text: BaseText
-  }
-}
-```
-
 ### Extend the Editor
 
 The first step after setting up types is to extend the `editor` with [`withPortive`](../reference/with-portive.md). This sets up the Slate editor so that it can accept uploads.
@@ -69,36 +38,20 @@ The first step after setting up types is to extend the `editor` with [`withPorti
 To upload files, you'll need an `authToken`. Get one with 1 GB of upload space free at [https://admin.portive.com/](https://admin.portive.com/). Sign in with a GitHub or Google account then create a Project and you will be shown a quick start `authToken`.
 
 ```ts
+import { useState } from "react"
 import { BaseEditor, BaseText, createEditor } from "slate"
 import { ReactEditor, withReact } from "slate-react"
-import { PortiveEditor, withPortive } from "slate-portive"
-import { HistoryEditor } from "slate-history"
-import {
-  AttachmentBlockElement,
-  createAttachmentBlock,
-  ImageBlockElement,
-  createImageBlock,
-} from "slate-portive"
-import { useState } from "react"
+import { PortiveEditor, withCloud, ImageBlock } from "slate-cloud"
 
 // ... types ...
 
 export default function MyEditor() {
-  // Create a Slate editor object that won't change across renders.
   const [editor] = useState(() => {
-    const reactEditor = withReact(withHistory(createEditor()))
-
-    // ✅ Call `withPortive` on the editor with `createImageBlock`
-    //    and `createAttachmentBlock`
-    const editor = withPortive(reactEditor, {
-      authToken: "...",
-      createImageFileElement: createImageBlock,
-      createFileElement: createAttachmentBlock,
+    // ✅ Call `withCloud` on the editor to extend it.
+    const editor = withCloud(withReact(createEditor()), {
+      apiKey: "YOUR_API_KEY",
+      createImageElement: ImageBlock.createElement,
     })
-
-    // ✅ Set `isVoid` for `image-block` and `attachment-block` types
-    editor.isVoid = (element) =>
-      ["image-block", "attachment-block"].includes(element.type)
 
     return editor
   })
@@ -134,29 +87,26 @@ import {
 } from "slate-portive"
 import { useState } from "react"
 
-// ... types ...
-
-// ✅ Add the `initialValue`
+// Add the `initialValue`
 const initialValue: Descendant[] = [
   { type: "paragraph", children: [{ text: "" }] },
 ]
+
 // ✅ Add render code for `ImageBlock` and `AttachmentBlock`
 function renderElement(props: RenderElementProps) {
   const element = props.element
   switch (element.type) {
     case "paragraph":
       return <p {...props.attributes}>{props.children}</p>
-    case "attachment-block":
-      return <AttachmentBlock {...props} element={element} />
-    case "image-block":
-      return <ImageBlock {...props} element={element} />
+    case ImageBlock.type:
+      return <ImageBlock.Element {...props} element={element} />
     default:
-      throw new Error("Unexpected type")
+      throw new Error("Unrecognized element type")
   }
 }
 
 export default function MyEditor() {
-  // ... set `editor` const ...
+  const
 
   return (
     <Slate editor={editor} value={initialValue}>
@@ -164,6 +114,8 @@ export default function MyEditor() {
       <Editable
         style={{ border: "1px solid", padding: 10 }}
         renderElement={renderElement}
+        onPaste={cloud.onPaste}
+        onDrop={cloud.onDrop}
       />
     </Slate>
   )
@@ -199,81 +151,44 @@ export default function MyEditor() {
 The final editor source.
 
 ```tsx
-import { BaseEditor, BaseText, Descendant, createEditor } from "slate"
-import {
-  Editable,
-  ReactEditor,
-  RenderElementProps,
-  Slate,
-  withReact,
-} from "slate-react"
-import { PortiveEditor, withPortive } from "slate-portive"
-import { HistoryEditor } from "slate-history"
-import {
-  AttachmentBlock,
-  AttachmentBlockElement,
-  createAttachmentBlock,
-  ImageBlock,
-  ImageBlockElement,
-  createImageBlock,
-} from "slate-portive"
 import { useState } from "react"
+import { createEditor } from "slate"
+import { withReact, Slate, Editable } from "slate-react"
+import { withHistory } from "slate-history"
+import { withCloudEditor } from "slate-cloud/editor"
+import { ImageBlock } from "slate-cloud/image-block"
 
-type ParagraphElement = {
-  type: "paragraph"
-  children: BaseText[]
-}
-
-declare module "slate" {
-  interface CustomTypes {
-    Editor: BaseEditor & ReactEditor & HistoryEditor & PortiveEditor
-    Element: ParagraphElement | ImageBlockElement | AttachmentBlockElement
-    Text: BaseText
-  }
-}
-
-const initialValue: Descendant[] = [
+/**
+ * Initial value is an empty paragraph
+ */
+const initialValue = [
   { type: "paragraph", children: [{ text: "" }] },
 ]
 
-function renderElement(props: RenderElementProps) {
-  const element = props.element
-  switch (element.type) {
-    case "paragraph":
-      return <p {...props.attributes}>{props.children}</p>
-    case "attachment-block":
-      return <AttachmentBlock {...props} element={element} />
-    case "image-block":
-      return <ImageBlock {...props} element={element} />
-    default:
-      throw new Error("Unexpected type")
+const renderElement = ImageBlock.withRenderElement((props) => {
+  const {element} = props
+  if (element.type === 'paragraph') {
+    return <p {...props.attributes}>{props.children}</p>
   }
-}
+})
+
+const renderElement = ImageBlock.withRenderElement(renderParagraphElement)
 
 export default function MyEditor() {
-  // Create a Slate editor object that won't change across renders.
+
   const [editor] = useState(() => {
-    const reactEditor = withReact(createEditor())
-    const editor = withPortive(reactEditor, {
-      authToken: "...",
-      createImageFileElement: createImageBlock,
-      createFileElement: createAttachmentBlock,
-    })
-
-    // Set `isVoid` for `image-block` and `attachment-block` types
-    editor.isVoid = (element) =>
-      ["image-block", "attachment-block"].includes(element.type)
-
-    return editor
+    const basicEditor = withHistory(withReact(createEditor()))
+    const cloudEditor = withCloud(basicEditor), { apiKey: "YOUR_API_KEY", })
+    ImageBlock.withEditor(cloudEditor)
+    return cloudEditor
   })
 
   return (
     <Slate editor={editor} value={initialValue}>
       <Editable
-        style={{ border: "1px solid", padding: 10 }}
         renderElement={renderElement}
-        onPaste={editor.portive.handlePaste}
-        onDrop={editor.portive.handleDrop}
+        onPaste={editor.cloud.handlePaste}
+        onDrop={editor.cloud.handleDrop}
       />
     </Slate>
   )
