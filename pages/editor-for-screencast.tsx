@@ -124,7 +124,7 @@ export default function Index({
       <div className={themeCss}>
         {themes.map((theme) => {
           return (
-            <div onClick={(e) => setTheme(theme)} key={theme.title}>
+            <div onClick={() => setTheme(theme)} key={theme.title}>
               {theme.title}
             </div>
           )
