@@ -37,6 +37,9 @@ export function withCloud<T extends FullCloudEditor>(
     initialOrigins = {},
     createImageFileElement,
     createFileElement,
+    onUpload = () => {
+      /* noop */
+    },
   }: WithCloudEditorOptions
 ): T {
   const useStore = createOriginStore({ origins: initialOrigins })
@@ -96,6 +99,7 @@ export function withCloud<T extends FullCloudEditor>(
       const origins = getOrigins(editor)
       return normalizeOrigins(editor.children, origins)
     },
+    onUpload,
   }
   return editor
 }

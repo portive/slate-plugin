@@ -19,6 +19,10 @@ export type CreateGenericFileElementEvent = {
   file: File
 }
 
+export type OnUploadEvent =
+  | CreateImageFileElementEvent
+  | CreateGenericFileElementEvent
+
 export type CreateFileElementEvent =
   | CreateImageFileElementEvent
   | CreateGenericFileElementEvent
@@ -36,6 +40,8 @@ export type CreateImageFileElement = (
  */
 type PortiveClientOptions = ConstructorParameters<typeof Client>[0]
 
+export type OnUpload = (e: OnUploadEvent) => void
+
 export type WithCloudEditorOptions = {
   apiOriginUrl?: string
   apiKey?: PortiveClientOptions["apiKey"]
@@ -46,6 +52,7 @@ export type WithCloudEditorOptions = {
   initialOrigins?: Record<string, Origin>
   createImageFileElement?: CreateImageFileElement
   createFileElement: CreateFileElement
+  onUpload?: OnUpload
 }
 
 /**
@@ -75,6 +82,7 @@ export type CloudObject = {
   handleInputFileChange: (e: React.ChangeEvent<HTMLInputElement>) => boolean
   save: (options?: SaveOptions) => Promise<SaveResult>
   normalize: () => Descendant[]
+  onUpload: (e: OnUploadEvent) => void
 }
 
 export type CloudEditor = {

@@ -16,6 +16,7 @@ import {
 import { ClientFile } from "@portive/api-types"
 import EventEmitter from "eventemitter3"
 import Defer from "p-defer"
+import { insertBlock } from "./transforms"
 
 /**
  * Executes the `uploadSteps`:
@@ -27,7 +28,7 @@ import Defer from "p-defer"
  * - Set the `error` state if there is an upload failure
  * - Set the final upload status as `complete` and set the final `url` on the `origin`
  */
-async function uploadSteps({
+async function startUploadSteps({
   editor,
   originKey,
   file,
@@ -40,7 +41,7 @@ async function uploadSteps({
   file: File
   clientFile: ClientFile
   element: Element & { originKey: string }
-  at?: Location | null
+  at?: Location
 }) {
   const { setOrigin } = editor.cloud.useStore.getState()
   const url = clientFile.objectUrl
@@ -77,35 +78,11 @@ async function uploadSteps({
   })
 
   /**
-   * If `at` is passed in, we are going to move the editor's selection to that
-   * location. This would happen with a drag and drop.
+   * Insert a block smartly at a location that makes sense wither `at` the
+   * given location or, if `at` is `undefined`, then at the locaiton of  the
+   * current selection.
    */
-  if (at != null) {
-    Transforms.select(editor, at)
-  }
-  /**
-   * If the selection is in an empty block, Slate's behavior is to insert a
-   * new block beneat the empty block. To get the block to insert above the
-   * empty block (the expected behavior) we move the selection back one.
-   */
-  const { selection } = editor
-  if (selection) {
-    const aboveEntry = Editor.above(editor, {
-      at: selection,
-      match: (node) => Element.isElement(node) && Editor.isBlock(editor, node),
-    })
-    if (aboveEntry) {
-      const string = Editor.string(editor, aboveEntry[1])
-      if (string.length === 0) {
-        Transforms.move(editor, { unit: "offset", reverse: true })
-      }
-    }
-  }
-
-  /**
-   * Insert the `element` (which includes an `originKey`).
-   */
-  Transforms.insertNodes(editor, element)
+  insertBlock(editor, element, at)
 
   /**
    * Start the actual upload progress and update the `origin` as to the
@@ -192,7 +169,7 @@ async function uploadHostedImage(
     ? cloud.createImageFileElement(event)
     : cloud.createFileElement(event)
 
-  await uploadSteps({
+  await startUploadSteps({
     editor,
     originKey,
     file,
@@ -225,7 +202,14 @@ async function uploadHostedFile(
     file,
   })
 
-  await uploadSteps({
+  // FIXME: Add this back in
+  // editor.cloud.onUpload({
+  //   type: "generic",
+  //   originKey: originKey,
+  //   file,
+  // })
+
+  await startUploadSteps({
     editor,
     originKey,
     file,
