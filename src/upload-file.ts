@@ -42,7 +42,7 @@ async function uploadSteps({
   element: Element & { originKey: string }
   at?: Location | null
 }) {
-  const { setOrigin } = editor.portive.useStore.getState()
+  const { setOrigin } = editor.cloud.useStore.getState()
   const url = clientFile.objectUrl
 
   /**
@@ -112,7 +112,7 @@ async function uploadSteps({
    * upload progress.
    */
   const uploadResult = await uploadFile({
-    client: editor.portive.client,
+    client: editor.cloud.client,
     file,
     onProgress(e) {
       const origin: Origin = {
@@ -166,7 +166,7 @@ async function uploadHostedImage(
   file: File,
   options: UploadFileOptions
 ) {
-  const portive = editor.portive
+  const cloud = editor.cloud
 
   const clientFile = await createClientFile(file)
   if (clientFile.type !== "image") {
@@ -178,7 +178,7 @@ async function uploadHostedImage(
   /**
    * Get initial image size
    */
-  const initialSize = resizeIn(clientFile.size, portive.initialMaxSize)
+  const initialSize = resizeIn(clientFile.size, cloud.initialMaxSize)
 
   const event: CreateImageFileElementEvent = {
     type: "image",
@@ -188,9 +188,9 @@ async function uploadHostedImage(
     initialSize,
   }
 
-  const element = portive.createImageFileElement
-    ? portive.createImageFileElement(event)
-    : portive.createFileElement(event)
+  const element = cloud.createImageFileElement
+    ? cloud.createImageFileElement(event)
+    : cloud.createFileElement(event)
 
   await uploadSteps({
     editor,
@@ -212,14 +212,14 @@ async function uploadHostedFile(
   file: File,
   options: UploadFileOptions
 ) {
-  const portive = editor.portive
+  const cloud = editor.cloud
 
   const clientFile = await createClientFile(file)
   if (clientFile.type !== "generic") {
     throw new Error(`Expected clientFile.type to be generic`)
   }
 
-  const element = portive.createFileElement({
+  const element = cloud.createFileElement({
     type: "generic",
     originKey: originKey,
     file,

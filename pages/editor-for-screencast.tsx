@@ -91,7 +91,7 @@ export default function Index({
 
   return (
     <>
-      <input type="file" onChange={editor.portive.handleInputFileChange} />
+      <input type="file" onChange={editor.cloud.handleInputFileChange} />
       <div
         className={$outerCss}
         style={{
@@ -107,7 +107,7 @@ export default function Index({
             <input
               className={$inputFileCss}
               type="file"
-              onChange={editor.portive.handleInputFileChange}
+              onChange={editor.cloud.handleInputFileChange}
             />
             <img src={theme.toolbar} width={theme.toolbarWidth} height={16} />
           </div>
@@ -116,8 +116,8 @@ export default function Index({
           <Editable
             className={$innerCss}
             renderElement={renderElement}
-            onPaste={editor.portive.handlePaste}
-            onDrop={editor.portive.handleDrop}
+            onPaste={editor.cloud.handlePaste}
+            onDrop={editor.cloud.handleDrop}
           />
         </Slate>
       </div>

@@ -10,7 +10,7 @@ export function ResizeControls({ element }: { element: ImageFileInterface }) {
   const editor = useSlateStatic()
   const [isResizing, setIsResizing] = useState(false)
 
-  if (element.originSize[0] < editor.portive.minResizeWidth) return null
+  if (element.originSize[0] < editor.cloud.minResizeWidth) return null
 
   let currentSize = size
 
@@ -19,10 +19,10 @@ export function ResizeControls({ element }: { element: ImageFileInterface }) {
       setIsResizing(true)
       const startX = e.clientX
       const startWidth = size[0]
-      const minWidth = editor.portive.minResizeWidth
+      const minWidth = editor.cloud.minResizeWidth
       const maxWidth = Math.min(
         element.originSize[0],
-        editor.portive.maxResizeWidth
+        editor.cloud.maxResizeWidth
       )
       /**
        * Handle resize dragging through an event handler on mouseMove on the

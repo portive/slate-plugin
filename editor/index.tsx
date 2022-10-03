@@ -57,7 +57,7 @@ export function MyEditor({
 
   const save = useCallback(async () => {
     setSaveState("saving")
-    const result = await editor.portive.save()
+    const result = await editor.cloud.save()
     console.log(result.value)
     setSaveState("saved")
     await delay(1000)
@@ -77,7 +77,7 @@ export function MyEditor({
         <p>
           <input
             type="file"
-            onChange={editor.portive.handleInputFileChange}
+            onChange={editor.cloud.handleInputFileChange}
             multiple
           />
         </p>
@@ -86,8 +86,8 @@ export function MyEditor({
         <Editable
           readOnly={isReadOnly}
           renderElement={renderElement}
-          onPaste={editor.portive.handlePaste}
-          onDrop={editor.portive.handleDrop}
+          onPaste={editor.cloud.handlePaste}
+          onDrop={editor.cloud.handleDrop}
           style={{
             font: "16px sans-serif",
             border: "1px solid #c0c0c0",

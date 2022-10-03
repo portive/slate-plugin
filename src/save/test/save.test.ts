@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Descendant, createEditor } from "slate"
 import { withReact } from "slate-react"
-import { withPortive } from "~/src"
+import { withCloud } from "~/src"
 import { withHistory } from "slate-history"
 import { FullCloudEditor, Origin } from "../../types"
 import "~/editor/types" // use the types from our demo editor for testing
@@ -13,7 +13,7 @@ function mockEditor(
   value: Descendant[],
   origins: Record<string, Origin>
 ): FullCloudEditor {
-  const editor = withPortive(withReact(withHistory(createEditor())), {
+  const editor = withCloud(withReact(withHistory(createEditor())), {
     authToken: "", // we won't be uploading
     initialMaxSize: [320, 320],
     minResizeWidth: 100,
@@ -22,7 +22,7 @@ function mockEditor(
     createFileElement: {} as any, // we won't be testing this
   })
   editor.children = value
-  editor.portive.useStore = createOriginStore({ origins })
+  editor.cloud.useStore = createOriginStore({ origins })
   return editor
 }
 
@@ -35,14 +35,14 @@ function log(x: unknown) {
   console.log(JSON.stringify(x, null, 2))
 }
 
-describe("editor.portive.save", () => {
+describe("editor.cloud.save", () => {
   describe("check that it normalizes", () => {
     it("should save a simple document", async () => {
       const editor = mockEditor(
         [{ type: "paragraph", children: [{ text: "" }] }],
         {}
       )
-      const result = await editor.portive.save()
+      const result = await editor.cloud.save()
       expect(result).toEqual({
         status: "complete",
         value: [{ type: "paragraph", children: [{ text: "" }] }],
@@ -60,7 +60,7 @@ describe("editor.portive.save", () => {
         ],
         {}
       )
-      const result = await editor.portive.save()
+      const result = await editor.cloud.save()
       expect(result).toEqual({ status: "complete", value: [] })
     })
   })
@@ -98,7 +98,7 @@ describe("editor.portive.save", () => {
         ],
         origins
       )
-      const result = await editor.portive.save({ maxTimeoutInMs: 10 })
+      const result = await editor.cloud.save({ maxTimeoutInMs: 10 })
       expect(result).toEqual({
         status: "timeout",
         value: [
@@ -147,8 +147,8 @@ describe("editor.portive.save", () => {
         ],
         origins
       )
-      const { setOrigin } = editor.portive.useStore.getState()
-      const promise = editor.portive.save()
+      const { setOrigin } = editor.cloud.useStore.getState()
+      const promise = editor.cloud.save()
       setOrigin("uploading1", mockOrigin.complete("landscape"))
       resolve(origins.uploading1.finishPromise)
       setOrigin("uploading2", mockOrigin.complete("landscape"))

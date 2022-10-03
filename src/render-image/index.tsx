@@ -36,7 +36,7 @@ export function useHighlightedStyle() {
  */
 export function useOrigin(originKey: string): Origin {
   const editor = useSlateStatic()
-  const originFromStore = editor.portive.useStore(
+  const originFromStore = editor.cloud.useStore(
     (state) => state.origins[originKey]
   )
   if (originKey.includes("/")) {

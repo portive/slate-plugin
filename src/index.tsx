@@ -33,7 +33,7 @@ export function withCloud<T extends FullCloudEditor>(
     // If the source image is less than this number, it cannot be resized
     minResizeWidth = 100,
     maxResizeWidth = 1280,
-    initialMaxSize = [640, 640],
+    initialMaxSize = [320, 320],
     initialOrigins = {},
     createImageFileElement,
     createFileElement,
