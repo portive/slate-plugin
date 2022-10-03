@@ -1,7 +1,7 @@
 import { createOriginStore } from "./origin-store"
 import {
-  FullPortiveEditor,
-  WithPortiveOptions,
+  FullCloudEditor,
+  WithCloudEditorOptions,
   SaveOptions,
   UploadFileOptions,
 } from "./types"
@@ -23,7 +23,7 @@ export * from "./element-presets/image-block"
 export * from "./element-presets/image-inline"
 export * from "./element-presets/titled-image-block"
 
-export function withPortive<T extends FullPortiveEditor>(
+export function withCloud<T extends FullCloudEditor>(
   editor: T,
   {
     apiOriginUrl,
@@ -37,33 +37,58 @@ export function withPortive<T extends FullPortiveEditor>(
     initialOrigins = {},
     createImageFileElement,
     createFileElement,
-  }: WithPortiveOptions
+  }: WithCloudEditorOptions
 ): T {
   const useStore = createOriginStore({ origins: initialOrigins })
   /**
    * Create an instance of the Portive Client
    */
   const client = new Client({ apiKey, authToken, apiOrigin: apiOriginUrl })
-  editor.portive = {
+  editor.cloud = {
     client,
     minResizeWidth,
     maxResizeWidth,
     initialMaxSize,
     useStore,
+    /**
+     * Call this to initiate a file upload
+     */
     uploadFile(file: File, options?: UploadFileOptions): string {
       return upload(editor, file, options)
     },
     createImageFileElement,
     createFileElement,
+    /**
+     * Use this in `Editable` as the `onDrop` event handler.
+     * Returns `true` if the drop was handled.
+     */
     handleDrop(e) {
       return handleDropFile(editor, e)
     },
+    /**
+     * Use this in `Editable` as the `onPaste` event handler.
+     * Returns `true` if the paste was handled.
+     */
     handlePaste(e) {
       return handlePasteFile(editor, e)
     },
+    /**
+     * Use this on an `<input type="file" />` as the `onChange` event handler.
+     * Returns `true` if files were present in the Input Element and the
+     * upload process was started.
+     */
     handleInputFileChange(e) {
       return handleInputFileChange(editor, e)
     },
+    /**
+     * Waits for the files to finish uploading.
+     *
+     * If files finish uploading returns:
+     * { status: "complete", value: Descendant[] }
+     *
+     * If we hit the timeout, we remove unfinished uploads and return:
+     * { status: "timeout", value: Descendant[] }
+     */
     async save(options: SaveOptions = {}) {
       return await save(editor, options)
     },

@@ -5,7 +5,7 @@ import {
   ImageInlineElement,
   ImageBlockElement,
   AttachmentBlockElement,
-  PortiveEditor,
+  CloudEditor,
 } from "~/src"
 import { HistoryEditor } from "slate-history"
 
@@ -38,7 +38,7 @@ export type CustomElement =
 
 declare module "slate" {
   interface CustomTypes {
-    Editor: BaseEditor & ReactEditor & HistoryEditor & PortiveEditor
+    Editor: BaseEditor & ReactEditor & HistoryEditor & CloudEditor
     Element: CustomElement
     Text: CustomText
   }

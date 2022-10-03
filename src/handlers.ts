@@ -9,7 +9,7 @@ function uploadFiles(
 ) {
   if (files == null || files.length === 0) return false
   for (const file of files) {
-    editor.portive.uploadFile(file, options)
+    editor.cloud.uploadFile(file, options)
   }
   return true
 }

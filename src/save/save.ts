@@ -1,4 +1,4 @@
-import { FullPortiveEditor, SaveOptions, SaveResult } from "../types"
+import { FullCloudEditor, SaveOptions, SaveResult } from "../types"
 import { getOrigins } from "./get-origins"
 import { getUploadingOrigins } from "./get-uploading-origins"
 import delay from "delay"
@@ -7,7 +7,7 @@ import { normalizeOrigins } from "./normalize-origins"
 const TEN_MINUTES = 1000 * 60 * 60
 
 export async function save(
-  editor: FullPortiveEditor,
+  editor: FullCloudEditor,
   { maxTimeoutInMs = TEN_MINUTES }: SaveOptions
 ): Promise<SaveResult> {
   const origins = getOrigins(editor)

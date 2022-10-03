@@ -1,7 +1,7 @@
 import { Editor, Element, Location, Transforms } from "slate"
 import {
   CreateImageFileElementEvent,
-  FullPortiveEditor,
+  FullCloudEditor,
   Origin,
   OriginEventTypes,
   UploadFileOptions,
@@ -35,7 +35,7 @@ async function uploadSteps({
   element,
   at,
 }: {
-  editor: FullPortiveEditor
+  editor: FullCloudEditor
   originKey: string
   file: File
   clientFile: ClientFile
@@ -161,7 +161,7 @@ async function uploadSteps({
  * the meat of the function including uploading and setting the origin.
  */
 async function uploadHostedImage(
-  editor: FullPortiveEditor,
+  editor: FullCloudEditor,
   originKey: string,
   file: File,
   options: UploadFileOptions
@@ -207,7 +207,7 @@ async function uploadHostedImage(
  * the meat of the function including uploading and setting the origin.
  */
 async function uploadHostedFile(
-  editor: FullPortiveEditor,
+  editor: FullCloudEditor,
   originKey: string,
   file: File,
   options: UploadFileOptions
@@ -243,7 +243,7 @@ async function uploadHostedFile(
  * and when it's complete, sets the URL of the upload.
  */
 export function upload(
-  editor: FullPortiveEditor,
+  editor: FullCloudEditor,
   file: File,
   options: UploadFileOptions = {}
 ): string {

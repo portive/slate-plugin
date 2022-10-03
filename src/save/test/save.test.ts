@@ -3,7 +3,7 @@ import { Descendant, createEditor } from "slate"
 import { withReact } from "slate-react"
 import { withPortive } from "~/src"
 import { withHistory } from "slate-history"
-import { FullPortiveEditor, Origin } from "../../types"
+import { FullCloudEditor, Origin } from "../../types"
 import "~/editor/types" // use the types from our demo editor for testing
 import { mockOrigin } from "./mock-origin"
 import { createOriginStore } from "../../origin-store"
@@ -12,7 +12,7 @@ import { resolve } from "./test-utils"
 function mockEditor(
   value: Descendant[],
   origins: Record<string, Origin>
-): FullPortiveEditor {
+): FullCloudEditor {
   const editor = withPortive(withReact(withHistory(createEditor())), {
     authToken: "", // we won't be uploading
     initialMaxSize: [320, 320],

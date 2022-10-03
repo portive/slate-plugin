@@ -155,39 +155,41 @@ import { useState } from "react"
 import { createEditor } from "slate"
 import { withReact, Slate, Editable } from "slate-react"
 import { withHistory } from "slate-history"
-import { withCloudEditor } from "slate-cloud/editor"
+import { withCloud } from "slate-cloud/editor"
 import { ImageBlock } from "slate-cloud/image-block"
 
-/**
- * Initial value is an empty paragraph
- */
+// initial value "Hello World"
 const initialValue = [
-  { type: "paragraph", children: [{ text: "" }] },
+  { type: "paragraph", children: [{ text: "Hello World" }] },
 ]
 
+// Add `ImageBlock` plugin
 const renderElement = ImageBlock.withRenderElement((props) => {
   const {element} = props
   if (element.type === 'paragraph') {
     return <p {...props.attributes}>{props.children}</p>
   }
+  throw new Error(`Unhandled element type ${element.type}`)
 })
 
-const renderElement = ImageBlock.withRenderElement(renderParagraphElement)
-
-export default function MyEditor() {
+export default function EditorDemo() {
 
   const [editor] = useState(() => {
     const basicEditor = withHistory(withReact(createEditor()))
+    // add `withCloud` plugin
     const cloudEditor = withCloud(basicEditor), { apiKey: "YOUR_API_KEY", })
-    ImageBlock.withEditor(cloudEditor)
-    return cloudEditor
+    // add `ImageBlock.withEditor` plugin. Must be after `withCloud` plugin.
+    const imageBlockEditor = ImageBlock.withEditor(cloudEditor)
+    return imageBlockEditor
   })
 
   return (
     <Slate editor={editor} value={initialValue}>
       <Editable
         renderElement={renderElement}
+        // Use SlateCloud's handlePaste handler
         onPaste={editor.cloud.handlePaste}
+        // Use SlateCloud's handleDrop handler
         onDrop={editor.cloud.handleDrop}
       />
     </Slate>

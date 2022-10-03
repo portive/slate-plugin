@@ -36,7 +36,7 @@ export type CreateImageFileElement = (
  */
 type PortiveClientOptions = ConstructorParameters<typeof Client>[0]
 
-export type WithPortiveOptions = {
+export type WithCloudEditorOptions = {
   apiOriginUrl?: string
   apiKey?: PortiveClientOptions["apiKey"]
   authToken?: PortiveClientOptions["authToken"]
@@ -61,7 +61,7 @@ export type SaveResult =
   | { status: "timeout"; value: Descendant[]; finishes: Promise<Origin>[] }
   | { status: "complete"; value: Descendant[] }
 
-export type PortiveObject = {
+export type CloudObject = {
   client: Client
   initialMaxSize: [number, number]
   minResizeWidth: number
@@ -77,11 +77,11 @@ export type PortiveObject = {
   normalize: () => Descendant[]
 }
 
-export type PortiveEditor = {
-  portive: PortiveObject
+export type CloudEditor = {
+  cloud: CloudObject
 }
 
-export type FullPortiveEditor = BaseEditor &
+export type FullCloudEditor = BaseEditor &
   ReactEditor &
   HistoryEditor &
-  PortiveEditor
+  CloudEditor
