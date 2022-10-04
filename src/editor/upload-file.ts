@@ -1,10 +1,10 @@
 import {
-  CreateImageFileElementEvent,
+  OnUploadImageEvent,
   FullCloudEditor,
   Origin,
   OriginEventTypes,
   UploadFileOptions,
-} from "./types"
+} from "../types"
 import { nanoid } from "nanoid"
 import {
   createClientFile,
@@ -156,7 +156,7 @@ async function uploadHostedImageFile(
    */
   const initialSize = resizeIn(clientFile.size, cloud.initialMaxSize)
 
-  const event: CreateImageFileElementEvent = {
+  const event: OnUploadImageEvent = {
     type: "image",
     originKey: originKey,
     originSize: clientFile.size,

@@ -5,12 +5,12 @@ import {
   SaveOptions,
   UploadFileOptions,
 } from "../types"
-import { upload } from "../upload-file"
+import { upload } from "./upload-file"
 import {
   handleInputFileChange,
   handlePasteFile,
   handleDropFile,
-} from "./handlers"
+} from "./upload-handlers"
 import { normalizeOrigins, save } from "../save"
 import { getOrigins } from "../save/get-origins"
 import { Client } from "@portive/client"

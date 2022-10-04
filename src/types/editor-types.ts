@@ -1,11 +1,11 @@
-import { BaseEditor, Descendant, Element, Location } from "slate"
+import { BaseEditor, Descendant, Location } from "slate"
 import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { createOriginStore } from "../origin-store"
 import { Origin } from "./origin-types"
 import { Client } from "@portive/client"
 
-export type CreateImageFileElementEvent = {
+export type OnUploadImageEvent = {
   type: "image"
   originKey: string
   originSize: [number, number]
@@ -14,28 +14,16 @@ export type CreateImageFileElementEvent = {
   at: Location
 }
 
-export type CreateGenericFileElementEvent = {
+export type OnUploadGenericEvent = {
   type: "generic"
   originKey: string
   file: File
   at: Location
 }
 
-export type OnUploadEvent =
-  | CreateImageFileElementEvent
-  | CreateGenericFileElementEvent
+export type OnUploadEvent = OnUploadImageEvent | OnUploadGenericEvent
 
-export type CreateFileElementEvent =
-  | CreateImageFileElementEvent
-  | CreateGenericFileElementEvent
-
-export type CreateFileElement = (
-  e: CreateFileElementEvent
-) => Element & { originKey: string }
-
-export type CreateImageFileElement = (
-  e: CreateImageFileElementEvent
-) => Element & { originKey: string }
+export type CreateFileElementEvent = OnUploadImageEvent | OnUploadGenericEvent
 
 /**
  * The Options object passed into `@portive/client`
