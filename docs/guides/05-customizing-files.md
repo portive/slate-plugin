@@ -168,7 +168,7 @@ Here's the `createAttachmentBlock` method passed into the `createFileElement` op
 
 ```ts
 export function createAttachmentBlock(
-  e: CreateFileElementEvent
+  e: OnUploadEvent
 ): AttachmentBlockElement {
   return {
     originKey: e.originKey,
@@ -186,7 +186,7 @@ Let's modify it to set the `contentType` as well:
 
 ```ts
 export function createCustomAttachmentBlock(
-  e: CreateFileElementEvent
+  e: OnUploadEvent
 ): CustomAttachmentBlockElement {
   return {
     originKey: e.originKey,
@@ -220,7 +220,7 @@ export type CustomAttachmentBlockElement = {
 
 
 export function createCustomAttachmentBlock(
-  e: CreateFileElementEvent
+  e: OnUploadEvent
 ): CustomAttachmentBlockElement {
   return {
     originKey: e.originKey,

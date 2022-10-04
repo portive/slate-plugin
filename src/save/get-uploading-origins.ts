@@ -7,6 +7,10 @@ type MaybeOriginNode = {
   [key: string]: unknown
 }
 
+/**
+ * Tells us if the `originKey` is a `url`. If it's not, it's a lookup in the
+ * origins lookup.
+ */
 export function isUrl(originKey: string) {
   return originKey.includes("/")
 }

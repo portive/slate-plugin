@@ -5,6 +5,10 @@ import { createOriginStore } from "../editor/origin-store"
 import { Origin } from "./origin-types"
 import { Client } from "@portive/client"
 
+/**
+ * `OnUpload` related types
+ */
+
 export type OnUploadImageEvent = {
   type: "image"
   originKey: string
@@ -23,14 +27,13 @@ export type OnUploadGenericEvent = {
 
 export type OnUploadEvent = OnUploadImageEvent | OnUploadGenericEvent
 
-export type CreateFileElementEvent = OnUploadImageEvent | OnUploadGenericEvent
+export type OnUpload = (e: OnUploadEvent) => void
 
 /**
  * The Options object passed into `@portive/client`
  */
-type PortiveClientOptions = ConstructorParameters<typeof Client>[0]
 
-export type OnUpload = (e: OnUploadEvent) => void
+type PortiveClientOptions = ConstructorParameters<typeof Client>[0]
 
 export type WithCloudEditorOptions = {
   apiOriginUrl?: string
