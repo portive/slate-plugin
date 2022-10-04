@@ -1,5 +1,5 @@
 import create from "zustand"
-import { Origin, OriginState } from "./types"
+import { Origin, OriginState } from "../types"
 
 /**
  * Creates an origin store using `zustand`.

@@ -3,7 +3,6 @@ import {
   FullCloudEditor,
   Origin,
   OriginEventTypes,
-  UploadFileOptions,
 } from "../types"
 import { nanoid } from "nanoid"
 import {
@@ -15,7 +14,6 @@ import {
 import { ClientFile } from "@portive/api-types"
 import EventEmitter from "eventemitter3"
 import Defer from "p-defer"
-import { Editor } from "slate"
 
 /**
  * Executes the `uploadSteps`:
@@ -139,8 +137,7 @@ async function startUploadSteps({
 async function uploadHostedImageFile(
   editor: FullCloudEditor,
   originKey: string,
-  file: File,
-  options: UploadFileOptions
+  file: File
 ) {
   const cloud = editor.cloud
 
@@ -164,7 +161,7 @@ async function uploadHostedImageFile(
     initialSize,
     // at specified position, or if not specified, the current selection or
     // if no current selection at the top of the editor.
-    at: options.at || editor.selection || Editor.start(editor, [0]),
+    // at: options.at || editor.selection || Editor.start(editor, [0]),
   }
 
   editor.cloud.onUpload(event)
@@ -188,8 +185,7 @@ async function uploadHostedImageFile(
 async function uploadHostedGenericFile(
   editor: FullCloudEditor,
   originKey: string,
-  file: File,
-  options: UploadFileOptions
+  file: File
 ) {
   // const cloud = editor.cloud
 
@@ -204,7 +200,7 @@ async function uploadHostedGenericFile(
     file,
     // at specified position, or if not specified, the current selection or
     // if no current selection at the top of the editor.
-    at: options.at || editor.selection || Editor.start(editor, [0]),
+    // at: options.at || editor.selection || Editor.start(editor, [0]),
   })
 
   await startUploadSteps({
@@ -222,16 +218,12 @@ async function uploadHostedGenericFile(
  * of the upload in the editor. For example, how much upload progress there is
  * and when it's complete, sets the URL of the upload.
  */
-export function upload(
-  editor: FullCloudEditor,
-  file: File,
-  options: UploadFileOptions = {}
-): string {
+export function upload(editor: FullCloudEditor, file: File): string {
   const id = nanoid()
   if (isHostedImage(file)) {
-    uploadHostedImageFile(editor, id, file, options)
+    uploadHostedImageFile(editor, id, file)
   } else {
-    uploadHostedGenericFile(editor, id, file, options)
+    uploadHostedGenericFile(editor, id, file)
   }
   return id
 }

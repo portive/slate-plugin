@@ -1,10 +1,5 @@
 import { createOriginStore } from "./origin-store"
-import {
-  FullCloudEditor,
-  WithCloudEditorOptions,
-  SaveOptions,
-  UploadFileOptions,
-} from "../types"
+import { FullCloudEditor, WithCloudEditorOptions, SaveOptions } from "../types"
 import { upload } from "./upload-file"
 import {
   handleInputFileChange,
@@ -46,8 +41,8 @@ export function withCloud<T extends FullCloudEditor>(
     /**
      * Call this to initiate a file upload
      */
-    uploadFile(file: File, options?: UploadFileOptions): string {
-      return upload(editor, file, options)
+    uploadFile(file: File): string {
+      return upload(editor, file)
     },
     /**
      * Use this in `Editable` as the `onDrop` event handler.

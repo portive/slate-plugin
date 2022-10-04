@@ -1,18 +1,20 @@
-import { Editor } from "slate"
+import { Editor, Transforms } from "slate"
 import { ReactEditor } from "slate-react"
-import { UploadFileOptions } from "../types"
 
 /**
  * Handle uploading of files
  */
-function uploadFiles(
-  editor: Editor,
-  files: FileList | null,
-  options?: UploadFileOptions
-) {
+function uploadFiles(editor: Editor, files: FileList | null) {
   if (files == null || files.length === 0) return false
+  /**
+   * If there is no selection when this is called, we need somewhere for the
+   * file to go so we select the start of the editor as a default.
+   */
+  if (editor.selection == null) {
+    Transforms.select(editor, Editor.start(editor, [0]))
+  }
   for (const file of [...files].reverse()) {
-    editor.cloud.uploadFile(file, options)
+    editor.cloud.uploadFile(file)
   }
   return true
 }
@@ -44,7 +46,8 @@ export const handleDropFile = (editor: Editor, e: React.DragEvent): boolean => {
    * location.
    */
   const at = ReactEditor.findEventRange(editor, e)
-  uploadFiles(editor, files, { at })
+  Transforms.select(editor, at)
+  uploadFiles(editor, files)
   e.preventDefault()
   e.stopPropagation()
   return true

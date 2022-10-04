@@ -15,14 +15,12 @@ export type OnUploadImageEvent = {
   originSize: [number, number]
   initialSize: [number, number]
   file: File
-  at: Location
 }
 
 export type OnUploadGenericEvent = {
   type: "generic"
   originKey: string
   file: File
-  at: Location
 }
 
 export type OnUploadEvent = OnUploadImageEvent | OnUploadGenericEvent
@@ -47,11 +45,6 @@ export type WithCloudEditorOptions = {
 }
 
 /**
- * Upload File Options
- */
-export type UploadFileOptions = { at?: Location }
-
-/**
  * Save
  */
 export type SaveOptions = { maxTimeoutInMs?: number }
@@ -59,13 +52,13 @@ export type SaveResult =
   | { status: "timeout"; value: Descendant[]; finishes: Promise<Origin>[] }
   | { status: "complete"; value: Descendant[] }
 
-export type CloudObject = {
+export type EditorCloudObject = {
   client: Client
   initialMaxSize: [number, number]
   minResizeWidth: number
   maxResizeWidth: number
   useStore: ReturnType<typeof createOriginStore>
-  uploadFile: (file: File, options?: UploadFileOptions) => string
+  uploadFile: (file: File) => string
   handlePaste: (e: React.ClipboardEvent) => boolean
   handleDrop: (e: React.DragEvent) => boolean
   handleInputFileChange: (e: React.ChangeEvent<HTMLInputElement>) => boolean
@@ -75,7 +68,7 @@ export type CloudObject = {
 }
 
 export type CloudEditor = {
-  cloud: CloudObject
+  cloud: EditorCloudObject
 }
 
 export type FullCloudEditor = BaseEditor &
