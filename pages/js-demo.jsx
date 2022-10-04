@@ -18,6 +18,7 @@ export async function getServerSideProps() {
   return { props: { authToken } }
 }
 
+// ✅ Add `CloudComponents.withRenderElement` plugin on `renderElement`
 const renderElement = CloudComponents.withRenderElement((props) => {
   const { element } = props
   if (element.type === "paragraph") {
@@ -29,9 +30,9 @@ const renderElement = CloudComponents.withRenderElement((props) => {
 export default function Page({ authToken }) {
   const [editor] = useState(() => {
     const basicEditor = withHistory(withReact(createEditor()))
-    // Add `withCloud` plugin to enable uploads
+    // ✅ Add `CloudComponents.withRenderElement` plugin on `renderElement`
     const cloudEditor = withCloud(basicEditor, { authToken })
-    // Add default cloud components for ImageBlock and AttachmentBlock
+    // ✅ Add `CloudComponents.withEditor` plugin on `Editor` object
     CloudComponents.withEditor(cloudEditor)
     return cloudEditor
   })
