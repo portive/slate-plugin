@@ -22,6 +22,9 @@ export function RenderHostedImage({
   )
 }
 
+/**
+ * Adds a `boxShadow` around the Element when it is selected.
+ */
 export function useHighlightedStyle() {
   const selected = useSelected()
   const focused = useFocused()
