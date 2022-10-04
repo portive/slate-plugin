@@ -1,7 +1,10 @@
 import { Editor } from "slate"
 import { ReactEditor } from "slate-react"
-import { UploadFileOptions } from "./types"
+import { UploadFileOptions } from "../types"
 
+/**
+ * Handle uploading of files
+ */
 function uploadFiles(
   editor: Editor,
   files: FileList | null,
@@ -14,6 +17,9 @@ function uploadFiles(
   return true
 }
 
+/**
+ * handle `pasteFile` on any Element
+ */
 export const handlePasteFile = (
   editor: Editor,
   e: React.ClipboardEvent
@@ -26,6 +32,9 @@ export const handlePasteFile = (
   return true
 }
 
+/**
+ * handle `dropFile` on any Element
+ */
 export const handleDropFile = (editor: Editor, e: React.DragEvent): boolean => {
   const files = e.dataTransfer.files
   if (files.length === 0) return false
@@ -41,6 +50,9 @@ export const handleDropFile = (editor: Editor, e: React.DragEvent): boolean => {
   return true
 }
 
+/**
+ * handle `onChange` on any `<input type="file" />` Element
+ */
 export const handleInputFileChange = (
   editor: Editor,
   e: React.ChangeEvent<HTMLInputElement>

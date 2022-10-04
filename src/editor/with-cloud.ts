@@ -10,7 +10,7 @@ import {
   handleInputFileChange,
   handlePasteFile,
   handleDropFile,
-} from "../handlers"
+} from "./handlers"
 import { normalizeOrigins, save } from "../save"
 import { getOrigins } from "../save/get-origins"
 import { Client } from "@portive/client"
