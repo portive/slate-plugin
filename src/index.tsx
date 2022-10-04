@@ -18,10 +18,6 @@ export * from "./types"
 export * from "./origin-store"
 export * from "./render-image"
 export * from "./handlers"
-export * from "./components/attachment-block"
-export * from "./components/image-block"
-export * from "./components/image-inline"
-export * from "./components/titled-image-block"
 
 export function withCloud<T extends FullCloudEditor>(
   editor: T,

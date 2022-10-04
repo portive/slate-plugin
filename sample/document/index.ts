@@ -248,5 +248,14 @@ export const initialValue: Descendant[] = [
     size: [256, 171],
     children: [{ text: "" }],
   },
+  { type: "paragraph", children: [{ text: "Titled image block" }] },
+  {
+    type: "titled-image-block",
+    title: "This is titled",
+    originKey: "complete",
+    originSize: images.landscape.originSize,
+    size: [256, 171],
+    children: [{ text: "" }],
+  },
   { type: "paragraph", children: [{ text: "End of World" }] },
 ]

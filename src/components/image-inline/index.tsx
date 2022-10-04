@@ -1,13 +1,15 @@
 import { AssertType } from "@thesunny/assert-type"
+import { RenderElementProps } from "slate-react"
 import {
-  DiscriminatedRenderElementProps,
-  HostedImage,
   ImageFileInterface,
+  HostedImage,
+  RenderElementPropsFor,
+  FullCloudEditor,
 } from "../.."
+// import { insertBlock } from "~/src/transforms"
+import { Transforms } from "slate"
 
-export const IMAGE_INLINE_TYPE = "image-inline"
-
-export type ImageInlineElement = {
+export type ImageInlineElementType = {
   type: "image-inline"
   /**
    * Must include originKey and originSize
@@ -21,14 +23,55 @@ export type ImageInlineElement = {
   children: [{ text: "" }]
 }
 
-AssertType.Equal<typeof IMAGE_INLINE_TYPE, ImageInlineElement["type"]>(true)
-AssertType.Extends<ImageInlineElement, ImageFileInterface>(true)
+export const ELEMENT_TYPE: ImageInlineElementType["type"] = "image-inline"
 
-export function ImageInline({
+AssertType.Extends<ImageInlineElementType, ImageFileInterface>(true)
+
+/**
+ * Augment `Editor` to support this element type
+ */
+function withEditor(editor: FullCloudEditor): FullCloudEditor {
+  const { cloud } = editor
+  /**
+   * override `isVoid`
+   */
+  const originalIsVoid = editor.isVoid
+  editor.isVoid = (element) => {
+    return element.type === ELEMENT_TYPE ? true : originalIsVoid(element)
+  }
+  /**
+   * override `isInline`
+   */
+  const originalIsInline = editor.isInline
+  editor.isInline = (element) => {
+    return element.type === ELEMENT_TYPE ? true : originalIsInline(element)
+  }
+  /**
+   * override `onUpload`
+   */
+  const originalOnUpload = cloud.onUpload
+  cloud.onUpload = (e) => {
+    if (e.type !== "image") return originalOnUpload(e)
+    Transforms.insertNodes(
+      editor,
+      {
+        type: "image-inline",
+        originKey: e.originKey,
+        originSize: e.originSize,
+        size: e.initialSize,
+        children: [{ text: "" }],
+      },
+      { at: e.at }
+    )
+  }
+  return editor
+}
+
+export function Component({
   attributes,
   element,
   children,
-}: DiscriminatedRenderElementProps<"image-inline">) {
+}: RenderElementPropsFor<ImageInlineElementType>) {
   return (
     <span {...attributes}>
       <HostedImage
@@ -38,4 +81,22 @@ export function ImageInline({
       {children}
     </span>
   )
+}
+
+/**
+ * Augment `renderElement` method to support this element type
+ */
+function withRenderElement(
+  renderElement: (props: RenderElementProps) => JSX.Element
+): (props: RenderElementProps) => JSX.Element {
+  const originalRenderElement = renderElement
+  return function renderElement(props: RenderElementProps): JSX.Element {
+    if (props.element.type !== ELEMENT_TYPE) return originalRenderElement(props)
+    return <Component {...props} element={props.element} />
+  }
+}
+
+export const ImageInline = {
+  withEditor,
+  withRenderElement,
 }

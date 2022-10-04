@@ -5,6 +5,8 @@ import { Origin, withCloud } from "~/src"
 import { withHistory } from "slate-history"
 import { renderElement } from "./render-element"
 import { ImageBlock } from "~/src/components/image-block"
+import { ImageInline } from "~/src/components/image-inline"
+import { TitledImageBlock } from "~/src/components/titled-image-block"
 import { AttachmentBlock } from "~/src/components/attachment-block"
 import delay from "delay"
 import "./types"
@@ -35,13 +37,9 @@ export function MyEditor({
       maxResizeWidth: 640,
       initialOrigins,
     })
-    editor.isVoid = (element) => {
-      return ["image-inline"].includes(element.type)
-    }
-    editor.isInline = (element) => {
-      return element.type === "image-inline"
-    }
     AttachmentBlock.withEditor(editor)
+    ImageInline.withEditor(editor)
+    TitledImageBlock.withEditor(editor)
     ImageBlock.withEditor(editor)
     return editor
   })

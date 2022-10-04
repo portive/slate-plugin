@@ -1,21 +1,22 @@
 import { RenderElementProps } from "slate-react"
 import React from "react"
-import { ImageInline, TitledImageBlock } from "~/src"
+import { TitledImageBlock } from "~/src/components/titled-image-block"
 import { ImageBlock } from "~/src/components/image-block"
+import { ImageInline } from "~/src/components/image-inline"
 import { AttachmentBlock } from "~/src/components/attachment-block"
 
 export const renderElement = AttachmentBlock.withRenderElement(
-  ImageBlock.withRenderElement((props: RenderElementProps) => {
-    const element = props.element
-    switch (element.type) {
-      case "titled-image-block":
-        return <TitledImageBlock {...props} element={element} />
-      case "image-inline":
-        return <ImageInline {...props} element={element} />
-      case "paragraph":
-        return <p {...props.attributes}>{props.children}</p>
-      default:
-        throw new Error("Unexpected type")
-    }
-  })
+  ImageInline.withRenderElement(
+    TitledImageBlock.withRenderElement(
+      ImageBlock.withRenderElement((props: RenderElementProps) => {
+        const element = props.element
+        switch (element.type) {
+          case "paragraph":
+            return <p {...props.attributes}>{props.children}</p>
+          default:
+            throw new Error(`Unexpected type ${element.type}`)
+        }
+      })
+    )
+  )
 )

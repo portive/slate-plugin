@@ -1,19 +1,17 @@
 import { BaseEditor, BaseText } from "slate"
 import { ReactEditor } from "slate-react"
-import {
-  TitledImageBlockElement,
-  ImageInlineElement,
-  ElementType,
-  AttachmentBlockElementType,
-  CloudEditor,
-} from "~/src"
+import { CloudEditor } from "~/src"
+import { ImageBlockElementType as ImageBlockElementType } from "~/src/components/image-block"
+import { AttachmentBlockElementType } from "~/src/components/attachment-block"
+import { ImageInlineElementType } from "~/src/components/image-inline"
+import { TitledImageBlockElementType } from "~/src/components/titled-image-block"
 import { HistoryEditor } from "slate-history"
 
 type CustomText = BaseText
 
 type ParagraphElement = {
   type: "paragraph"
-  children: (CustomText | ImageInlineElement)[]
+  children: (CustomText | ImageInlineElementType)[]
 }
 
 type BlockQuoteElement = {
@@ -32,9 +30,10 @@ export type CustomElement =
   | BlockQuoteElement
   | MinOriginElement
   | AttachmentBlockElementType
-  | ElementType
-  | TitledImageBlockElement
-  | ImageInlineElement
+  | ImageBlockElementType
+  | ImageInlineElementType
+  | TitledImageBlockElementType
+// | ImageInlineElement
 
 declare module "slate" {
   interface CustomTypes {

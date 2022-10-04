@@ -8,7 +8,7 @@ import {
 } from "../.."
 import { insertBlock } from "~/src/transforms"
 
-export type ElementType = {
+export type ImageBlockElementType = {
   type: "image-block"
   originKey: string
   originSize: [number, number]
@@ -16,9 +16,9 @@ export type ElementType = {
   children: [{ text: "" }]
 }
 
-const ELEMENT_TYPE: ElementType["type"] = "image-block"
+const ELEMENT_TYPE: ImageBlockElementType["type"] = "image-block"
 
-AssertType.Extends<ElementType, ImageFileInterface>(true)
+AssertType.Extends<ImageBlockElementType, ImageFileInterface>(true)
 
 /**
  * Augment `Editor` to support this element type
@@ -41,7 +41,7 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
     insertBlock(
       editor,
       {
-        type: "image-block",
+        type: ELEMENT_TYPE,
         originKey: e.originKey,
         originSize: e.originSize,
         size: e.initialSize,
@@ -56,11 +56,11 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
 /**
  * The `Element` component to render
  */
-export function Component({
+function Component({
   attributes,
   element,
   children,
-}: RenderElementPropsFor<ElementType>) {
+}: RenderElementPropsFor<ImageBlockElementType>) {
   return (
     <div {...attributes} style={{ margin: "8px 0" }}>
       <HostedImage
@@ -86,8 +86,6 @@ function withRenderElement(
 }
 
 export const ImageBlock = {
-  type: ELEMENT_TYPE,
-  Component,
   withEditor,
   withRenderElement,
 }
