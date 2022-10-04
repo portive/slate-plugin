@@ -3,7 +3,7 @@ import { Slate, Editable, withReact } from "slate-react"
 import React, { useCallback, useState } from "react"
 import {
   Origin,
-  withPortive,
+  withCloud,
   createAttachmentBlock,
   createImageBlock,
 } from "~/src"
@@ -29,7 +29,7 @@ export function MyEditor({
 }) {
   const [editor] = useState<Editor>(() => {
     const reactEditor = withReact(withHistory(createEditor()))
-    const editor = withPortive(reactEditor, {
+    const editor = withCloud(reactEditor, {
       apiKey,
       authToken,
       apiOriginUrl,

@@ -5,11 +5,7 @@ import { Editor, Element, Location, Transforms } from "slate"
  * given location or, if `at` is `undefined`, then at the locaiton of  the
  * current selection.
  */
-export function insertBlock(
-  editor: Editor,
-  element: Element,
-  at: Location | undefined
-) {
+export function insertBlock(editor: Editor, element: Element, at?: Location) {
   /**
    * If `at` is passed in, we are going to move the editor's selection to that
    * location. This would happen with a drag and drop for example.

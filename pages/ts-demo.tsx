@@ -7,8 +7,8 @@ import { withHistory } from "slate-history"
 import { withCloud } from "~/src"
 import { createAuthToken } from "@portive/auth"
 import { env } from "~/lib/server-env"
-import { Origin, createAttachmentBlock, createImageBlock } from "~/src"
 import { ImageBlock } from "~/src/image-block"
+import { AttachmentBlock } from "~/src/attachment-block"
 
 /**
  * Create the authToken
@@ -24,14 +24,14 @@ const initialValue: Descendant[] = [
   { type: "paragraph", children: [{ text: "Hello World" }] },
 ]
 
-const renderElement = ImageBlock.withRenderElement(
-  (props: RenderElementProps) => {
+const renderElement = AttachmentBlock.withRenderElement(
+  ImageBlock.withRenderElement((props: RenderElementProps) => {
     const { element } = props
     if (element.type === "paragraph") {
       return <p {...props.attributes}>{props.children}</p>
     }
     throw new Error(`Unhandled element type ${element.type}`)
-  }
+  })
 )
 
 export default function Page({
@@ -39,12 +39,12 @@ export default function Page({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [editor] = useState(() => {
     const basicEditor = withHistory(withReact(createEditor()))
-    const cloudEditor = withCloud(basicEditor, {
-      authToken,
-      createImageFileElement: createImageBlock,
-      createFileElement: createAttachmentBlock,
-    })
-    // ImageBlock.withEditor(cloudEditor)
+    // Add `withCloud` plugin to enable uploads
+    const cloudEditor = withCloud(basicEditor, { authToken })
+    // Add `AttachmentBlock` plugin for generic files
+    AttachmentBlock.withEditor(cloudEditor)
+    // Add `ImageBlock` plugin for images
+    ImageBlock.withEditor(cloudEditor)
     return cloudEditor
   })
 

@@ -35,8 +35,6 @@ export function withCloud<T extends FullCloudEditor>(
     maxResizeWidth = 1280,
     initialMaxSize = [320, 320],
     initialOrigins = {},
-    createImageFileElement,
-    createFileElement,
     onUpload = () => {
       /* noop */
     },
@@ -59,8 +57,6 @@ export function withCloud<T extends FullCloudEditor>(
     uploadFile(file: File, options?: UploadFileOptions): string {
       return upload(editor, file, options)
     },
-    createImageFileElement,
-    createFileElement,
     /**
      * Use this in `Editable` as the `onDrop` event handler.
      * Returns `true` if the drop was handled.

@@ -1,4 +1,3 @@
-import { Editor, Element, Location, Transforms } from "slate"
 import {
   CreateImageFileElementEvent,
   FullCloudEditor,
@@ -16,7 +15,6 @@ import {
 import { ClientFile } from "@portive/api-types"
 import EventEmitter from "eventemitter3"
 import Defer from "p-defer"
-import { insertBlock } from "./transforms"
 
 /**
  * Executes the `uploadSteps`:
@@ -33,15 +31,15 @@ async function startUploadSteps({
   originKey,
   file,
   clientFile,
-  element,
-  at,
-}: {
+}: // element,
+// at,
+{
   editor: FullCloudEditor
   originKey: string
   file: File
   clientFile: ClientFile
-  element: Element & { originKey: string }
-  at?: Location
+  // element: Element & { originKey: string }
+  // at?: Location
 }) {
   const { setOrigin } = editor.cloud.useStore.getState()
   const url = clientFile.objectUrl
@@ -82,7 +80,7 @@ async function startUploadSteps({
    * given location or, if `at` is `undefined`, then at the locaiton of  the
    * current selection.
    */
-  insertBlock(editor, element, at)
+  // insertBlock(editor, element, at)
 
   /**
    * Start the actual upload progress and update the `origin` as to the
@@ -137,7 +135,7 @@ async function startUploadSteps({
  * This is the asynchronous part of `uploadHostedImage` that contains most of
  * the meat of the function including uploading and setting the origin.
  */
-async function uploadHostedImage(
+async function uploadHostedImageFile(
   editor: FullCloudEditor,
   originKey: string,
   file: File,
@@ -165,17 +163,19 @@ async function uploadHostedImage(
     initialSize,
   }
 
-  const element = cloud.createImageFileElement
-    ? cloud.createImageFileElement(event)
-    : cloud.createFileElement(event)
+  editor.cloud.onUpload(event)
+
+  // const element = cloud.createImageFileElement
+  //   ? cloud.createImageFileElement(event)
+  //   : cloud.createFileElement(event)
 
   await startUploadSteps({
     editor,
     originKey,
     file,
     clientFile,
-    element,
-    at: options.at,
+    // element,
+    // at: options.at,
   })
 }
 
@@ -183,7 +183,7 @@ async function uploadHostedImage(
  * This is the asynchronous part of `uploadHostedImage` that contains most of
  * the meat of the function including uploading and setting the origin.
  */
-async function uploadHostedFile(
+async function uploadHostedGenericFile(
   editor: FullCloudEditor,
   originKey: string,
   file: File,
@@ -196,26 +196,25 @@ async function uploadHostedFile(
     throw new Error(`Expected clientFile.type to be generic`)
   }
 
-  const element = cloud.createFileElement({
-    type: "generic",
-    originKey: originKey,
-    file,
-  })
-
-  // FIXME: Add this back in
-  // editor.cloud.onUpload({
+  // const element = cloud.createFileElement({
   //   type: "generic",
   //   originKey: originKey,
   //   file,
   // })
+
+  editor.cloud.onUpload({
+    type: "generic",
+    originKey: originKey,
+    file,
+  })
 
   await startUploadSteps({
     editor,
     originKey,
     file,
     clientFile,
-    element,
-    at: options.at,
+    // element,
+    // at: options.at,
   })
 }
 
@@ -233,9 +232,9 @@ export function upload(
 ): string {
   const id = nanoid()
   if (isHostedImage(file)) {
-    uploadHostedImage(editor, id, file, options)
+    uploadHostedImageFile(editor, id, file, options)
   } else {
-    uploadHostedFile(editor, id, file, options)
+    uploadHostedGenericFile(editor, id, file, options)
   }
   return id
 }

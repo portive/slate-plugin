@@ -12,8 +12,6 @@ export function renderElement(props: RenderElementProps) {
   switch (element.type) {
     case "attachment-block":
       return <AttachmentBlock {...props} element={element} />
-    case "image-block":
-      return <ImageBlock {...props} element={element} />
     case "titled-image-block":
       return <TitledImageBlock {...props} element={element} />
     case "image-inline":

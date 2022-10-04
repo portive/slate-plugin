@@ -11,12 +11,14 @@ export type CreateImageFileElementEvent = {
   originSize: [number, number]
   initialSize: [number, number]
   file: File
+  at?: Location
 }
 
 export type CreateGenericFileElementEvent = {
   type: "generic"
   originKey: string
   file: File
+  at?: Location
 }
 
 export type OnUploadEvent =
@@ -50,8 +52,6 @@ export type WithCloudEditorOptions = {
   minResizeWidth?: number
   maxResizeWidth?: number
   initialOrigins?: Record<string, Origin>
-  createImageFileElement?: CreateImageFileElement
-  createFileElement: CreateFileElement
   onUpload?: OnUpload
 }
 
@@ -75,8 +75,6 @@ export type CloudObject = {
   maxResizeWidth: number
   useStore: ReturnType<typeof createOriginStore>
   uploadFile: (file: File, options?: UploadFileOptions) => string
-  createImageFileElement?: CreateImageFileElement
-  createFileElement: CreateFileElement
   handlePaste: (e: React.ClipboardEvent) => boolean
   handleDrop: (e: React.DragEvent) => boolean
   handleInputFileChange: (e: React.ChangeEvent<HTMLInputElement>) => boolean

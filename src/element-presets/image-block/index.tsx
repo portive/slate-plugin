@@ -6,35 +6,60 @@ import {
   FullCloudEditor,
 } from "../../../src"
 
-import { withReact, Slate, Editable, RenderElementProps } from "slate-react"
+import { RenderElementProps } from "slate-react"
 import { AssertType } from "@thesunny/assert-type"
+import { insertBlock } from "~/src/transforms"
 
-export const IMAGE_BLOCK_TYPE = "image-block"
+const ELEMENT_TYPE = "image-block"
 
-export type ImageBlockElement = {
-  type: "image-block"
-  /**
-   * Must include originKey and originSize
-   */
+export type ImageBlockElementType = {
+  type: typeof ELEMENT_TYPE
   originKey: string
   originSize: [number, number]
-  /**
-   * Must include `size` (consider switching to `mods.size`)
-   */
   size: [number, number]
   children: [{ text: "" }]
 }
 
-AssertType.Equal<typeof IMAGE_BLOCK_TYPE, ImageBlockElement["type"]>(true)
-AssertType.Extends<ImageBlockElement, ImageFileInterface>(true)
+AssertType.Equal<typeof ELEMENT_TYPE, ImageBlockElementType["type"]>(true)
+AssertType.Extends<ImageBlockElementType, ImageFileInterface>(true)
 
-const elementType = "image-block"
+/**
+ * Augment `Editor` to support this element type
+ */
+function withEditor(editor: FullCloudEditor): FullCloudEditor {
+  const { cloud } = editor
+  /**
+   * override `isVoid`
+   */
+  const originalIsVoid = editor.isVoid
+  editor.isVoid = (element) => {
+    return element.type === ELEMENT_TYPE ? true : originalIsVoid(element)
+  }
+  /**
+   * override `onUpload`
+   */
+  const originalOnUpload = cloud.onUpload
+  cloud.onUpload = (e) => {
+    if (e.type !== "image") return originalOnUpload(e)
+    insertBlock(editor, {
+      type: "image-block",
+      originKey: e.originKey,
+      originSize: e.originSize,
+      size: e.initialSize,
+      children: [{ text: "" }],
+    })
+  }
+  return editor
+}
 
-export function ImageBlockElement({
+/**
+ * The `Element` component to render
+ */
+export function RenderElement({
   attributes,
   element,
   children,
-}: RenderElementPropsFor<ImageBlockElement>) {
+}: RenderElementPropsFor<ImageBlockElementType>) {
   return (
     <div {...attributes} style={{ margin: "8px 0" }}>
       <HostedImage
@@ -46,39 +71,22 @@ export function ImageBlockElement({
   )
 }
 
-export function createImageBlock(
-  e: CreateImageFileElementEvent
-): ImageBlockElement {
-  return {
-    type: "image-block",
-    originKey: e.originKey,
-    originSize: e.originSize,
-    size: e.initialSize,
-    children: [{ text: "" }],
-  }
-}
-
-// function withEditor(editor: FullCloudEditor): FullCloudEditor {
-//   const { cloud } = editor
-//   const originalOnUpload = cloud.onUpload
-//   cloud.onUpload = (e) => {
-//     return originalOnUpload(e)
-//   }
-//   return editor
-// }
-
+/**
+ * Augment `renderElement` method to support this element type
+ */
 function withRenderElement(
   renderElement: (props: RenderElementProps) => JSX.Element
 ): (props: RenderElementProps) => JSX.Element {
   const originalRenderElement = renderElement
   return function renderElement(props: RenderElementProps): JSX.Element {
-    if (props.element.type !== elementType) return originalRenderElement(props)
-    return <ImageBlockElement {...props} element={props.element} />
+    if (props.element.type !== ELEMENT_TYPE) return originalRenderElement(props)
+    return <RenderElement {...props} element={props.element} />
   }
 }
 
 export const ImageBlock = {
-  elementType,
-  Element: ImageBlockElement,
+  ELEMENT_TYPE,
+  Element: RenderElement,
+  withEditor,
   withRenderElement,
 }
