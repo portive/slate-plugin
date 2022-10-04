@@ -5,7 +5,7 @@ export interface GenericFileInterface {
    * `fileEneity` being a `url` or an Object URL to the file on the
    * local computer of the browser.
    */
-  originKey: string
+  id: string
 }
 
 export interface ImageFileInterface {
@@ -15,7 +15,7 @@ export interface ImageFileInterface {
    * `imageOrigin` being a `url` or an Object URL to the image on the
    * local computer of the browser.
    */
-  originKey: string
+  id: string
   originSize: [number, number]
   /**
    * The `size` is required to know what dimensions to display the image at.

@@ -16,25 +16,25 @@ describe("getUploadingOrigins", () => {
       {
         type: "block-quote",
         children: [
-          { type: "min-origin", originKey: "error", children: [{ text: "" }] },
+          { type: "min-origin", id: "error", children: [{ text: "" }] },
           {
             type: "min-origin",
-            originKey: "complete",
+            id: "complete",
             children: [{ text: "" }],
           },
           {
             type: "min-origin",
-            originKey: "uploading1",
+            id: "uploading1",
             children: [{ text: "" }],
           },
           {
             type: "min-origin",
-            originKey: "uploading2",
+            id: "uploading2",
             children: [{ text: "" }],
           },
           {
             type: "min-origin",
-            originKey: "uploading3",
+            id: "uploading3",
             children: [{ text: "" }],
           },
         ],

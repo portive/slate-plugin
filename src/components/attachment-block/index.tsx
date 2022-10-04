@@ -5,7 +5,7 @@ import { insertBlock } from "~/src/transforms"
 
 export type AttachmentBlockElementType = {
   type: "attachment-block"
-  originKey: string
+  id: string
   filename: string
   bytes: number
   children: [{ text: "" }]
@@ -31,7 +31,7 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
   cloud.onUpload = (e) => {
     insertBlock(editor, {
       type: "attachment-block",
-      originKey: e.originKey,
+      id: e.id,
       filename: e.file.name,
       bytes: e.file.size,
       children: [{ text: "" }],

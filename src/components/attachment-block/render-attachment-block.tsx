@@ -73,7 +73,7 @@ export function AttachmentBlock({
   children,
 }: RenderElementPropsFor<AttachmentBlockElementType>) {
   const editor = useSlateStatic()
-  const origin = useOrigin(element.originKey)
+  const origin = useOrigin(element.id)
   const highlightedStyle = useHighlightedStyle()
 
   const removeElement = useCallback(() => {

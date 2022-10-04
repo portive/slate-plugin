@@ -93,7 +93,7 @@ export function HostedImage({
   style?: CSSProperties
 } & ImageProps) {
   const editor = useSlateStatic()
-  const origin = useOrigin(element.originKey)
+  const origin = useOrigin(element.id)
   const [size, setSize] = useState(element.size)
 
   useEffect(() => {

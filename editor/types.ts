@@ -21,7 +21,7 @@ type BlockQuoteElement = {
 
 type MinOriginElement = {
   type: "min-origin"
-  originKey: string
+  id: string
   children: [{ text: "" }]
 }
 

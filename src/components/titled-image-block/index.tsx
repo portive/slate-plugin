@@ -60,7 +60,7 @@ import { insertBlock } from "~/src/transforms"
 export type TitledImageBlockElementType = {
   type: "titled-image-block"
   title: string // ✅ Add a `title` property for our titled image
-  originKey: string
+  id: string
   originSize: [number, number]
   size: [number, number]
   children: [{ text: "" }]
@@ -91,7 +91,7 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
     insertBlock(editor, {
       type: ELEMENT_TYPE,
       title: e.file.name, // ✅ set the initial title value to the filename
-      originKey: e.originKey,
+      id: e.id,
       originSize: e.originSize,
       size: e.initialSize,
       children: [{ text: "" }],

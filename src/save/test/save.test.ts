@@ -48,12 +48,12 @@ describe("editor.cloud.save", () => {
       })
     })
 
-    it("should remove a node with an originKey that doesn't match", async () => {
+    it("should remove a node with an id that doesn't match", async () => {
       const editor = mockEditor(
         [
           {
             type: "min-origin",
-            originKey: "missing",
+            id: "missing",
             children: [{ text: "" }],
           },
         ],
@@ -76,22 +76,22 @@ describe("editor.cloud.save", () => {
         [
           {
             type: "min-origin",
-            originKey: "error",
+            id: "error",
             children: [{ text: "" }],
           },
           {
             type: "min-origin",
-            originKey: "complete",
+            id: "complete",
             children: [{ text: "" }],
           },
           {
             type: "min-origin",
-            originKey: "uploading1",
+            id: "uploading1",
             children: [{ text: "" }],
           },
           {
             type: "min-origin",
-            originKey: "uploading2",
+            id: "uploading2",
             children: [{ text: "" }],
           },
         ],
@@ -103,8 +103,7 @@ describe("editor.cloud.save", () => {
         value: [
           {
             type: "min-origin",
-            originKey:
-              "https://files.dev.portive.com/f/demo/4q494y5quamrcrwvce23n--1920x1281.jpg",
+            id: "https://files.dev.portive.com/f/demo/4q494y5quamrcrwvce23n--1920x1281.jpg",
             children: [{ text: "" }],
           },
         ],
@@ -125,22 +124,22 @@ describe("editor.cloud.save", () => {
         [
           {
             type: "min-origin",
-            originKey: "error",
+            id: "error",
             children: [{ text: "" }],
           },
           {
             type: "min-origin",
-            originKey: "complete",
+            id: "complete",
             children: [{ text: "" }],
           },
           {
             type: "min-origin",
-            originKey: "uploading1",
+            id: "uploading1",
             children: [{ text: "" }],
           },
           {
             type: "min-origin",
-            originKey: "uploading2",
+            id: "uploading2",
             children: [{ text: "" }],
           },
         ],
@@ -166,8 +165,7 @@ describe("editor.cloud.save", () => {
         value: [
           {
             type: "min-origin",
-            originKey:
-              "https://files.dev.portive.com/f/demo/4q494y5quamrcrwvce23n--1920x1281.jpg",
+            id: "https://files.dev.portive.com/f/demo/4q494y5quamrcrwvce23n--1920x1281.jpg",
             children: [
               {
                 text: "",
@@ -176,8 +174,7 @@ describe("editor.cloud.save", () => {
           },
           {
             type: "min-origin",
-            originKey:
-              "https://files.dev.portive.com/f/demo/4q494y5quamrcrwvce23n--1920x1281.jpg",
+            id: "https://files.dev.portive.com/f/demo/4q494y5quamrcrwvce23n--1920x1281.jpg",
             children: [
               {
                 text: "",
@@ -186,8 +183,7 @@ describe("editor.cloud.save", () => {
           },
           {
             type: "min-origin",
-            originKey:
-              "https://files.dev.portive.com/f/demo/4q494y5quamrcrwvce23n--1920x1281.jpg",
+            id: "https://files.dev.portive.com/f/demo/4q494y5quamrcrwvce23n--1920x1281.jpg",
             children: [
               {
                 text: "",

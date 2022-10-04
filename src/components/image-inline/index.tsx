@@ -13,7 +13,7 @@ export type ImageInlineElementType = {
   /**
    * Must include originKey and originSize
    */
-  originKey: string
+  id: string
   originSize: [number, number]
   /**
    * Must include `size` (consider switching to `mods.size`)
@@ -53,7 +53,7 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
     if (e.type !== "image") return originalOnUpload(e)
     Transforms.insertNodes(editor, {
       type: "image-inline",
-      originKey: e.originKey,
+      id: e.id,
       originSize: e.originSize,
       size: e.initialSize,
       children: [{ text: "" }],

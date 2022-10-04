@@ -10,7 +10,7 @@ import { insertBlock } from "~/src/transforms"
 
 export type ImageBlockElementType = {
   type: "image-block"
-  originKey: string
+  id: string
   originSize: [number, number]
   size: [number, number]
   children: [{ text: "" }]
@@ -40,7 +40,7 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
     if (e.type !== "image") return originalOnUpload(e)
     insertBlock(editor, {
       type: ELEMENT_TYPE,
-      originKey: e.originKey,
+      id: e.id,
       originSize: e.originSize,
       size: e.initialSize,
       children: [{ text: "" }],

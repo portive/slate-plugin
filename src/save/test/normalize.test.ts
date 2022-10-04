@@ -6,13 +6,13 @@ import { FakePromise } from "fake-promise"
 import { resolve } from "./test-utils"
 
 describe("normalize", () => {
-  it("should normalize an originKey", async () => {
+  it("should normalize an id", async () => {
     const origins: Record<string, Origin> = {
       a: { status: "complete", url: "/fake.txt" },
     }
-    const nodes = [{ originKey: "a" }] as Descendant[]
+    const nodes = [{ id: "a" }] as Descendant[]
     const normalizedNodes = normalizeOrigins(nodes, origins)
-    expect(normalizedNodes).toEqual([{ originKey: "/fake.txt" }])
+    expect(normalizedNodes).toEqual([{ id: "/fake.txt" }])
   })
 
   it("should skip an element with origin still uploading", async () => {
@@ -28,7 +28,7 @@ describe("normalize", () => {
         finishPromise,
       },
     }
-    const nodes = [{ originKey: "a" }] as Descendant[]
+    const nodes = [{ id: "a" }] as Descendant[]
     const normalizedNodes = normalizeOrigins(nodes, origins)
     expect(normalizedNodes).toEqual([])
     resolve(finishPromise)
@@ -42,7 +42,7 @@ describe("normalize", () => {
         url: "/fake.txt",
       },
     }
-    const nodes = [{ originKey: "a" }] as Descendant[]
+    const nodes = [{ id: "a" }] as Descendant[]
     const normalizedNodes = normalizeOrigins(nodes, origins)
     expect(normalizedNodes).toEqual([])
   })
@@ -51,25 +51,21 @@ describe("normalize", () => {
     const origins: Record<string, Origin> = {
       a: { status: "complete", url: "/fake.txt" },
     }
-    const nodes = [
-      { children: [{ originKey: "a" }] },
-    ] as unknown as Descendant[]
+    const nodes = [{ children: [{ id: "a" }] }] as unknown as Descendant[]
     const normalizedNodes = normalizeOrigins(nodes, origins)
-    expect(normalizedNodes).toEqual([
-      { children: [{ originKey: "/fake.txt" }] },
-    ])
+    expect(normalizedNodes).toEqual([{ children: [{ id: "/fake.txt" }] }])
   })
 
-  it("should not normalize children of an element that has an originKey", async () => {
+  it("should not normalize children of an element that has an id", async () => {
     const origins: Record<string, Origin> = {
       a: { status: "complete", url: "/fake.txt" },
     }
     const nodes = [
-      { originKey: "a", children: [{ originKey: "a" }] },
+      { id: "a", children: [{ id: "a" }] },
     ] as unknown as Descendant[]
     const normalizedNodes = normalizeOrigins(nodes, origins)
     expect(normalizedNodes).toEqual([
-      { originKey: "/fake.txt", children: [{ originKey: "a" }] },
+      { id: "/fake.txt", children: [{ id: "a" }] },
     ])
   })
 })

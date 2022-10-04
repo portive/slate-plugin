@@ -11,7 +11,7 @@ import { Client } from "@portive/client"
 
 export type OnUploadImageEvent = {
   type: "image"
-  originKey: string
+  id: string
   originSize: [number, number]
   initialSize: [number, number]
   file: File
@@ -19,7 +19,7 @@ export type OnUploadImageEvent = {
 
 export type OnUploadGenericEvent = {
   type: "generic"
-  originKey: string
+  id: string
   file: File
 }
 

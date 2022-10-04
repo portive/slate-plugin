@@ -28,12 +28,12 @@ import Defer from "p-defer"
  */
 async function startUploadSteps({
   editor,
-  originKey,
+  id,
   file,
   clientFile,
 }: {
   editor: FullCloudEditor
-  originKey: string
+  id: string
   file: File
   clientFile: ClientFile
 }) {
@@ -62,7 +62,7 @@ async function startUploadSteps({
   /**
    * Set the `origin` as `uploading` with zero bytes sent
    */
-  setOrigin(originKey, {
+  setOrigin(id, {
     url,
     status: "uploading",
     sentBytes: 0,
@@ -87,7 +87,7 @@ async function startUploadSteps({
         eventEmitter,
         finishPromise: finishPromise,
       }
-      setOrigin(originKey, origin)
+      setOrigin(id, origin)
       eventEmitter.emit("progress", origin)
     },
   })
@@ -101,7 +101,7 @@ async function startUploadSteps({
       status: "error",
       message: uploadResult.message,
     }
-    setOrigin(originKey, origin)
+    setOrigin(id, origin)
     eventEmitter.emit("error", origin)
     deferredFinish.resolve(origin)
     console.error(uploadResult.message)
@@ -115,7 +115,7 @@ async function startUploadSteps({
     url: uploadResult.data.url,
     status: "complete",
   }
-  setOrigin(originKey, origin)
+  setOrigin(id, origin)
   eventEmitter.emit("complete", origin)
   deferredFinish.resolve(origin)
 }
@@ -126,7 +126,7 @@ async function startUploadSteps({
  */
 async function uploadHostedImageFile(
   editor: FullCloudEditor,
-  originKey: string,
+  id: string,
   file: File
 ) {
   const cloud = editor.cloud
@@ -145,7 +145,7 @@ async function uploadHostedImageFile(
 
   const event: OnUploadImageEvent = {
     type: "image",
-    originKey: originKey,
+    id: id,
     originSize: clientFile.size,
     file,
     initialSize,
@@ -155,7 +155,7 @@ async function uploadHostedImageFile(
 
   await startUploadSteps({
     editor,
-    originKey,
+    id,
     file,
     clientFile,
   })
@@ -167,7 +167,7 @@ async function uploadHostedImageFile(
  */
 async function uploadHostedGenericFile(
   editor: FullCloudEditor,
-  originKey: string,
+  id: string,
   file: File
 ) {
   const clientFile = await createClientFile(file)
@@ -177,7 +177,7 @@ async function uploadHostedGenericFile(
 
   const event: OnUploadGenericEvent = {
     type: "generic",
-    originKey: originKey,
+    id: id,
     file,
   }
 
@@ -185,7 +185,7 @@ async function uploadHostedGenericFile(
 
   await startUploadSteps({
     editor,
-    originKey,
+    id,
     file,
     clientFile,
   })
