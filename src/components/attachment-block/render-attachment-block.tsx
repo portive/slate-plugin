@@ -7,11 +7,11 @@ import {
   useOrigin,
   RenderElementPropsFor,
   StatusBar,
-} from "../../../src"
+} from "../.."
 import { ReactEditor } from "slate-react"
 import React, { useCallback } from "react"
 import { DownloadIcon, FileIcon, TrashIcon } from "../../icons"
-import { AttachmentBlockElement } from "./types"
+import { AttachmentBlockElementType } from "."
 
 const $attachmentBlock = css`
   position: relative;
@@ -71,7 +71,7 @@ export function AttachmentBlock({
   attributes,
   element,
   children,
-}: RenderElementPropsFor<AttachmentBlockElement>) {
+}: RenderElementPropsFor<AttachmentBlockElementType>) {
   const editor = useSlateStatic()
   const origin = useOrigin(element.originKey)
   const highlightedStyle = useHighlightedStyle()

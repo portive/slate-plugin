@@ -1,1 +1,1 @@
-export * from "./element-presets/image-block"
+export * from "./components/image-block"

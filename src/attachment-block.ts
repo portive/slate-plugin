@@ -1,1 +1,1 @@
-export * from "./element-presets/attachment-block"
+export * from "./components/attachment-block"

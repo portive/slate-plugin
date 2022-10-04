@@ -2,7 +2,7 @@ import {
   CreateImageFileElementEvent,
   HostedImage,
   RenderElementPropsFor,
-} from "../../../src"
+} from "../.."
 
 export const TITLED_IMAGE_BLOCK_TYPE = "titled-image-block"
 

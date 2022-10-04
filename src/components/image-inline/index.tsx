@@ -3,7 +3,7 @@ import {
   DiscriminatedRenderElementProps,
   HostedImage,
   ImageFileInterface,
-} from "../../../src"
+} from "../.."
 
 export const IMAGE_INLINE_TYPE = "image-inline"
 

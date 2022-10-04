@@ -1,5 +1,5 @@
 import { AttachmentBlock as RenderElement } from "./render-attachment-block"
-import { FullCloudEditor } from "../../../src"
+import { FullCloudEditor } from "../.."
 import { RenderElementProps } from "slate-react"
 import { insertBlock } from "~/src/transforms"
 

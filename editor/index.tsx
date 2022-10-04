@@ -1,14 +1,11 @@
 import { createEditor, Descendant, Editor } from "slate"
 import { Slate, Editable, withReact } from "slate-react"
 import React, { useCallback, useState } from "react"
-import {
-  Origin,
-  withCloud,
-  createAttachmentBlock,
-  createImageBlock,
-} from "~/src"
+import { Origin, withCloud } from "~/src"
 import { withHistory } from "slate-history"
 import { renderElement } from "./render-element"
+import { ImageBlock } from "~/src/components/image-block"
+import { AttachmentBlock } from "~/src/components/attachment-block"
 import delay from "delay"
 import "./types"
 
@@ -37,17 +34,15 @@ export function MyEditor({
       minResizeWidth: 100,
       maxResizeWidth: 640,
       initialOrigins,
-      createImageFileElement: createImageBlock,
-      createFileElement: createAttachmentBlock,
     })
     editor.isVoid = (element) => {
-      return ["attachment-block", "image-block", "image-inline"].includes(
-        element.type
-      )
+      return ["image-inline"].includes(element.type)
     }
     editor.isInline = (element) => {
       return element.type === "image-inline"
     }
+    AttachmentBlock.withEditor(editor)
+    ImageBlock.withEditor(editor)
     return editor
   })
 

@@ -19,7 +19,6 @@ function mockEditor(
     minResizeWidth: 100,
     maxResizeWidth: 640,
     initialOrigins: origins,
-    createFileElement: {} as any, // we won't be testing this
   })
   editor.children = value
   editor.cloud.useStore = createOriginStore({ origins })

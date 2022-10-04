@@ -1,10 +1,12 @@
 import { createEditor, Descendant, Editor } from "slate"
 import { Slate, Editable, withReact } from "slate-react"
 import React, { useState } from "react"
-import { withPortive, createAttachmentBlock, createImageBlock } from "~/src"
+import { withCloud } from "~/src"
 import { withHistory } from "slate-history"
 import { renderElement } from "~/editor/render-element"
 import { css } from "emotion"
+import { ImageBlock } from "~/src/components/image-block"
+import { AttachmentBlock } from "~/src/components/attachment-block"
 import "~/editor/types"
 
 import { env } from "~/lib/server-env"
@@ -69,23 +71,21 @@ export default function Index({
   const [theme, setTheme] = useState<Theme>(themes[0])
   const [editor] = useState<Editor>(() => {
     const reactEditor = withReact(withHistory(createEditor()))
-    const editor = withPortive(reactEditor, {
+    const editor = withCloud(reactEditor, {
       authToken,
       apiOriginUrl,
       initialMaxSize: [240, 320], // 256
       minResizeWidth: 100,
       maxResizeWidth: 238,
-      createImageFileElement: createImageBlock,
-      createFileElement: createAttachmentBlock,
     })
     editor.isVoid = (element) => {
-      return ["attachment-block", "image-block", "image-inline"].includes(
-        element.type
-      )
+      return ["image-inline"].includes(element.type)
     }
     editor.isInline = (element) => {
       return element.type === "image-inline"
     }
+    AttachmentBlock.withEditor(editor)
+    ImageBlock.withEditor(editor)
     return editor
   })
 

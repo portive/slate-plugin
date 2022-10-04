@@ -5,7 +5,7 @@ import {
   HostedImage,
   RenderElementPropsFor,
   FullCloudEditor,
-} from "../../../src"
+} from "../.."
 import { insertBlock } from "~/src/transforms"
 
 export type ElementType = {
