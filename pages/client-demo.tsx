@@ -2,10 +2,17 @@ import React, { useCallback, useState } from "react"
 import { env } from "~/lib/server-env"
 import { Client, uploadFile } from "@portive/client"
 import { InferGetServerSidePropsType } from "next"
+import { createAuthToken } from "@portive/auth"
 
 export async function getServerSideProps() {
-  const props: { authToken: string; apiOriginUrl?: string } = {
-    authToken: env.PORTIVE_AUTH_TOKEN,
+  const authToken = createAuthToken(env.PORTIVE_API_KEY, { expiresIn: "1d" })
+  const props: {
+    authToken: string
+    apiKey?: string
+    apiOriginUrl?: string
+  } = {
+    apiKey: env.PORTIVE_API_KEY,
+    authToken,
   }
   if (process.env.API_ORIGIN_URL) {
     props.apiOriginUrl = process.env.API_ORIGIN_URL

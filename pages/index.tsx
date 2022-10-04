@@ -7,10 +7,7 @@ import { createAuthToken } from "@portive/auth"
 import { DefaultHead } from "~/components/default-head"
 
 export async function getServerSideProps() {
-  const authToken = createAuthToken(env.PORTIVE_API_KEY, {
-    expiresIn: "1d",
-    path: "should-ignore-path-now",
-  })
+  const authToken = createAuthToken(env.PORTIVE_API_KEY, { expiresIn: "1d" })
   const props: {
     authToken: string
     apiKey?: string
