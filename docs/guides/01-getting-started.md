@@ -22,10 +22,10 @@ You'll also need these peer dependencies if you don't already have them:
 
 ```bash
 # install with yarn
-yarn add slate slate-react
+yarn add slate slate-react slate-history
 
 # install with npm
-npm install --save slate slate-react
+npm install --save slate slate-react slate-history
 ```
 
 ### Using Slate Cloud
