@@ -1,4 +1,3 @@
-import { AssertType } from "@thesunny/assert-type"
 import { AttachmentBlock as RenderElement } from "./render-attachment-block"
 import { FullCloudEditor } from "../../../src"
 import { RenderElementProps } from "slate-react"
@@ -13,8 +12,6 @@ export type AttachmentBlockElementType = {
 }
 
 const ELEMENT_TYPE: AttachmentBlockElementType["type"] = "attachment-block"
-
-AssertType.Equal<typeof ELEMENT_TYPE, AttachmentBlockElementType["type"]>(true)
 
 /**
  * Augment `Editor` to support this element type

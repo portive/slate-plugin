@@ -3,7 +3,7 @@ import { ReactEditor } from "slate-react"
 import {
   TitledImageBlockElement,
   ImageInlineElement,
-  ImageBlockElementType,
+  ElementType,
   AttachmentBlockElementType,
   CloudEditor,
 } from "~/src"
@@ -32,7 +32,7 @@ export type CustomElement =
   | BlockQuoteElement
   | MinOriginElement
   | AttachmentBlockElementType
-  | ImageBlockElementType
+  | ElementType
   | TitledImageBlockElement
   | ImageInlineElement
 

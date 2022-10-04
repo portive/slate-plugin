@@ -1,26 +1,24 @@
+import { AssertType } from "@thesunny/assert-type"
+import { RenderElementProps } from "slate-react"
 import {
   ImageFileInterface,
   HostedImage,
   RenderElementPropsFor,
   FullCloudEditor,
 } from "../../../src"
-
-import { RenderElementProps } from "slate-react"
-import { AssertType } from "@thesunny/assert-type"
 import { insertBlock } from "~/src/transforms"
 
-const ELEMENT_TYPE = "image-block"
-
-export type ImageBlockElementType = {
-  type: typeof ELEMENT_TYPE
+export type ElementType = {
+  type: "image-block"
   originKey: string
   originSize: [number, number]
   size: [number, number]
   children: [{ text: "" }]
 }
 
-AssertType.Equal<typeof ELEMENT_TYPE, ImageBlockElementType["type"]>(true)
-AssertType.Extends<ImageBlockElementType, ImageFileInterface>(true)
+const ELEMENT_TYPE: ElementType["type"] = "image-block"
+
+AssertType.Extends<ElementType, ImageFileInterface>(true)
 
 /**
  * Augment `Editor` to support this element type
@@ -58,11 +56,11 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
 /**
  * The `Element` component to render
  */
-export function RenderElement({
+export function Component({
   attributes,
   element,
   children,
-}: RenderElementPropsFor<ImageBlockElementType>) {
+}: RenderElementPropsFor<ElementType>) {
   return (
     <div {...attributes} style={{ margin: "8px 0" }}>
       <HostedImage
@@ -83,13 +81,13 @@ function withRenderElement(
   const originalRenderElement = renderElement
   return function renderElement(props: RenderElementProps): JSX.Element {
     if (props.element.type !== ELEMENT_TYPE) return originalRenderElement(props)
-    return <RenderElement {...props} element={props.element} />
+    return <Component {...props} element={props.element} />
   }
 }
 
 export const ImageBlock = {
-  ELEMENT_TYPE,
-  Element: RenderElement,
+  type: ELEMENT_TYPE,
+  Component,
   withEditor,
   withRenderElement,
 }
