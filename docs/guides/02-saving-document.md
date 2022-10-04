@@ -1,21 +1,25 @@
 # Saving the Document
 
-Now that you've got a working Editor that supports images and attachments, let's move on to saving a document that contains images and attachments which may be in progress uploading.
+Now that you've got a working Editor that supports images and attachments, let's move on to saving a document.
 
-If you don't know how to save documents in Slate in general, first read the [Slate Documentation on Saving to a Database](https://docs.slatejs.org/walkthroughs/06-saving-to-a-database).
+What I want you to remember about Slate Cloud is that the document may contain images and file attachments which haven't finished uploading. We need to make sure that the files have finished uploading before saving the Document.
 
-With `slate-portive` there are two main ways to handle saves:
+But first, if you don't know how to save documents in Slate in general, read the [Slate Documentation on Saving to a Database](https://docs.slatejs.org/walkthroughs/06-saving-to-a-database).
 
-1. Wait for all files to finish uploading by using `editor.portive.save`
-2. Get a normalized version of the document with in progress uploads removed using `editor.portive.normalize`
+With `slate-cloud` there are two main ways to save a document:
 
-> 🌞 If you do not use one of the methods above and just save the document value as you would normally, then after you open the document again, the uploads will be in an `error` status.
+1. **Wait then save:** Wait for all files to finish uploading by using `editor.cloud.save`
+2. **Save a draft:** Get a version of the document with just the unfinished uploads removed using `editor.cloud.normalize`
 
-## Using `editor.portive.save`
+> 🌞 If you do not use one of these two methods and just save the Slate's document `value`, then after you open the document again, the images and attachments will be invalid.
 
-This is the recommended way to save a document. Call `await editor.portive.save` which returns an object with the document value. It waits until all uploads complete before returning.
+## Using `editor.cloud.save`
 
-The method takes an optional `{ maxTimeoutInMs: number }` option. If the files aren't uploaded by the timeout, a normalized document value will be return with the unfinished Elements removed from the `value`.
+This is the recommended way to save a document. Call `await editor.cloud.save` which returns an object that contains the document `value`.
+
+The method takes an optional `{ maxTimeoutInMs: number }` option. If the files aren't finished uploading by the timeout, a normalized document value will be return with the unfinished Elements removed.
+
+Even though some incomplete elements are remove, the document value is in a valid state.
 
 > 🌞 Note that when a normalized document is returned, it won't remove the Elements from the Editor. Any uploads will continue uploading after `save` is called.
 
@@ -26,7 +30,7 @@ const App = () => {
    */
 
   const save = useCallback(async () => {
-    const result = await editor.portive.save({ maxTimeoutInMs: 10000 })
+    const result = await editor.cloud.save({ maxTimeoutInMs: 10000 })
     console.log(result.value) // document value
   }, [editor])
 
@@ -36,8 +40,8 @@ const App = () => {
       <Slate editor={editor} value={initialValue}>
         <Editable
           renderElement={renderElement}
-          onPaste={editor.portive.handlePaste}
-          onDrop={editor.portive.handleDrop}
+          onPaste={editor.cloud.handlePaste}
+          onDrop={editor.cloud.handleDrop}
         />
       </Slate>
     </>
@@ -45,17 +49,15 @@ const App = () => {
 }
 ```
 
-> 🌞 NOTE: Two more `SaveOptions` are on the Roadmap. The first is an `activityTimeoutInMs` where the timeout expires when there is no progress activity for the given number of milliseconds. This might be a more useful option as it will timeout if there is a loss of Internet connectivity but won't timeout just because a large file is being uploaded. The second is an `onProgress` callback which can be used to update a progress bar letting the user know the state of the remaining uploads in the document.
-
-> 🌞 SUGGESTION: Although not shown in this sample code, we recommend setting the `readOnly` property to `true` during save. This prevents the user from making edits or uploading new files while waiting for save to complete.
+We also recommend putting the editor into `readOnly` mode so the user can't editing while a save is in progress.
 
 ## using `editor.portive.normalize`
 
 This is a good way to get a draft of the document for saving.
 
-The `normalize` method returns a document value immediately but it removes any elements that are either `uploading` or have an upload `error`.
+The `normalize` method returns a document value immediately but it removes any elements that haven't finished uploading.
 
-This might be used in a scenario where you want a snapshot of the document **right now** and you can't wait. It will get the best version of the document it can excluding the unfinished uploads.
+This might be used in a scenario where you want a snapshot of the document **right now** and you can't wait. This can be useful, for example, if you want to save a draft of the document.
 
 ```tsx
 const App = () => {
@@ -64,7 +66,7 @@ const App = () => {
    */
 
   const saveDraft = useCallback(() => {
-    const result = await editor.portive.normalize()
+    const result = await editor.cloud.normalize()
     console.log(result.value) // output
   }, [editor])
 
@@ -74,8 +76,8 @@ const App = () => {
       <Slate editor={editor} value={initialValue}>
         <Editable
           renderElement={renderElement}
-          onPaste={editor.portive.handlePaste}
-          onDrop={editor.portive.handleDrop}
+          onPaste={editor.cloud.handlePaste}
+          onDrop={editor.cloud.handleDrop}
         />
       </Slate>
     </>

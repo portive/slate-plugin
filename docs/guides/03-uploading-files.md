@@ -1,14 +1,15 @@
 # Uploading Files
 
-In [Getting Started](./01-getting-started.md), we added support for uploading by pasting files into or dropping files on the editor.
+In [Getting Started](./01-getting-started.md), we added support for uploading by pasting files into or dropping files onto the editor by adding `editor.cloud.handlePaste` and `editor.cloud.handleDrop` on the `Editable` component.
 
-Sometimes, we want the user to be able to use a system file picker to select the files they want to upload. This might be by clicking an upload file icon which then opens the file picker.
+Slate Cloud also supports uploading files by opening the system file picker, for example, when a user clicks an image or attachment button in a toolbar.
 
-Developers may also wish to programmatically upload [`File`](https://developer.mozilla.org/en-US/docs/Web/API/File) objects. This might be used to filter specific files before uploading or to upload a File generated from a Component (maybe a Component that generates a graph `png` for example).
+- [Upload using a File Input](#upload-using-a-input-typefile)
+- [Upload using a File Object](#upload-using-file-object)
 
-## Upload from `<input type=file />`
+## Upload using a File Input
 
-To upload from an `<input type="file" />` element, add the `editor.portive.onInputFileChangeHandler` to the `onChange` attribute.
+To upload from an `<input type="file" />` element, add the `editor.cloud.onInputFileChangeHandler` to the `onChange` attribute.
 
 ```tsx
 const App = () => {
@@ -27,8 +28,8 @@ const App = () => {
       <Slate editor={editor} value={initialValue}>
         <Editable
           renderElement={renderElement}
-          onPaste={editor.portive.handlePaste}
-          onDrop={editor.portive.handleDrop}
+          onPaste={editor.cloud.handlePaste}
+          onDrop={editor.cloud.handleDrop}
         />
       </Slate>
     </>
@@ -38,13 +39,11 @@ const App = () => {
 
 When the user clicks the `<input type="file" />` button, it opens a file picker, and when files are picked the upload process begins.
 
-## Upload using `File` object
+## Upload using File Object
 
-To programmatically upload a file, use the `editor.portive.uploadFile` method and pass a `File` object as the first argument.
+To programmatically upload a file from a `File` object, use the `editor.portive.uploadFile` method and pass a `File` object as the first argument.
 
-Internally, the `handlePaste`, `handleDrop` and `handleInputFileChange` methods all use the `editor.portive.uploadFile` method.
-
-In this example, we check if a file is a `pdf` and only allow upload of those `pdf` files.
+Internally, the `handlePaste`, `handleDrop` and `handleInputFileChange` methods use the `editor.portive.uploadFile` method.
 
 ```tsx
 const App = () => {
@@ -52,16 +51,13 @@ const App = () => {
    * editor = ...
    */
 
-  // ✅ This callback goes through each file and uploads only the
-  //    `application/pdf` files
-  const uploadPdfs = useCallback(
+  // ✅ This callback goes through each file and uploads it
+  const upload = useCallback(
     (e) => {
       const files = e.target.files
       if (files == null || files.length === 0) return
       for (const file of files) {
-        if (file.type === "application/pdf" && file.name.endsWith(".pdf")) {
-          editor.portive.uploadFile(file)
-        }
+        editor.portive.uploadFile(file)
       }
     },
     [editor]
@@ -70,7 +66,7 @@ const App = () => {
   return (
     <>
       {/* ✅ use the `uploadPdfs` callback with individual `uploadFile` */}
-      <input type="file" onChange={uploadPdfs} multiple />
+      <input type="file" onChange={upload} multiple />
       <Slate editor={editor} value={initialValue}>
         <Editable
           renderElement={renderElement}
