@@ -2,6 +2,9 @@
   "description": "Used with @thesunny/presets, 'yarn preset exports'",
   "instructions": "add exports mappings to 'exports' below",
   "exports": {
-    ".": "src/index.ts"
+    ".": "src/index.ts",
+    "image-block": "src/image-block.ts",
+    "attachment-block": "src/image-block.ts",
+    "cloud-components": "src/cloud-components.ts"
   }
 }
