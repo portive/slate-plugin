@@ -1,19 +1,19 @@
-import { Origin } from "../types"
+import { Upload } from "../types"
 
 export function ProgressBar({
-  origin,
+  upload,
   className,
   style,
   width,
   height = 16,
 }: {
-  origin: Origin
+  upload: Upload
   className?: string
   style?: React.CSSProperties
   width: number
   height?: number
 }) {
-  if (origin.status !== "uploading") {
+  if (upload.status !== "uploading") {
     return null
   }
   /**
@@ -29,7 +29,7 @@ export function ProgressBar({
    *    bar when it is technically at the halfway point.
    */
   const progressWidth =
-    (origin.sentBytes / origin.totalBytes) * (width - height) + height
+    (upload.sentBytes / upload.totalBytes) * (width - height) + height
   return (
     <div
       className={className}
@@ -56,19 +56,19 @@ export function ProgressBar({
 }
 
 export function ErrorBar({
-  origin,
+  upload,
   className,
   style,
   width,
   height = 16,
 }: {
-  origin: Origin
+  upload: Upload
   className?: string
   style?: React.CSSProperties
   width: number
   height?: number
 }) {
-  if (origin.status !== "error") {
+  if (upload.status !== "error") {
     return null
   }
   return (
@@ -96,14 +96,14 @@ export function ErrorBar({
 }
 
 export function StatusBar(props: {
-  origin: Origin
+  upload: Upload
   className?: string
   style?: React.CSSProperties
   width: number
   height?: number
   children?: React.ReactNode
 }) {
-  switch (props.origin.status) {
+  switch (props.upload.status) {
     case "uploading":
       return <ProgressBar {...props} />
     case "error":

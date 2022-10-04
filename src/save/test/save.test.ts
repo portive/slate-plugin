@@ -3,15 +3,15 @@ import { Descendant, createEditor } from "slate"
 import { withReact } from "slate-react"
 import { withCloud } from "~/src"
 import { withHistory } from "slate-history"
-import { FullCloudEditor, Origin } from "../../types"
+import { FullCloudEditor, Upload } from "../../types"
 import "~/editor/types" // use the types from our demo editor for testing
 import { mockOrigin } from "./mock-origin"
-import { createOriginStore } from "../../editor/origin-store"
+import { createUploadStore } from "../../editor/upload-store"
 import { resolve } from "./test-utils"
 
 function mockEditor(
   value: Descendant[],
-  origins: Record<string, Origin>
+  origins: Record<string, Upload>
 ): FullCloudEditor {
   const editor = withCloud(withReact(withHistory(createEditor())), {
     authToken: "", // we won't be uploading
@@ -21,7 +21,7 @@ function mockEditor(
     initialOrigins: origins,
   })
   editor.children = value
-  editor.cloud.useStore = createOriginStore({ origins })
+  editor.cloud.useStore = createUploadStore({ origins })
   return editor
 }
 
@@ -145,7 +145,7 @@ describe("editor.cloud.save", () => {
         ],
         origins
       )
-      const { setOrigin } = editor.cloud.useStore.getState()
+      const { setUpload: setOrigin } = editor.cloud.useStore.getState()
       const promise = editor.cloud.save()
       setOrigin("uploading1", mockOrigin.complete("landscape"))
       resolve(origins.uploading1.finishPromise)

@@ -1,4 +1,4 @@
-import { ImageFileInterface, Origin } from "../types"
+import { ImageFileInterface, Upload } from "../types"
 import { useSlateStatic, useSelected, useFocused } from "slate-react"
 import { ImageControls } from "./image-controls"
 import { CSSProperties, useEffect, useState } from "react"
@@ -35,20 +35,22 @@ export function useHighlightedStyle() {
 
 /**
  * Takes an `element` (which it only needs for its `id`) and returns the
- * origin from it.
+ * Upload object from it.
  */
-export function useOrigin(originKey: string): Origin {
+export function useUpload(id: string): Upload {
   const editor = useSlateStatic()
-  const originFromStore = editor.cloud.useStore(
-    (state) => state.origins[originKey]
-  )
-  if (originKey.includes("/")) {
+  /**
+   * We call this even if it's not always required because it calls `useStore`
+   * which is a React hook which means it needs to be called consistently.
+   */
+  const upload = editor.cloud.useStore((state) => state.uploads[id])
+  if (id.includes("/")) {
     return {
       status: "complete",
-      url: originKey,
+      url: id,
     }
   } else {
-    return originFromStore
+    return upload
   }
 }
 
@@ -93,7 +95,7 @@ export function HostedImage({
   style?: CSSProperties
 } & ImageProps) {
   const editor = useSlateStatic()
-  const origin = useOrigin(element.id)
+  const upload = useUpload(element.id)
   const [size, setSize] = useState(element.size)
 
   useEffect(() => {
@@ -103,20 +105,20 @@ export function HostedImage({
   const highlightedStyle = useHighlightedStyle()
 
   const src = generateSrc({
-    originUrl: origin.url,
+    originUrl: upload.url,
     size: element.size,
     maxSize: element.originSize,
   })
 
   const srcSet = generateSrcSet({
-    originUrl: origin.url,
+    originUrl: upload.url,
     size: element.size,
     maxSize: element.originSize,
   })
 
   return (
     <HostedImageContext.Provider
-      value={{ editor, origin: origin, size, setSize }}
+      value={{ editor, origin: upload, size, setSize }}
     >
       <ImageControls element={element}>
         <img

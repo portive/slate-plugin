@@ -11,7 +11,7 @@ import { Transforms } from "slate"
 export type ImageInlineElementType = {
   type: "image-inline"
   /**
-   * Must include originKey and originSize
+   * Must include id and originSize
    */
   id: string
   originSize: [number, number]

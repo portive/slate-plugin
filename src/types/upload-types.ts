@@ -12,19 +12,19 @@ export type OriginEventTypes =
 /**
  * Indicates an `Origin` that is uploading and the state of the Upload
  */
-export type OriginUploading = {
+export type UploadProgress = {
   url: string
   status: "uploading"
   sentBytes: number
   totalBytes: number
   eventEmitter: EventEmitter<OriginEventTypes>
-  finishPromise: Promise<Origin>
+  finishPromise: Promise<Upload>
 }
 
 /**
  * Indicates an `Origin` that has completed uploading
  */
-export type OriginComplete = {
+export type UploadComplete = {
   url: string
   status: "complete"
 }
@@ -33,13 +33,13 @@ export type OriginComplete = {
  * Indicates an `Origin` that has an error during uploading and the Error
  * message
  */
-export type OriginError = {
+export type UploadError = {
   url: string
   status: "error"
   message: string
 }
 
-export type Origin = OriginUploading | OriginComplete | OriginError
+export type Upload = UploadProgress | UploadComplete | UploadError
 
 /**
  * `OriginState`
@@ -48,11 +48,11 @@ export type Origin = OriginUploading | OriginComplete | OriginError
  * store the state of uploads.
  */
 
-export type GetOrigin = (originKey: string) => Origin
-export type SetOrigin = (originKey: string, origin: Origin) => void
+export type GetUpload = (id: string) => Upload
+export type SetUpload = (id: string, upload: Upload) => void
 
-export type OriginState = {
-  origins: Record<string, Origin>
-  getOrigin: GetOrigin
-  setOrigin: SetOrigin
+export type UploadState = {
+  uploads: Record<string, Upload>
+  getUpload: GetUpload
+  setUpload: SetUpload
 }

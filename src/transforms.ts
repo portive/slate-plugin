@@ -29,7 +29,7 @@ export function insertBlock<T extends Element>(editor: Editor, element: T) {
   }
 
   /**
-   * Insert the `element` (which includes an `originKey`).
+   * Insert the `element` (which includes an `id`).
    */
   Transforms.insertNodes(editor, element)
 }

@@ -1,7 +1,7 @@
-import { Origin, OriginEventTypes } from "~/src"
+import { Upload, OriginEventTypes } from "~/src"
 import { FakePromise } from "fake-promise"
 import EventEmitter from "eventemitter3"
-import { OriginError, OriginComplete, OriginUploading } from "../../types"
+import { UploadError, UploadComplete, UploadProgress } from "../../types"
 
 const PORTRAIT_IMAGE =
   "https://files.dev.portive.com/f/demo/ktjairhr4jy5i3qr6ow43--1920x2880.jpg"
@@ -67,7 +67,7 @@ const _mockOrigins = {
 type OriginKey = keyof typeof _mockOrigins
 const mockOrigins: Record<
   OriginKey,
-  Pick<Origin, "status" | "url">
+  Pick<Upload, "status" | "url">
 > = _mockOrigins
 
 export const mockOrigin = {
@@ -76,22 +76,22 @@ export const mockOrigin = {
     if (origin == null) throw new Error(`Expected to find origin`)
     return origin
   },
-  complete(key: OriginKey): OriginComplete {
+  complete(key: OriginKey): UploadComplete {
     const origin = mockOrigin.get(key)
     return { ...origin, status: "complete" }
   },
-  error(key: OriginKey): OriginError {
+  error(key: OriginKey): UploadError {
     const origin = mockOrigin.get(key)
     return { ...origin, status: "error", message: `Error` }
   },
-  uploading(key: OriginKey, percentComplete: number): OriginUploading {
+  uploading(key: OriginKey, percentComplete: number): UploadProgress {
     const origin = mockOrigin.get(key)
     if (percentComplete < 0)
       throw new Error(`percentComplete must be 0 or more`)
     if (percentComplete > 1)
       throw new Error(`percentComplete must be 1 or less`)
     const eventEmitter = new EventEmitter<OriginEventTypes>()
-    const finishPromise = new FakePromise<Origin>()
+    const finishPromise = new FakePromise<Upload>()
     return {
       ...origin,
       status: "uploading",

@@ -1,8 +1,8 @@
 import { BaseEditor, Descendant } from "slate"
 import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
-import { createOriginStore } from "../editor/origin-store"
-import { Origin } from "./origin-types"
+import { createUploadStore } from "../editor/upload-store"
+import { Upload } from "./upload-types"
 import { Client } from "@portive/client"
 
 /**
@@ -40,7 +40,7 @@ export type WithCloudEditorOptions = {
   initialMaxSize?: [number, number]
   minResizeWidth?: number
   maxResizeWidth?: number
-  initialOrigins?: Record<string, Origin>
+  initialOrigins?: Record<string, Upload>
   onUpload?: OnUpload
 }
 
@@ -49,7 +49,7 @@ export type WithCloudEditorOptions = {
  */
 export type SaveOptions = { maxTimeoutInMs?: number }
 export type SaveResult =
-  | { status: "timeout"; value: Descendant[]; finishes: Promise<Origin>[] }
+  | { status: "timeout"; value: Descendant[]; finishes: Promise<Upload>[] }
   | { status: "complete"; value: Descendant[] }
 
 export type EditorCloudObject = {
@@ -57,7 +57,7 @@ export type EditorCloudObject = {
   initialMaxSize: [number, number]
   minResizeWidth: number
   maxResizeWidth: number
-  useStore: ReturnType<typeof createOriginStore>
+  useStore: ReturnType<typeof createUploadStore>
   uploadFile: (file: File) => void
   handlePaste: (e: React.ClipboardEvent) => boolean
   handleDrop: (e: React.DragEvent) => boolean

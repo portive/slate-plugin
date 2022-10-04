@@ -1,4 +1,4 @@
-import { createOriginStore } from "./origin-store"
+import { createUploadStore } from "./upload-store"
 import { FullCloudEditor, WithCloudEditorOptions, SaveOptions } from "../types"
 import { upload } from "./upload-file"
 import {
@@ -27,7 +27,7 @@ export function withCloud<T extends FullCloudEditor>(
     },
   }: WithCloudEditorOptions
 ): T {
-  const useStore = createOriginStore({ origins: initialOrigins })
+  const useStore = createUploadStore({ origins: initialOrigins })
   /**
    * Create an instance of the Portive Client
    */

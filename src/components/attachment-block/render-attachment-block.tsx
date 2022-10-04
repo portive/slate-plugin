@@ -4,7 +4,7 @@ import { css } from "emotion"
 import bytes from "bytes"
 import {
   useHighlightedStyle,
-  useOrigin,
+  useUpload,
   RenderElementPropsFor,
   StatusBar,
 } from "../.."
@@ -73,7 +73,7 @@ export function AttachmentBlock({
   children,
 }: RenderElementPropsFor<AttachmentBlockElementType>) {
   const editor = useSlateStatic()
-  const origin = useOrigin(element.id)
+  const upload = useUpload(element.id)
   const highlightedStyle = useHighlightedStyle()
 
   const removeElement = useCallback(() => {
@@ -93,7 +93,7 @@ export function AttachmentBlock({
         <div className="--body">
           <div>{element.filename}</div>
           <StatusBar
-            origin={origin}
+            upload={upload}
             className="--status-bar"
             width={192}
             height={16}
@@ -103,10 +103,10 @@ export function AttachmentBlock({
         </div>
 
         {/* Download Icon */}
-        {origin.status === "complete" ? (
+        {upload.status === "complete" ? (
           <div className="--icon">
             <a
-              href={origin.url}
+              href={upload.url}
               target="_blank"
               rel="noreferrer"
               className="--icon-button --download-icon"
@@ -118,7 +118,7 @@ export function AttachmentBlock({
         ) : null}
 
         {/* Delete Icon */}
-        {origin.status === "error" ? (
+        {upload.status === "error" ? (
           <div className="--icon">
             <div className="--icon-button --trash-icon" onClick={removeElement}>
               <TrashIcon />

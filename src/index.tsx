@@ -1,5 +1,5 @@
 export * from "./types"
-export * from "./editor/origin-store"
+export * from "./editor/upload-store"
 export * from "./render-image"
 export * from "./editor/upload-handlers"
 export * from "./editor"

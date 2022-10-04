@@ -1,11 +1,11 @@
 import React from "react"
-import { Origin } from "../types"
+import { Upload } from "../types"
 import { useContext, Dispatch, SetStateAction } from "react"
 import { Editor } from "slate"
 
 export const HostedImageContext = React.createContext<{
   editor: Editor
-  origin: Origin
+  origin: Upload
   size: [number, number]
   setSize: Dispatch<SetStateAction<[number, number]>>
 } | null>(null)

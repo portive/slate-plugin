@@ -1,7 +1,7 @@
 import {
   OnUploadImageEvent,
   FullCloudEditor,
-  Origin,
+  Upload,
   OriginEventTypes,
   OnUploadGenericEvent,
 } from "../types"
@@ -37,7 +37,7 @@ async function startUploadSteps({
   file: File
   clientFile: ClientFile
 }) {
-  const { setOrigin } = editor.cloud.useStore.getState()
+  const { setUpload: setOrigin } = editor.cloud.useStore.getState()
   const url = clientFile.objectUrl
 
   /**
@@ -47,7 +47,7 @@ async function startUploadSteps({
    * `origin` object so we can await `origin.finish` during the save process
    * to wait for all the files to finish uploading.
    */
-  const deferredFinish = Defer<Origin>()
+  const deferredFinish = Defer<Upload>()
   const finishPromise = deferredFinish.promise
 
   /**
@@ -79,7 +79,7 @@ async function startUploadSteps({
     client: editor.cloud.client,
     file,
     onProgress(e) {
-      const origin: Origin = {
+      const origin: Upload = {
         url,
         status: "uploading",
         sentBytes: e.sentBytes,
@@ -96,7 +96,7 @@ async function startUploadSteps({
    * If there's an upload error, then we set it on the `origin`
    */
   if (uploadResult.status === "error") {
-    const origin: Origin = {
+    const origin: Upload = {
       url,
       status: "error",
       message: uploadResult.message,
@@ -111,7 +111,7 @@ async function startUploadSteps({
   /**
    * Set file as `complete` with the final hosted URL
    */
-  const origin: Origin = {
+  const origin: Upload = {
     url: uploadResult.data.url,
     status: "complete",
   }

@@ -1,4 +1,4 @@
-import { Origin, OriginEventTypes } from "~/src"
+import { Upload, OriginEventTypes } from "~/src"
 import { Descendant } from "slate"
 import EventEmitter from "eventemitter3"
 
@@ -51,11 +51,11 @@ export const images: Record<string, HostedFileInfo> = {
  * dispatch any events so we just share the same `eventTarget`.
  */
 const eventEmitter = new EventEmitter<OriginEventTypes>()
-const finishPromise = new Promise<Origin>(() => {
+const finishPromise = new Promise<Upload>(() => {
   /* empty */
 })
 
-export const initialOrigins: Record<string, Origin> = {
+export const initialOrigins: Record<string, Upload> = {
   pdf: {
     status: "complete",
     url: PDF_FILE,

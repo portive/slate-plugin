@@ -61,7 +61,7 @@ export function ImageControls({
     >
       {image}
       <StatusBar
-        origin={origin}
+        upload={origin}
         width={statusBarWidth}
         height={16}
         style={{

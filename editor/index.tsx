@@ -1,7 +1,7 @@
 import { createEditor, Descendant, Editor } from "slate"
 import { Slate, Editable, withReact } from "slate-react"
 import React, { useCallback, useState } from "react"
-import { Origin, withCloud } from "~/src"
+import { Upload, withCloud } from "~/src"
 import { withHistory } from "slate-history"
 import { renderElement } from "./render-element"
 import { ImageBlock } from "~/src/components/image-block"
@@ -23,7 +23,7 @@ export function MyEditor({
   authToken?: string
   apiOriginUrl?: string
   initialValue: Descendant[]
-  initialOrigins: Record<string, Origin>
+  initialOrigins: Record<string, Upload>
   isReadOnly: boolean
 }) {
   const [editor] = useState<Editor>(() => {

@@ -1,13 +1,13 @@
 import { Descendant } from "slate"
 import { normalizeOrigins } from ".."
-import { Origin, OriginEventTypes, OriginUploading } from "../../types"
+import { Upload, OriginEventTypes, UploadProgress } from "../../types"
 import EventEmitter from "eventemitter3"
 import { FakePromise } from "fake-promise"
 import { resolve } from "./test-utils"
 
 describe("normalize", () => {
   it("should normalize an id", async () => {
-    const origins: Record<string, Origin> = {
+    const origins: Record<string, Upload> = {
       a: { status: "complete", url: "/fake.txt" },
     }
     const nodes = [{ id: "a" }] as Descendant[]
@@ -17,8 +17,8 @@ describe("normalize", () => {
 
   it("should skip an element with origin still uploading", async () => {
     const eventEmitter = new EventEmitter<OriginEventTypes>()
-    const finishPromise = new FakePromise<Origin>()
-    const origins: Record<string, OriginUploading> = {
+    const finishPromise = new FakePromise<Upload>()
+    const origins: Record<string, UploadProgress> = {
       a: {
         status: "uploading",
         url: "/fake.txt",
@@ -35,7 +35,7 @@ describe("normalize", () => {
   })
 
   it("should skip an element with origin in an error state", async () => {
-    const origins: Record<string, Origin> = {
+    const origins: Record<string, Upload> = {
       a: {
         status: "error",
         message: "No Internet",
@@ -48,7 +48,7 @@ describe("normalize", () => {
   })
 
   it("should normalize children", async () => {
-    const origins: Record<string, Origin> = {
+    const origins: Record<string, Upload> = {
       a: { status: "complete", url: "/fake.txt" },
     }
     const nodes = [{ children: [{ id: "a" }] }] as unknown as Descendant[]
@@ -57,7 +57,7 @@ describe("normalize", () => {
   })
 
   it("should not normalize children of an element that has an id", async () => {
-    const origins: Record<string, Origin> = {
+    const origins: Record<string, Upload> = {
       a: { status: "complete", url: "/fake.txt" },
     }
     const nodes = [
