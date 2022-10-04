@@ -11,8 +11,10 @@ import { insertBlock } from "~/src/transforms"
 export type ImageBlockElementType = {
   type: "image-block"
   id: string
-  originSize: [number, number]
-  size: [number, number]
+  width: number
+  height: number
+  maxWidth: number
+  maxHeight: number
   children: [{ text: "" }]
 }
 
@@ -41,8 +43,10 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
     insertBlock(editor, {
       type: ELEMENT_TYPE,
       id: e.id,
-      originSize: e.originSize,
-      size: e.initialSize,
+      width: e.initialWidth,
+      height: e.initialHeight,
+      maxWidth: e.maxWidth,
+      maxHeight: e.maxHeight,
       children: [{ text: "" }],
     })
   }
@@ -61,7 +65,7 @@ function Component({
     <div {...attributes} style={{ margin: "8px 0" }}>
       <HostedImage
         element={element}
-        style={{ borderRadius: element.size[0] < 100 ? 0 : 4 }}
+        style={{ borderRadius: element.width < 100 ? 0 : 4 }}
       />
       {children}
     </div>

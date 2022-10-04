@@ -146,9 +146,13 @@ async function uploadHostedImageFile(
   const event: OnUploadImageEvent = {
     type: "image",
     id: id,
-    originSize: clientFile.size,
+    // originSize: clientFile.size,
     file,
-    initialSize,
+    initialWidth: initialSize[0],
+    initialHeight: initialSize[1],
+    maxWidth: clientFile.size[0],
+    maxHeight: clientFile.size[1],
+    // initialSize,
   }
 
   editor.cloud.onUpload(event)

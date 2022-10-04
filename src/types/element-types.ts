@@ -16,12 +16,14 @@ export interface ImageFileInterface {
    * local computer of the browser.
    */
   id: string
-  originSize: [number, number]
   /**
-   * The `size` is required to know what dimensions to display the image at.
-   * Remember that during the user doing a resize, the size of the displayed
-   * image may not match with the size of the image on the server and that is
-   * okay.
+   * The `width` and `height `is required to know what dimensions to display
+   * the image at.  Remember that during the user doing a resize, the size of
+   * the displayed image may not match with the size of the image on the server
+   * and that is okay.
    */
-  size: [number, number]
+  width: number
+  height: number
+  maxWidth: number
+  maxHeight: number
 }

@@ -15,7 +15,7 @@ export function RenderHostedImage({
     <div {...attributes} style={{ margin: "8px 0" }}>
       <HostedImage
         element={element}
-        style={{ borderRadius: element.size[0] < 100 ? 0 : 4 }}
+        style={{ borderRadius: element.width < 100 ? 0 : 4 }}
       />
       {children}
     </div>
@@ -84,6 +84,10 @@ export function useUpload(id: string): Upload {
 
 type ImageProps = React.HTMLAttributes<HTMLImageElement>
 
+// function getSizeFromElement(): {width: number, height: number} {
+
+// }
+
 export function HostedImage({
   element,
   className,
@@ -96,36 +100,44 @@ export function HostedImage({
 } & ImageProps) {
   const editor = useSlateStatic()
   const upload = useUpload(element.id)
-  const [size, setSize] = useState(element.size)
+  const [size, setSize] = useState<{ width: number; height: number }>({
+    width: element.width,
+    height: element.height,
+  })
 
   useEffect(() => {
-    setSize(element.size)
-  }, [element.size[0], element.size[1]])
+    setSize({ width: element.width, height: element.height })
+  }, [element.width, element.height])
 
   const highlightedStyle = useHighlightedStyle()
 
   const src = generateSrc({
     originUrl: upload.url,
-    size: element.size,
-    maxSize: element.originSize,
+    size: [element.width, element.height],
+    maxSize: [element.maxWidth, element.maxHeight],
   })
 
   const srcSet = generateSrcSet({
     originUrl: upload.url,
-    size: element.size,
-    maxSize: element.originSize,
+    size: [element.width, element.height],
+    maxSize: [element.maxWidth, element.maxHeight],
   })
 
   return (
     <HostedImageContext.Provider
-      value={{ editor, origin: upload, size, setSize }}
+      value={{
+        editor,
+        origin: upload,
+        size,
+        setSize,
+      }}
     >
       <ImageControls element={element}>
         <img
           src={src}
           srcSet={srcSet}
-          width={size[0]}
-          height={size[1]}
+          width={size.width}
+          height={size.height}
           className={className}
           style={{ ...highlightedStyle, ...style, display: "block" }}
           {...imageProps}

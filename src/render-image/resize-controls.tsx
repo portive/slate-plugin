@@ -10,7 +10,7 @@ export function ResizeControls({ element }: { element: ImageFileInterface }) {
   const editor = useSlateStatic()
   const [isResizing, setIsResizing] = useState(false)
 
-  if (element.originSize[0] < editor.cloud.minResizeWidth) return null
+  if (element.width < editor.cloud.minResizeWidth) return null
 
   let currentSize = size
 
@@ -18,12 +18,9 @@ export function ResizeControls({ element }: { element: ImageFileInterface }) {
     (e: React.MouseEvent) => {
       setIsResizing(true)
       const startX = e.clientX
-      const startWidth = size[0]
+      const startWidth = size.width
       const minWidth = editor.cloud.minResizeWidth
-      const maxWidth = Math.min(
-        element.originSize[0],
-        editor.cloud.maxResizeWidth
-      )
+      const maxWidth = Math.min(element.width, editor.cloud.maxResizeWidth)
       /**
        * Handle resize dragging through an event handler on mouseMove on the
        * document.
@@ -41,7 +38,11 @@ export function ResizeControls({ element }: { element: ImageFileInterface }) {
          */
         const nextWidth = Math.min(maxWidth, Math.max(minWidth, proposedWidth))
 
-        currentSize = resizeInWidth(element.originSize, nextWidth)
+        const sizeTuple = resizeInWidth(
+          [element.maxWidth, element.maxHeight],
+          nextWidth
+        )
+        currentSize = { width: sizeTuple[0], height: sizeTuple[1] }
 
         setSize(currentSize)
       }
@@ -60,7 +61,11 @@ export function ResizeControls({ element }: { element: ImageFileInterface }) {
 
         const at = ReactEditor.findPath(editor, element as Element)
 
-        Transforms.setNodes(editor, { size: currentSize }, { at })
+        Transforms.setNodes(
+          editor,
+          { width: currentSize.width, height: currentSize.height },
+          { at }
+        )
       }
 
       /**
@@ -79,7 +84,7 @@ export function ResizeControls({ element }: { element: ImageFileInterface }) {
        */
       document.body.style.cursor = "ew-resize"
     },
-    [editor, size[0], size[1]]
+    [editor, size.width, size.height]
   )
   return (
     <>
@@ -92,8 +97,8 @@ export function ResizeControls({ element }: { element: ImageFileInterface }) {
 /**
  * The resize label that shows the width/height of the image
  */
-function ResizeLabel({ size }: { size: [number, number] }) {
-  const isBelow = size[0] < 100 || size[1] < 100
+function ResizeLabel({ size }: { size: { width: number; height: number } }) {
+  const isBelow = size.width < 100 || size.height < 100
   const bottom = isBelow ? -24 : 4
   return (
     <div
@@ -113,7 +118,7 @@ function ResizeLabel({ size }: { size: [number, number] }) {
         transition: "bottom 250ms",
       }}
     >
-      {size[0]} &times; {size[1]}
+      {size.width} &times; {size.height}
     </div>
   )
 }

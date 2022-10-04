@@ -14,11 +14,10 @@ export type ImageInlineElementType = {
    * Must include id and originSize
    */
   id: string
-  originSize: [number, number]
-  /**
-   * Must include `size` (consider switching to `mods.size`)
-   */
-  size: [number, number]
+  width: number
+  height: number
+  maxWidth: number
+  maxHeight: number
   children: [{ text: "" }]
 }
 
@@ -54,8 +53,10 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
     Transforms.insertNodes(editor, {
       type: "image-inline",
       id: e.id,
-      originSize: e.originSize,
-      size: e.initialSize,
+      width: e.initialWidth,
+      height: e.initialHeight,
+      maxWidth: e.maxWidth,
+      maxHeight: e.maxHeight,
       children: [{ text: "" }],
     })
   }
@@ -71,7 +72,7 @@ export function Component({
     <span {...attributes}>
       <HostedImage
         element={element}
-        style={{ borderRadius: element.size[0] < 100 ? 0 : 4 }}
+        style={{ borderRadius: element.width < 100 ? 0 : 4 }}
       />
       {children}
     </span>

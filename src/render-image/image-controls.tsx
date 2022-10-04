@@ -30,7 +30,7 @@ export function ImageControls({
   const selected = useSelected()
   const showResizeControls = focused && selected
   const STATUS_BAR_MARGIN = 16
-  const statusBarWidth = size[0] - STATUS_BAR_MARGIN * 2
+  const statusBarWidth = size.width - STATUS_BAR_MARGIN * 2
   return (
     <span
       draggable={true}

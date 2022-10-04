@@ -10,10 +10,12 @@ import { insertBlock } from "~/src/transforms"
 
 export type TitledImageBlockElementType = {
   type: "titled-image-block"
-  title: string // ✅ Add a `title` property for our titled image
   id: string
-  originSize: [number, number]
-  size: [number, number]
+  title: string // ✅ Add a `title` property for our titled image
+  width: number
+  height: number
+  maxWidth: number
+  maxHeight: number
   children: [{ text: "" }]
 }
 
@@ -43,8 +45,10 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
       type: ELEMENT_TYPE,
       title: e.file.name, // ✅ set the initial title value to the filename
       id: e.id,
-      originSize: e.originSize,
-      size: e.initialSize,
+      width: e.initialWidth,
+      height: e.initialHeight,
+      maxWidth: e.maxWidth,
+      maxHeight: e.maxHeight,
       children: [{ text: "" }],
     })
   }
@@ -63,7 +67,7 @@ function Component({
     <div {...attributes} style={{ margin: "8px 0" }}>
       <HostedImage
         element={element}
-        style={{ borderRadius: element.size[0] < 100 ? 0 : 4 }}
+        style={{ borderRadius: element.width < 100 ? 0 : 4 }}
         // ✅ Add the title here
         title={element.title}
       />

@@ -12,8 +12,10 @@ import { Client } from "@portive/client"
 export type OnUploadImageEvent = {
   type: "image"
   id: string
-  originSize: [number, number]
-  initialSize: [number, number]
+  initialWidth: number
+  initialHeight: number
+  maxWidth: number
+  maxHeight: number
   file: File
 }
 
