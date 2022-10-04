@@ -4,7 +4,7 @@ import { ImageFileInterface } from "../types"
 import { Element, Transforms } from "slate"
 import { CircleX } from "../icons/circle-x-icon"
 
-export function RemoveIcon({ element }: { element: ImageFileInterface }) {
+export function RemoveButton({ element }: { element: ImageFileInterface }) {
   const editor = useSlateStatic()
   const onMouseDown = useCallback(() => {
     const at = ReactEditor.findPath(editor, element as Element)

@@ -89,6 +89,9 @@ export function ResizeControls({ element }: { element: ImageFileInterface }) {
   )
 }
 
+/**
+ * The resize label that shows the width/height of the image
+ */
 function ResizeLabel({ size }: { size: [number, number] }) {
   const isBelow = size[0] < 100 || size[1] < 100
   const bottom = isBelow ? -24 : 4
@@ -115,6 +118,9 @@ function ResizeLabel({ size }: { size: [number, number] }) {
   )
 }
 
+/**
+ * The handle used to drag resize an image
+ */
 function ResizeHandles({
   onMouseDown,
 }: {
@@ -157,6 +163,9 @@ function ResizeHandles({
   )
 }
 
+/**
+ * The little divets on the resize handle bar.
+ */
 const barStyle = {
   position: "absolute",
   top: 8,

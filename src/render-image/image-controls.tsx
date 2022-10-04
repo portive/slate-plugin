@@ -1,10 +1,9 @@
 import { useFocused, useSelected } from "slate-react"
 import { ImageFileInterface } from "../types"
 import { StatusBar } from "./status-bar"
-import { RemoveIcon } from "./remove-icon"
+import { RemoveButton } from "./remove-button"
 import { ResizeControls } from "./resize-controls"
 import { useHostedImageContext } from "./hosted-image-context"
-import { TrashIcon } from "../icons"
 
 /**
  * Display image controls that appear over the image.
@@ -75,7 +74,7 @@ export function ImageControls({
         }}
       />
       {/* <ErrorMessage /> */}
-      {origin.status === "error" ? <RemoveIcon element={element} /> : null}
+      {origin.status === "error" ? <RemoveButton element={element} /> : null}
       {showResizeControls ? <ResizeControls element={element} /> : null}
     </span>
   )

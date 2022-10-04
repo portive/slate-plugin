@@ -6,7 +6,6 @@ import {
   RenderElementPropsFor,
   FullCloudEditor,
 } from "../.."
-// import { insertBlock } from "~/src/transforms"
 import { Transforms } from "slate"
 
 export type ImageInlineElementType = {
@@ -52,17 +51,13 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
   const originalOnUpload = cloud.onUpload
   cloud.onUpload = (e) => {
     if (e.type !== "image") return originalOnUpload(e)
-    Transforms.insertNodes(
-      editor,
-      {
-        type: "image-inline",
-        originKey: e.originKey,
-        originSize: e.originSize,
-        size: e.initialSize,
-        children: [{ text: "" }],
-      },
-      { at: e.at }
-    )
+    Transforms.insertNodes(editor, {
+      type: "image-inline",
+      originKey: e.originKey,
+      originSize: e.originSize,
+      size: e.initialSize,
+      children: [{ text: "" }],
+    })
   }
   return editor
 }

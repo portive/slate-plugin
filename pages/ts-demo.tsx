@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
 import { InferGetServerSidePropsType } from "next"
 import { useState } from "react"
-import { createEditor, Descendant } from "slate"
+import { createEditor } from "slate"
 import { withReact, Slate, Editable, RenderElementProps } from "slate-react"
 import { withHistory } from "slate-history"
 import { withCloud } from "~/src"
 import { createAuthToken } from "@portive/auth"
 import { env } from "~/lib/server-env"
-import { ImageBlock } from "~/src/image-block"
-import { AttachmentBlock } from "~/src/attachment-block"
+import { CloudComponents } from "~/src/cloud-components"
 
 /**
  * Create the authToken
@@ -20,18 +19,14 @@ export async function getServerSideProps() {
   return { props: { authToken } }
 }
 
-const initialValue: Descendant[] = [
-  { type: "paragraph", children: [{ text: "Hello World" }] },
-]
-
-const renderElement = AttachmentBlock.withRenderElement(
-  ImageBlock.withRenderElement((props: RenderElementProps) => {
+const renderElement = CloudComponents.withRenderElement(
+  (props: RenderElementProps) => {
     const { element } = props
     if (element.type === "paragraph") {
       return <p {...props.attributes}>{props.children}</p>
     }
     throw new Error(`Unhandled element type ${element.type}`)
-  })
+  }
 )
 
 export default function Page({
@@ -41,15 +36,16 @@ export default function Page({
     const basicEditor = withHistory(withReact(createEditor()))
     // Add `withCloud` plugin to enable uploads
     const cloudEditor = withCloud(basicEditor, { authToken })
-    // Add `AttachmentBlock` plugin for generic files
-    AttachmentBlock.withEditor(cloudEditor)
-    // Add `ImageBlock` plugin for images
-    ImageBlock.withEditor(cloudEditor)
+    // Add default cloud components for ImageBlock and AttachmentBlock
+    CloudComponents.withEditor(cloudEditor)
     return cloudEditor
   })
 
   return (
-    <Slate editor={editor} value={initialValue}>
+    <Slate
+      editor={editor}
+      value={[{ type: "paragraph", children: [{ text: "Hello World" }] }]}
+    >
       <Editable
         renderElement={renderElement}
         onPaste={editor.cloud.handlePaste}

@@ -1,4 +1,4 @@
-import { BaseEditor, Descendant, Location } from "slate"
+import { BaseEditor, Descendant } from "slate"
 import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { createOriginStore } from "../editor/origin-store"
@@ -58,7 +58,7 @@ export type EditorCloudObject = {
   minResizeWidth: number
   maxResizeWidth: number
   useStore: ReturnType<typeof createOriginStore>
-  uploadFile: (file: File) => string
+  uploadFile: (file: File) => void
   handlePaste: (e: React.ClipboardEvent) => boolean
   handleDrop: (e: React.DragEvent) => boolean
   handleInputFileChange: (e: React.ChangeEvent<HTMLInputElement>) => boolean

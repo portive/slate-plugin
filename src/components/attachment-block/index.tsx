@@ -29,17 +29,13 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
    * override `onUpload`
    */
   cloud.onUpload = (e) => {
-    insertBlock(
-      editor,
-      {
-        type: "attachment-block",
-        originKey: e.originKey,
-        filename: e.file.name,
-        bytes: e.file.size,
-        children: [{ text: "" }],
-      },
-      e.at
-    )
+    insertBlock(editor, {
+      type: "attachment-block",
+      originKey: e.originKey,
+      filename: e.file.name,
+      bytes: e.file.size,
+      children: [{ text: "" }],
+    })
   }
   return editor
 }

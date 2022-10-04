@@ -88,18 +88,14 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
   const originalOnUpload = cloud.onUpload
   cloud.onUpload = (e) => {
     if (e.type !== "image") return originalOnUpload(e)
-    insertBlock(
-      editor,
-      {
-        type: ELEMENT_TYPE,
-        title: e.file.name, // ✅ set the initial title value to the filename
-        originKey: e.originKey,
-        originSize: e.originSize,
-        size: e.initialSize,
-        children: [{ text: "" }],
-      },
-      e.at
-    )
+    insertBlock(editor, {
+      type: ELEMENT_TYPE,
+      title: e.file.name, // ✅ set the initial title value to the filename
+      originKey: e.originKey,
+      originSize: e.originSize,
+      size: e.initialSize,
+      children: [{ text: "" }],
+    })
   }
   return editor
 }

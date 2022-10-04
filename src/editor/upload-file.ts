@@ -3,6 +3,7 @@ import {
   FullCloudEditor,
   Origin,
   OriginEventTypes,
+  OnUploadGenericEvent,
 } from "../types"
 import { nanoid } from "nanoid"
 import {
@@ -30,15 +31,11 @@ async function startUploadSteps({
   originKey,
   file,
   clientFile,
-}: // element,
-// at,
-{
+}: {
   editor: FullCloudEditor
   originKey: string
   file: File
   clientFile: ClientFile
-  // element: Element & { originKey: string }
-  // at?: Location
 }) {
   const { setOrigin } = editor.cloud.useStore.getState()
   const url = clientFile.objectUrl
@@ -73,13 +70,6 @@ async function startUploadSteps({
     eventEmitter,
     finishPromise,
   })
-
-  /**
-   * Insert a block smartly at a location that makes sense wither `at` the
-   * given location or, if `at` is `undefined`, then at the locaiton of  the
-   * current selection.
-   */
-  // insertBlock(editor, element, at)
 
   /**
    * Start the actual upload progress and update the `origin` as to the
@@ -159,16 +149,9 @@ async function uploadHostedImageFile(
     originSize: clientFile.size,
     file,
     initialSize,
-    // at specified position, or if not specified, the current selection or
-    // if no current selection at the top of the editor.
-    // at: options.at || editor.selection || Editor.start(editor, [0]),
   }
 
   editor.cloud.onUpload(event)
-
-  // const element = cloud.createImageFileElement
-  //   ? cloud.createImageFileElement(event)
-  //   : cloud.createFileElement(event)
 
   await startUploadSteps({
     editor,
@@ -187,21 +170,18 @@ async function uploadHostedGenericFile(
   originKey: string,
   file: File
 ) {
-  // const cloud = editor.cloud
-
   const clientFile = await createClientFile(file)
   if (clientFile.type !== "generic") {
     throw new Error(`Expected clientFile.type to be generic`)
   }
 
-  editor.cloud.onUpload({
+  const event: OnUploadGenericEvent = {
     type: "generic",
     originKey: originKey,
     file,
-    // at specified position, or if not specified, the current selection or
-    // if no current selection at the top of the editor.
-    // at: options.at || editor.selection || Editor.start(editor, [0]),
-  })
+  }
+
+  editor.cloud.onUpload(event)
 
   await startUploadSteps({
     editor,
@@ -219,11 +199,11 @@ async function uploadHostedGenericFile(
  * and when it's complete, sets the URL of the upload.
  */
 export function upload(editor: FullCloudEditor, file: File): string {
-  const id = nanoid()
+  const srcOrKey = nanoid()
   if (isHostedImage(file)) {
-    uploadHostedImageFile(editor, id, file)
+    uploadHostedImageFile(editor, srcOrKey, file)
   } else {
-    uploadHostedGenericFile(editor, id, file)
+    uploadHostedGenericFile(editor, srcOrKey, file)
   }
-  return id
+  return srcOrKey
 }

@@ -1,22 +1,9 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react"
 import { createEditor } from "slate"
 import { withReact, Slate, Editable } from "slate-react"
 import { withHistory } from "slate-history"
 import { withCloud } from "~/src"
-import { createAuthToken } from "@portive/auth"
-import { env } from "~/lib/server-env"
 import { CloudComponents } from "~/src/cloud-components"
-
-/**
- * Create the authToken
- */
-export async function getServerSideProps() {
-  const authToken = createAuthToken(env.PORTIVE_API_KEY, {
-    expiresIn: "1d",
-  })
-  return { props: { authToken } }
-}
 
 const renderElement = CloudComponents.withRenderElement((props) => {
   const { element } = props
@@ -26,11 +13,11 @@ const renderElement = CloudComponents.withRenderElement((props) => {
   throw new Error(`Unhandled element type ${element.type}`)
 })
 
-export default function Page({ authToken }) {
+export default function Page() {
   const [editor] = useState(() => {
     const basicEditor = withHistory(withReact(createEditor()))
     // Add `withCloud` plugin to enable uploads
-    const cloudEditor = withCloud(basicEditor, { authToken })
+    const cloudEditor = withCloud(basicEditor, { apiKey: "MY_API_KEY" })
     // Add default cloud components for ImageBlock and AttachmentBlock
     CloudComponents.withEditor(cloudEditor)
     return cloudEditor
