@@ -4,7 +4,7 @@ import {
   TitledImageBlockElement,
   ImageInlineElement,
   ImageBlockElementType,
-  AttachmentBlockElement,
+  AttachmentBlockElementType,
   CloudEditor,
 } from "~/src"
 import { HistoryEditor } from "slate-history"
@@ -31,7 +31,7 @@ export type CustomElement =
   | ParagraphElement
   | BlockQuoteElement
   | MinOriginElement
-  | AttachmentBlockElement
+  | AttachmentBlockElementType
   | ImageBlockElementType
   | TitledImageBlockElement
   | ImageInlineElement

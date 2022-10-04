@@ -11,14 +11,14 @@ export type CreateImageFileElementEvent = {
   originSize: [number, number]
   initialSize: [number, number]
   file: File
-  at?: Location
+  at: Location
 }
 
 export type CreateGenericFileElementEvent = {
   type: "generic"
   originKey: string
   file: File
-  at?: Location
+  at: Location
 }
 
 export type OnUploadEvent =

@@ -1,15 +1,20 @@
 import { AssertType } from "@thesunny/assert-type"
-import { AttachmentBlockElement } from "./types"
 import { AttachmentBlock as RenderElement } from "./render-attachment-block"
 import { FullCloudEditor } from "../../../src"
 import { RenderElementProps } from "slate-react"
 import { insertBlock } from "~/src/transforms"
 
-export type { AttachmentBlockElement } from "./types"
+export type AttachmentBlockElementType = {
+  type: "attachment-block"
+  originKey: string
+  filename: string
+  bytes: number
+  children: [{ text: "" }]
+}
 
-const ELEMENT_TYPE = "attachment-block"
+const ELEMENT_TYPE: AttachmentBlockElementType["type"] = "attachment-block"
 
-AssertType.Equal<typeof ELEMENT_TYPE, AttachmentBlockElement["type"]>(true)
+AssertType.Equal<typeof ELEMENT_TYPE, AttachmentBlockElementType["type"]>(true)
 
 /**
  * Augment `Editor` to support this element type
@@ -27,13 +32,17 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
    * override `onUpload`
    */
   cloud.onUpload = (e) => {
-    insertBlock(editor, {
-      type: "attachment-block",
-      originKey: e.originKey,
-      filename: e.file.name,
-      bytes: e.file.size,
-      children: [{ text: "" }],
-    })
+    insertBlock(
+      editor,
+      {
+        type: "attachment-block",
+        originKey: e.originKey,
+        filename: e.file.name,
+        bytes: e.file.size,
+        children: [{ text: "" }],
+      },
+      e.at
+    )
   }
   return editor
 }

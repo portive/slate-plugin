@@ -15,6 +15,7 @@ import {
 import { ClientFile } from "@portive/api-types"
 import EventEmitter from "eventemitter3"
 import Defer from "p-defer"
+import { Editor } from "slate"
 
 /**
  * Executes the `uploadSteps`:
@@ -161,6 +162,9 @@ async function uploadHostedImageFile(
     originSize: clientFile.size,
     file,
     initialSize,
+    // at specified position, or if not specified, the current selection or
+    // if no current selection at the top of the editor.
+    at: options.at || editor.selection || Editor.start(editor, [0]),
   }
 
   editor.cloud.onUpload(event)
@@ -174,8 +178,6 @@ async function uploadHostedImageFile(
     originKey,
     file,
     clientFile,
-    // element,
-    // at: options.at,
   })
 }
 
@@ -189,23 +191,20 @@ async function uploadHostedGenericFile(
   file: File,
   options: UploadFileOptions
 ) {
-  const cloud = editor.cloud
+  // const cloud = editor.cloud
 
   const clientFile = await createClientFile(file)
   if (clientFile.type !== "generic") {
     throw new Error(`Expected clientFile.type to be generic`)
   }
 
-  // const element = cloud.createFileElement({
-  //   type: "generic",
-  //   originKey: originKey,
-  //   file,
-  // })
-
   editor.cloud.onUpload({
     type: "generic",
     originKey: originKey,
     file,
+    // at specified position, or if not specified, the current selection or
+    // if no current selection at the top of the editor.
+    at: options.at || editor.selection || Editor.start(editor, [0]),
   })
 
   await startUploadSteps({
@@ -213,8 +212,6 @@ async function uploadHostedGenericFile(
     originKey,
     file,
     clientFile,
-    // element,
-    // at: options.at,
   })
 }
 
