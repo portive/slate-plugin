@@ -199,7 +199,8 @@ async function uploadHostedGenericFile(
  * and when it's complete, sets the URL of the upload.
  */
 export function upload(editor: FullCloudEditor, file: File): string {
-  const srcOrKey = nanoid()
+  // prefix with a `#` to make it visually clear this is a lookup value
+  const srcOrKey = `#${nanoid()}`
   if (isHostedImage(file)) {
     uploadHostedImageFile(editor, srcOrKey, file)
   } else {

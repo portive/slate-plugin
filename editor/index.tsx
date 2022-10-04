@@ -50,8 +50,9 @@ export function MyEditor({
 
   const save = useCallback(async () => {
     setSaveState("saving")
-    const result = await editor.cloud.save()
-    console.log(result.value)
+    console.log("children", editor.children)
+    const result = await editor.cloud.save({ maxTimeoutInMs: 1000 })
+    console.log("value", result.value)
     setSaveState("saved")
     await delay(1000)
     setSaveState("ready")
