@@ -4,6 +4,7 @@ import { StatusBar } from "./status-bar"
 import { RemoveIcon } from "./remove-icon"
 import { ResizeControls } from "./resize-controls"
 import { useHostedImageContext } from "./hosted-image-context"
+import { TrashIcon } from "../icons"
 
 /**
  * Display image controls that appear over the image.

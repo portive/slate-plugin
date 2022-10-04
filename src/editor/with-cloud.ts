@@ -1,4 +1,4 @@
-import { createOriginStore } from "../origin-store"
+import { createOriginStore } from "./origin-store"
 import {
   FullCloudEditor,
   WithCloudEditorOptions,

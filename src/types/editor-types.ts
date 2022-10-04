@@ -1,7 +1,7 @@
 import { BaseEditor, Descendant, Location } from "slate"
 import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
-import { createOriginStore } from "../origin-store"
+import { createOriginStore } from "../editor/origin-store"
 import { Origin } from "./origin-types"
 import { Client } from "@portive/client"
 

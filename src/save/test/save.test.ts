@@ -6,7 +6,7 @@ import { withHistory } from "slate-history"
 import { FullCloudEditor, Origin } from "../../types"
 import "~/editor/types" // use the types from our demo editor for testing
 import { mockOrigin } from "./mock-origin"
-import { createOriginStore } from "../../origin-store"
+import { createOriginStore } from "../../editor/origin-store"
 import { resolve } from "./test-utils"
 
 function mockEditor(
