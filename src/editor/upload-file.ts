@@ -142,8 +142,8 @@ async function uploadHostedImageFile(
    * Get initial image size
    */
   const initialSize = resizeIn(
-    [clientFile.width, clientFile.height],
-    cloud.initialMaxSize
+    { width: clientFile.width, height: clientFile.height },
+    { width: cloud.initialMaxSize[0], height: cloud.initialMaxSize[1] }
   )
 
   const event: OnUploadImageEvent = {
@@ -151,8 +151,8 @@ async function uploadHostedImageFile(
     id: id,
     // originSize: clientFile.size,
     file,
-    initialWidth: initialSize[0],
-    initialHeight: initialSize[1],
+    initialWidth: initialSize.width,
+    initialHeight: initialSize.height,
     maxWidth: clientFile.width,
     maxHeight: clientFile.height,
     // initialSize,

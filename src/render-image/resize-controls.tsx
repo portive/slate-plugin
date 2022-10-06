@@ -38,11 +38,10 @@ export function ResizeControls({ element }: { element: ImageFileInterface }) {
          */
         const nextWidth = Math.min(maxWidth, Math.max(minWidth, proposedWidth))
 
-        const sizeTuple = resizeInWidth(
-          [element.maxWidth, element.maxHeight],
+        currentSize = resizeInWidth(
+          { width: element.maxWidth, height: element.maxHeight },
           nextWidth
         )
-        currentSize = { width: sizeTuple[0], height: sizeTuple[1] }
 
         setSize(currentSize)
       }
