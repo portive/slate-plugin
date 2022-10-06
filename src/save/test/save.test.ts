@@ -15,7 +15,6 @@ function mockEditor(
 ): FullCloudEditor {
   const editor = withCloud(withReact(withHistory(createEditor())), {
     authToken: "", // we won't be uploading
-    initialMaxSize: [320, 320],
     minResizeWidth: 100,
     maxResizeWidth: 640,
     initialOrigins: origins,

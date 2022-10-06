@@ -32,7 +32,6 @@ export function MyEditor({
       apiKey,
       authToken,
       apiOriginUrl,
-      initialMaxSize: [320, 320],
       minResizeWidth: 100,
       maxResizeWidth: 640,
       initialOrigins,

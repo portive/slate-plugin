@@ -39,7 +39,7 @@ export type WithCloudEditorOptions = {
   apiOriginUrl?: string
   apiKey?: PortiveClientOptions["apiKey"]
   authToken?: PortiveClientOptions["authToken"]
-  initialMaxSize?: [number, number]
+  initialMaxSize?: { width: number; height: number }
   minResizeWidth?: number
   maxResizeWidth?: number
   initialOrigins?: Record<string, Upload>
@@ -56,7 +56,7 @@ export type SaveResult =
 
 export type EditorCloudObject = {
   client: Client
-  initialMaxSize: [number, number]
+  initialMaxSize: { width: number; height: number }
   minResizeWidth: number
   maxResizeWidth: number
   useStore: ReturnType<typeof createUploadStore>

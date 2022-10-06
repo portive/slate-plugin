@@ -74,7 +74,7 @@ export default function Index({
     const editor = withCloud(reactEditor, {
       authToken,
       apiOriginUrl,
-      initialMaxSize: [240, 320], // 256
+      initialMaxSize: { width: 240, height: 320 },
       minResizeWidth: 100,
       maxResizeWidth: 238,
     })
