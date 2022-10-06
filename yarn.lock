@@ -712,30 +712,30 @@
   resolved "https://registry.yarnpkg.com/@opentelemetry/context-base/-/context-base-0.14.0.tgz#c67fc20a4d891447ca1a855d7d70fa79a3533001"
   integrity sha512-sDOAZcYwynHFTbLo6n8kIbLiVF3a3BLkrmehJUyEbT9F+Smbi47kLGS2gG2g0fjBLR/Lr1InPD7kXL7FaTqEkw==
 
-"@portive/api-types@^8.0.1":
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/@portive/api-types/-/api-types-8.0.1.tgz#e4732bf6825d7329bd1205163525cfab28685581"
-  integrity sha512-tq0ri7XK6A8Qkrkmy/QkmS7nuKQjlktbtHnFDC73tPLXhND0OyDa10KcPH44rBw4mt0qWFJAXB1QcC/d3laTSQ==
+"@portive/api-types@^9.0.0":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@portive/api-types/-/api-types-9.0.0.tgz#cb8dacbc41d7e8eae723ff9dc966e250f7eadfc5"
+  integrity sha512-uyzC0taTJW9bL3EouGgI731ngMktX00XMHCpnuU4ijCVeKYKpReN3uNDL+JjFR1EzRXlF1ccRG1qtb6JLPNPLQ==
   dependencies:
     "@thesunny/assert-type" "^0.1.13"
     superstruct "^0.15.4"
 
-"@portive/auth@^8.0.1":
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/@portive/auth/-/auth-8.0.1.tgz#ca3da17c05bd49eaf6a0ff8fd26dfccb1d5f8e98"
-  integrity sha512-bjZ7eUX4Tm0rr34a/c96xsAoSc8OzroIbm2PeI/g88jubenCIEzi7OoKFEVTx/8KMg/5veRdMakWq+42dQ8wNA==
+"@portive/auth@^9.0.0":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@portive/auth/-/auth-9.0.0.tgz#b277166076510c3bb1221aaaab76abe6c38ac3e2"
+  integrity sha512-YwTczEVG9KAFLk6d5laT3RxT26qL/MSFUzAr8a9+6q98Rmz1FecVq3z9xfv4t6aRm7FFln5SZr9JkyUeQOvFfA==
   dependencies:
-    "@portive/api-types" "^8.0.1"
+    "@portive/api-types" "^9.0.0"
     "@portive/jwt-utils" "^1.0.7"
     "@types/jsonwebtoken" "^8.5.8"
     jsonwebtoken "^8.5.1"
 
-"@portive/client@^8.0.3":
-  version "8.0.3"
-  resolved "https://registry.yarnpkg.com/@portive/client/-/client-8.0.3.tgz#597955be1c839cb1aeb526022f6842a113fa091b"
-  integrity sha512-Shp3hKFYU4GmN2Wrsd7fGdsWWUOoEh0FTHZczlchht1axPMfz2MerSFZiMPBBFVByJPNnn087trcfaNexTBAqw==
+"@portive/client@^9.0.0":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@portive/client/-/client-9.0.0.tgz#120de7fb9901b88121bf7eb867a191891524da41"
+  integrity sha512-uKfMWpLgDjN/gJn2wUYR3l2sSIafasOH19XW9ptEEqXM3n1m87BQr5yrIQwtP6xkewiVz3klw4HxcJLT+GmBtA==
   dependencies:
-    "@portive/api-types" "^8.0.1"
+    "@portive/api-types" "^9.0.0"
     axios "^0.27.2"
     resolvable-value "^1.0.2"
 
