@@ -1,10 +1,10 @@
 import { BaseEditor, BaseText } from "slate"
 import { ReactEditor } from "slate-react"
-import { CloudEditor } from "~/src"
-import { ImageBlockElementType } from "~/src/components/image-block"
-import { AttachmentBlockElementType } from "~/src/components/attachment-block"
-import { ImageInlineElementType } from "~/src/components/image-inline"
-import { TitledImageBlockElementType } from "~/src/components/titled-image-block"
+import { CloudEditor } from "../src"
+import { ImageBlockElementType } from "../src/components/image-block"
+import { AttachmentBlockElementType } from "../src/components/attachment-block"
+import { ImageInlineElementType } from "../src/components/image-inline"
+import { TitledImageBlockElementType } from "../src/components/titled-image-block"
 import { HistoryEditor } from "slate-history"
 
 type CustomText = BaseText

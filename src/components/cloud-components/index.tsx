@@ -1,5 +1,5 @@
 import { RenderElementProps } from "slate-react"
-import { FullCloudEditor } from "~/src/types"
+import { FullCloudEditor } from "../../types"
 import {
   AttachmentBlock,
   AttachmentBlockElementType,

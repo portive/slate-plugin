@@ -6,7 +6,7 @@ import {
   RenderElementPropsFor,
   FullCloudEditor,
 } from "../.."
-import { insertBlock } from "~/src/transforms"
+import { insertBlock } from "../../transforms"
 
 export type TitledImageBlockElementType = {
   type: "titled-image-block"

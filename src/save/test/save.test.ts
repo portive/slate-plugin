@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Descendant, createEditor } from "slate"
 import { withReact } from "slate-react"
-import { withCloud } from "~/src"
+import { withCloud } from "../.."
 import { withHistory } from "slate-history"
 import { FullCloudEditor, Upload } from "../../types"
 import "~/editor/types" // use the types from our demo editor for testing
