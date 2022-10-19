@@ -95,7 +95,7 @@ async function startUploadSteps({
   /**
    * If there's an upload error, then we set it on the `origin`
    */
-  if (uploadResult.status === "error") {
+  if (uploadResult.type === "error") {
     const origin: Upload = {
       url,
       status: "error",
@@ -112,7 +112,7 @@ async function startUploadSteps({
    * Set file as `complete` with the final hosted URL
    */
   const origin: Upload = {
-    url: uploadResult.data.url,
+    url: uploadResult.hostedFile.url,
     status: "complete",
   }
   setOrigin(id, origin)
