@@ -3,6 +3,7 @@ import { ReactEditor } from "slate-react"
 import { HistoryEditor } from "slate-history"
 import { createUploadStore } from "../editor/upload-store"
 import { Upload } from "./upload-types"
+import { HostedFileInfo } from "@portive/api-types"
 import { Client } from "@portive/client"
 
 /**
@@ -11,9 +12,9 @@ import { Client } from "@portive/client"
 
 export type OnUploadImageEvent = {
   type: "image"
-  id: string
-  initialWidth: number
-  initialHeight: number
+  url: string
+  width: number
+  height: number
   maxWidth: number
   maxHeight: number
   file: File
@@ -21,7 +22,7 @@ export type OnUploadImageEvent = {
 
 export type OnUploadGenericEvent = {
   type: "generic"
-  id: string
+  url: string
   file: File
 }
 

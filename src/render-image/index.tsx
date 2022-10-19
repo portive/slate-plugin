@@ -37,17 +37,17 @@ export function useHighlightedStyle() {
  * Takes an `element` (which it only needs for its `id`) and returns the
  * Upload object from it.
  */
-export function useUpload(id: string): Upload {
+export function useUpload(url: string): Upload {
   const editor = useSlateStatic()
   /**
    * We call this even if it's not always required because it calls `useStore`
    * which is a React hook which means it needs to be called consistently.
    */
-  const upload = editor.cloud.useStore((state) => state.uploads[id])
-  if (id.includes("/")) {
+  const upload = editor.cloud.useStore((state) => state.uploads[url])
+  if (upload == null) {
     return {
       status: "complete",
-      url: id,
+      url: url,
     }
   } else {
     return upload
@@ -84,10 +84,6 @@ export function useUpload(id: string): Upload {
 
 type ImageProps = React.HTMLAttributes<HTMLImageElement>
 
-// function getSizeFromElement(): {width: number, height: number} {
-
-// }
-
 export function HostedImage({
   element,
   className,
@@ -99,7 +95,8 @@ export function HostedImage({
   style?: CSSProperties
 } & ImageProps) {
   const editor = useSlateStatic()
-  const upload = useUpload(element.id)
+  const upload = useUpload(element.url)
+
   const [size, setSize] = useState<{ width: number; height: number }>({
     width: element.width,
     height: element.height,

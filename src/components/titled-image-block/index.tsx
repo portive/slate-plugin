@@ -10,7 +10,7 @@ import { insertBlock } from "../../transforms"
 
 export type TitledImageBlockElementType = {
   type: "titled-image-block"
-  id: string
+  url: string
   title: string // ✅ Add a `title` property for our titled image
   width: number
   height: number
@@ -44,7 +44,7 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
     insertBlock(editor, {
       type: ELEMENT_TYPE,
       title: e.file.name, // ✅ set the initial title value to the filename
-      id: e.id,
+      url: e.url,
       width: e.initialWidth,
       height: e.initialHeight,
       maxWidth: e.maxWidth,

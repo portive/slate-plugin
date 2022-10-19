@@ -81,6 +81,9 @@ export default function Index({
         authToken={authType === "authToken" ? authToken : undefined}
         apiOriginUrl={apiOriginUrl}
         initialValue={initialValue}
+        // initialValue={[
+        //   { type: "paragraph", children: [{ text: "Hello World" }] },
+        // ]}
         initialOrigins={initialOrigins}
         isReadOnly={isReadOnly}
       />

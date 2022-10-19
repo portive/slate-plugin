@@ -13,7 +13,7 @@ export type ImageInlineElementType = {
   /**
    * Must include id and originSize
    */
-  id: string
+  url: string
   width: number
   height: number
   maxWidth: number
@@ -52,7 +52,7 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
     if (e.type !== "image") return originalOnUpload(e)
     Transforms.insertNodes(editor, {
       type: "image-inline",
-      id: e.id,
+      url: e.url,
       width: e.initialWidth,
       height: e.initialHeight,
       maxWidth: e.maxWidth,

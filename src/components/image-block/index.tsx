@@ -1,5 +1,6 @@
 import { AssertType } from "@thesunny/assert-type"
 import { RenderElementProps } from "slate-react"
+import { resizeIn } from "@portive/client"
 import {
   ImageFileInterface,
   HostedImage,
@@ -10,7 +11,7 @@ import { insertBlock } from "../../transforms"
 
 export type ImageBlockElementType = {
   type: "image-block"
-  id: string
+  url: string
   width: number
   height: number
   maxWidth: number
@@ -34,6 +35,7 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
   editor.isVoid = (element) => {
     return element.type === ELEMENT_TYPE ? true : originalIsVoid(element)
   }
+
   /**
    * override `onUpload`
    */
@@ -42,7 +44,7 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
     if (e.type !== "image") return originalOnUpload(e)
     insertBlock(editor, {
       type: ELEMENT_TYPE,
-      id: e.id,
+      url: e.url,
       width: e.initialWidth,
       height: e.initialHeight,
       maxWidth: e.maxWidth,

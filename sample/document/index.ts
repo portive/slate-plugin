@@ -184,7 +184,7 @@ export const initialValue: Descendant[] = [
       { text: "Image is inline " },
       {
         type: "image-inline",
-        id: "icon",
+        url: "icon",
         width: 40,
         height: 40,
         maxWidth: images.icon.originSize[0],
@@ -196,7 +196,7 @@ export const initialValue: Descendant[] = [
   },
   {
     type: "image-block",
-    id: "icon",
+    url: "icon",
     width: 40,
     height: 40,
     maxWidth: images.icon.originSize[0],
@@ -206,7 +206,7 @@ export const initialValue: Descendant[] = [
   { type: "paragraph", children: [{ text: "In progress uploads" }] },
   {
     type: "image-block",
-    id: "zero",
+    url: "zero",
     width: 256,
     height: 171,
     maxWidth: images.landscape.originSize[0],
@@ -215,7 +215,7 @@ export const initialValue: Descendant[] = [
   },
   {
     type: "image-block",
-    id: "half",
+    url: "half",
     width: 256,
     height: 171,
     maxWidth: images.landscape.originSize[0],
@@ -224,7 +224,7 @@ export const initialValue: Descendant[] = [
   },
   {
     type: "image-block",
-    id: "full",
+    url: "full",
     width: 256,
     height: 171,
     maxWidth: images.landscape.originSize[0],
@@ -237,7 +237,7 @@ export const initialValue: Descendant[] = [
   },
   {
     type: "image-block",
-    id: "complete",
+    url: "complete",
     width: 256,
     height: 171,
     maxWidth: images.landscape.originSize[0],
@@ -247,7 +247,7 @@ export const initialValue: Descendant[] = [
   { type: "paragraph", children: [{ text: "Completed upload with URL id" }] },
   {
     type: "image-block",
-    id: images.landscape.url,
+    url: images.landscape.url,
     width: 256,
     height: 171,
     maxWidth: images.landscape.originSize[0],
@@ -257,7 +257,7 @@ export const initialValue: Descendant[] = [
   { type: "paragraph", children: [{ text: "Failed upload" }] },
   {
     type: "image-block",
-    id: "error",
+    url: "error",
     width: 256,
     height: 171,
     maxWidth: images.landscape.originSize[0],
@@ -268,7 +268,7 @@ export const initialValue: Descendant[] = [
   {
     type: "titled-image-block",
     title: "This is titled",
-    id: "complete",
+    url: "complete",
     width: 256,
     height: 171,
     maxWidth: images.landscape.originSize[0],

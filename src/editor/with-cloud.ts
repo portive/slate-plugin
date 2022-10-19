@@ -41,7 +41,7 @@ export function withCloud<T extends FullCloudEditor>(
     /**
      * Call this to initiate a file upload
      */
-    uploadFile(file: File): string {
+    uploadFile(file: File): void {
       return upload(editor, file)
     },
     /**

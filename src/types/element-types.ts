@@ -5,7 +5,7 @@ export interface GenericFileInterface {
    * `fileEneity` being a `url` or an Object URL to the file on the
    * local computer of the browser.
    */
-  id: string
+  url: string
 }
 
 export interface ImageFileInterface {
@@ -15,7 +15,7 @@ export interface ImageFileInterface {
    * `imageOrigin` being a `url` or an Object URL to the image on the
    * local computer of the browser.
    */
-  id: string
+  url: string
   /**
    * The `width` and `height `is required to know what dimensions to display
    * the image at.  Remember that during the user doing a resize, the size of
