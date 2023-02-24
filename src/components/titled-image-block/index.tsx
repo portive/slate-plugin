@@ -16,6 +16,7 @@ export type TitledImageBlockElementType = {
   height: number
   maxWidth: number
   maxHeight: number
+  isAnimated?: boolean
   children: [{ text: "" }]
 }
 
@@ -49,6 +50,7 @@ function withEditor(editor: FullCloudEditor): FullCloudEditor {
       height: e.initialHeight,
       maxWidth: e.maxWidth,
       maxHeight: e.maxHeight,
+      isAnimated: e.isAnimated,
       children: [{ text: "" }],
     })
   }

@@ -20,7 +20,7 @@ export function ResizeControls({ element }: { element: ImageFileInterface }) {
       const startX = e.clientX
       const startWidth = size.width
       const minWidth = editor.cloud.minResizeWidth
-      const maxWidth = Math.min(element.width, editor.cloud.maxResizeWidth)
+      const maxWidth = Math.min(element.maxWidth, editor.cloud.maxResizeWidth)
       /**
        * Handle resize dragging through an event handler on mouseMove on the
        * document.

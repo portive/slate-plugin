@@ -17,6 +17,7 @@ export type OnUploadImageEvent = {
   maxWidth: number
   maxHeight: number
   file: File
+  isAnimated: boolean
 }
 
 export type OnUploadGenericEvent = {

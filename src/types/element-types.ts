@@ -26,4 +26,5 @@ export interface ImageFileInterface {
   height: number
   maxWidth: number
   maxHeight: number
+  isAnimated?: boolean
 }

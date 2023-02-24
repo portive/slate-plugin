@@ -115,12 +115,14 @@ export function HostedImage({
     originUrl: upload.url,
     size: [element.width, element.height],
     maxSize: [element.maxWidth, element.maxHeight],
+    isAnimated: element.isAnimated,
   })
 
   const srcSet = generateSrcSet({
     originUrl: upload.url,
     size: [element.width, element.height],
     maxSize: [element.maxWidth, element.maxHeight],
+    isAnimated: element.isAnimated,
   })
 
   return (
@@ -151,10 +153,12 @@ function generateSrcSet({
   originUrl,
   size,
   maxSize,
+  isAnimated,
 }: {
   originUrl: string
   size: [number, number]
   maxSize: [number, number]
+  isAnimated?: boolean
 }) {
   /**
    * If it's a url from `createObjectURL` then just return it
@@ -164,11 +168,13 @@ function generateSrcSet({
     originUrl,
     size,
     maxSize,
+    isAnimated,
   })
   const src2x = generateSrc({
     originUrl,
     size: [size[0] * 2, size[1] * 2],
     maxSize,
+    isAnimated,
   })
   return `${src1x}, ${src2x} 2x`
 }
@@ -177,15 +183,18 @@ function generateSrc({
   originUrl,
   size,
   maxSize,
+  isAnimated,
 }: {
   originUrl: string
   size: [number, number]
   maxSize: [number, number]
+  isAnimated?: boolean
 }) {
   /**
    * If it's a url from `createObjectURL` then just return it
    */
   if (originUrl.startsWith("blob:")) return originUrl
-  if (size[0] >= maxSize[0] || size[1] >= maxSize[1]) return originUrl
+  if (isAnimated || size[0] >= maxSize[0] || size[1] >= maxSize[1])
+    return originUrl
   return `${originUrl}?size=${size[0]}x${size[1]}`
 }
