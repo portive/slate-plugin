@@ -5,6 +5,7 @@
 .npm/
 .build
 .dist/
+.yarn/
 
 # Ignore Next.js directory
 .next/
